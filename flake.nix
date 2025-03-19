@@ -17,9 +17,9 @@
       pkgs = import nixpkgs { inherit system; };
     in {
       homeConfigurations = {
-        wyatt = home-manager.lib.homeManagerConfiguration {
+        desktop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./home.nix ];
+          modules = [ ./desktop.nix ];
         };
       };
     };
