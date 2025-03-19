@@ -85,6 +85,10 @@
 	"$modifier,s,movetoworkspace,3"
 	"$modifier,t,movetoworkspace,4"
       ];
+      bindm = [
+        "$modifier,mouse:272,movewindow"
+        "$modifier,mouse:273,resizewindow"
+      ];
     };
   };
 }
