@@ -6,7 +6,6 @@
     packages = with pkgs; [
       hyprland
       wget
-      git
       fastfetch
       ghostty
       kitty
