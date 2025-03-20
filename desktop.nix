@@ -78,10 +78,10 @@
 	"$modifier,s,workspace,3"
 	"$modifier,t,workspace,4"
 
-	"$modifier,a,movetoworkspace,1"
-	"$modifier,r,movetoworkspace,2"
-	"$modifier,s,movetoworkspace,3"
-	"$modifier,t,movetoworkspace,4"
+	"$modifier SHIFT,a,movetoworkspace,1"
+	"$modifier SHIFT,r,movetoworkspace,2"
+	"$modifier SHIFT,s,movetoworkspace,3"
+	"$modifier SHIFT,t,movetoworkspace,4"
       ];
       bindm = [
         "$modifier,mouse:272,movewindow"
