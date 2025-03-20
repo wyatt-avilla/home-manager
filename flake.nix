@@ -8,9 +8,21 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprland.url = "github:hyprwm/Hyprland";
+
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+
+    split-monitor-workspaces = {
+      url = "github:Duckonaut/split-monitor-workspaces";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, hyprland, hyprland-plugins, split-monitor-workspaces, ... }:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -19,7 +31,12 @@
       homeConfigurations = {
         desktop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./desktop.nix ];
+	  extraSpecialArgs = {
+	    inherit hyprland hyprland-plugins split-monitor-workspaces;
+	  };
+          modules = [
+	    ./desktop.nix
+	  ];
         };
       };
     };

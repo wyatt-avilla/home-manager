@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, hyprland, hyprland-plugins, split-monitor-workspaces, ... }:
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -46,11 +46,12 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = pkgs.hyprland;
+    package = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     settings = {
       general = {
         "$modifier" = "SUPER";
-	layout = "master";
+        layout = "master";
       };
       monitor = [
         "DP-1,2560x1440@165,0x0,1"
@@ -73,19 +74,22 @@
         "$modifier,o,resizeactive,10 0"
         "$modifier,n,resizeactive,-10 0"
 
-	"$modifier,a,workspace,1"
-	"$modifier,r,workspace,2"
-	"$modifier,s,workspace,3"
-	"$modifier,t,workspace,4"
+        "$modifier,a,workspace,1"
+        "$modifier,r,workspace,2"
+        "$modifier,s,workspace,3"
+        "$modifier,t,workspace,4"
 
-	"$modifier SHIFT,a,movetoworkspace,1"
-	"$modifier SHIFT,r,movetoworkspace,2"
-	"$modifier SHIFT,s,movetoworkspace,3"
-	"$modifier SHIFT,t,movetoworkspace,4"
+        "$modifier SHIFT,a,movetoworkspace,1"
+        "$modifier SHIFT,r,movetoworkspace,2"
+        "$modifier SHIFT,s,movetoworkspace,3"
+        "$modifier SHIFT,t,movetoworkspace,4"
       ];
       bindm = [
         "$modifier,mouse:272,movewindow"
         "$modifier,mouse:273,resizewindow"
+      ];
+      plugins = [
+        #split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
       ];
     };
   };
