@@ -4,10 +4,8 @@
 
   home = {
     packages = with pkgs; [
-      #hyprland
       wget
       fastfetch
-      ghostty
       ghostty
       wl-clipboard
       google-chrome
