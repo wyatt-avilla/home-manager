@@ -1,4 +1,4 @@
-{ lib, pkgs, hyprland, hyprland-plugins, ... }:
+{ lib, pkgs, hyprland, ... }:
 
 let
   mainMonitor = "DP-1";

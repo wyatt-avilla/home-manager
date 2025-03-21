@@ -1,4 +1,4 @@
-{ lib, pkgs, hyprland, hyprland-plugins, split-monitor-workspaces, ... }:
+{ lib, pkgs, hyprland, ... }:
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -6,7 +6,7 @@
     ./yazi.nix
     ./river.nix
     ./waybar.nix
-    (import ./hyprland.nix { inherit pkgs lib hyprland hyprland-plugins; })
+    (import ./hyprland.nix { inherit pkgs lib hyprland; })
   ];
 
   home.packages = with pkgs; [
