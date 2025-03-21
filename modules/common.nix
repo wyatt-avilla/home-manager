@@ -19,6 +19,7 @@
     bat
     ripgrep
     fira-code
+    jq
   ];
 
   fonts.fontconfig.enable = true;

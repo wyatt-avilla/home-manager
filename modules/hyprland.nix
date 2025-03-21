@@ -1,6 +1,10 @@
 { lib, pkgs, hyprland, hyprland-plugins, ... }:
 
 { 
+  home.packages = with pkgs; [
+    jq
+  ];
+
   wayland.windowManager.hyprland = {
     enable = true;
     package = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
