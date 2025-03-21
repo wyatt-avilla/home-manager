@@ -62,7 +62,10 @@
   programs.ghostty = {
     enable = true;
     enableZshIntegration = true;
-    settings.confirm-close-surface = false;
+    settings = {
+      confirm-close-surface = false;
+      window-decoration = false;
+    };
   };
 
   programs.zathura = {
