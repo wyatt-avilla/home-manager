@@ -6,6 +6,7 @@
     package = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     portalPackage = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     settings = {
+      animations.enabled = false;
       general = {
         "$modifier" = "SUPER";
         layout = "master";
