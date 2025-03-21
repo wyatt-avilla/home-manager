@@ -6,10 +6,13 @@
     packages = with pkgs; [
       wget
       fastfetch
-      ghostty
       wl-clipboard
       google-chrome
       wakatime-cli
+      eza
+      bat
+      ripgrep
+      yazi
     ];
 
     username = "wyatt";
@@ -22,6 +25,47 @@
     userName = "Wyatt Avilla";
     userEmail = "wyattmurphy1@gmail.com";
     extraConfig.init.defaultBranch = "main";
+  };
+
+  programs.zsh = {
+    enable = true;
+    autosuggestion.enable = true;
+
+    shellAliases = {
+      ls = "eza --group-directories-first --icons";
+      cat = "bat";
+      grep = "rg";
+      lf = "yazi";
+    };
+  };
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      format = "󱄅(red) $username $directory $all";
+      add_newline = true;
+
+      username = {
+        format = "[$user]($style)";
+        show_always = true;
+        style_user = "purple bold";
+      };
+
+      directory = {
+        format = "at [$path]($style)[$read_only]($read_only_style)";
+        truncation_length = 5;
+	truncation_symbol = ".../";
+	home_symbol = " ~";
+	read_only = "  ";
+	read_only_style = "red";
+      };
+    };
+  };
+
+  programs.ghostty = {
+    enable = true;
+    enableZshIntegration = true;
+    settings.confirm-close-surface = false;
   };
 
   programs.neovim = {
