@@ -29,8 +29,6 @@
 
         "$modifier,e,layoutmsg,cyclenext"
         "$modifier,i,layoutmsg,cycleprev"
-        "$modifier,o,resizeactive,10 0"
-        "$modifier,n,resizeactive,-10 0"
 
         "$modifier,a,workspace,1"
         "$modifier,r,workspace,2"
@@ -41,6 +39,10 @@
         "$modifier SHIFT,r,movetoworkspace,2"
         "$modifier SHIFT,s,movetoworkspace,3"
         "$modifier SHIFT,t,movetoworkspace,4"
+      ];
+      binde = [
+        "$modifier,o,resizeactive,10 0"
+        "$modifier,n,resizeactive,-10 0"
       ];
       bindm = [
         "$modifier,mouse:272,movewindow"

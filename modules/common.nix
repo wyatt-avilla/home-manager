@@ -5,6 +5,7 @@
   imports = [
     ./yazi.nix
     ./river.nix
+    ./waybar.nix
     (import ./hyprland.nix { inherit pkgs lib hyprland hyprland-plugins; })
   ];
 
