@@ -35,7 +35,7 @@
 	    inherit hyprland hyprland-plugins split-monitor-workspaces;
 	  };
           modules = [
-	    ./desktop.nix
+	    ./hosts/desktop.nix
 	  ];
         };
       };
