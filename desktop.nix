@@ -27,6 +27,7 @@
   programs.neovim = {
     enable = true;
     vimAlias = true;
+    defaultEditor = true;
     plugins = [
       pkgs.vimPlugins.vim-wakatime
     ];
