@@ -13,6 +13,7 @@ in
 {
   programs.waybar = {
     enable = true;
+    systemd.enable = true;
     settings = {
       "$barName" = {
         css-name = barName;
