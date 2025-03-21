@@ -18,7 +18,10 @@
     eza
     bat
     ripgrep
+    fira-code
   ];
+
+  fonts.fontconfig.enable = true;
 
   programs.git = {
     userName = "Wyatt Avilla";
@@ -67,6 +70,7 @@
     settings = {
       confirm-close-surface = false;
       window-decoration = false;
+      font-family = "Fira Code";
     };
   };
 
