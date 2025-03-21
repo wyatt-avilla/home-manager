@@ -39,6 +39,12 @@
       grep = "rg";
       lf = "yazi";
     };
+
+    profileExtra = ''
+      if [[ -z $SSH_TTY && $TTY == /dev/tty1 ]]; then
+        Hyprland > /dev/null
+      fi
+    '';
   };
 
   programs.starship = {
