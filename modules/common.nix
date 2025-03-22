@@ -2,6 +2,10 @@
 {
   nixpkgs.config.allowUnfree = true;
 
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = 1;
+  };
+
   imports = [
     ./yazi.nix
     ./river.nix
