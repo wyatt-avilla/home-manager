@@ -88,9 +88,6 @@ in
         "15,monitor:${verticalMonitor}"
         "16,monitor:${verticalMonitor}"
       ];
-      plugins = [
-        #split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
-      ];
     };
   };
   xdg.configFile."hypr/${workspaceLogicScriptName}" = {
