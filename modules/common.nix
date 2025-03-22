@@ -1,4 +1,4 @@
-{ lib, pkgs, hyprland, ... }:
+{ lib, pkgs, config, hyprland, ... }:
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -6,7 +6,7 @@
     ./yazi.nix
     ./river.nix
     ./waybar.nix
-    (import ./hyprland.nix { inherit pkgs lib hyprland; })
+    ./hyprland.nix
   ];
 
   home.packages = with pkgs; [

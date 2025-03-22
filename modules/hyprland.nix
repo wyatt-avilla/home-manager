@@ -1,10 +1,10 @@
-{ lib, pkgs, hyprland, ... }:
+{ lib, pkgs, config, hyprland, ... }:
 
 let
   mainMonitor = "DP-1";
   verticalMonitor = "HDMI-A-1";
   workspaceLogicScriptName = "workspaceLogic.sh";
-  absoluteWorkspaceLogicScriptPath = "/home/wyatt/.config/hypr/${workspaceLogicScriptName}";
+  absoluteWorkspaceLogicScriptPath = "${config.home.homeDirectory}/.config/hypr/${workspaceLogicScriptName}";
 in
 { 
   home.packages = with pkgs; [
