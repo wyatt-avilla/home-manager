@@ -20,6 +20,7 @@
     ripgrep
     fira-code
     jq
+    tree
   ];
 
   fonts.fontconfig.enable = true;
