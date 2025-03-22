@@ -26,7 +26,6 @@
     fastfetch
     wl-clipboard
     google-chrome
-    wakatime-cli
     eza
     bat
     ripgrep
