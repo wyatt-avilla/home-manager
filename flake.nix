@@ -17,22 +17,31 @@
     hyprland.url = "github:hyprwm/Hyprland";
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, nixvim, ... }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      hyprland,
+      nixvim,
+      ...
+    }:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
-    in {
+    in
+    {
       homeConfigurations = {
         desktop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-	  extraSpecialArgs = {
-	    inherit hyprland;
-	    inherit nixvim;
-	  };
+          extraSpecialArgs = {
+            inherit hyprland;
+            inherit nixvim;
+          };
           modules = [
-	    ./hosts/desktop.nix
-	  ];
+            ./hosts/desktop.nix
+          ];
         };
       };
     };

@@ -20,42 +20,45 @@ in
         layer = "top";
         position = "top";
         height = 22;
-	spacing = 12;
+        spacing = 12;
         output = monitorName;
-	modules-left = ["hyprland/workspaces"];
-	modules-center = ["hyprland/window"];
-	modules-right = ["clock#date" "clock#time"];
+        modules-left = [ "hyprland/workspaces" ];
+        modules-center = [ "hyprland/window" ];
+        modules-right = [
+          "clock#date"
+          "clock#time"
+        ];
 
-	"clock#date" = {
+        "clock#date" = {
           format = "{:%a %b %d}";
-	};
-	"clock#time" = {
+        };
+        "clock#time" = {
           format = "{:%H:%M:%OS}";
-	  interval = 1;
-	};
+          interval = 1;
+        };
       };
     };
     style = ''
-      * {
-	padding: 0px;
-	margin: 0px;
-	min-height: 0;
-      }
-      window#waybar {
-	background: ${barBackground};
-	border-bottom: ${borderWidth}px ${barBorderColor};
-	color: white;
-	font-size: 14px;
-      }
-      .${barName} {
-	font-family: Fira Code;
-      }
-      #workspaces {
-	border: ${borderWidth}px solid ${moduleBorderColor};
-      }
-      #workspaces button.active {
-        color: ${moduleBorderColor};
-      }
+            * {
+      	padding: 0px;
+      	margin: 0px;
+      	min-height: 0;
+            }
+            window#waybar {
+      	background: ${barBackground};
+      	border-bottom: ${borderWidth}px ${barBorderColor};
+      	color: white;
+      	font-size: 14px;
+            }
+            .${barName} {
+      	font-family: Fira Code;
+            }
+            #workspaces {
+      	border: ${borderWidth}px solid ${moduleBorderColor};
+            }
+            #workspaces button.active {
+              color: ${moduleBorderColor};
+            }
     '';
   };
 }

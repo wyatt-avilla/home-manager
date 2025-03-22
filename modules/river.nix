@@ -1,4 +1,10 @@
-{ lib, pkgs, hyprland, hyprland-plugins, ... }:
+{
+  lib,
+  pkgs,
+  hyprland,
+  hyprland-plugins,
+  ...
+}:
 
 {
   home.packages = with pkgs; [

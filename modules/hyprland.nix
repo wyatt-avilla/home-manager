@@ -1,4 +1,10 @@
-{ lib, pkgs, config, hyprland, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  hyprland,
+  ...
+}:
 
 let
   mainMonitor = "DP-1";
@@ -6,7 +12,7 @@ let
   workspaceLogicScriptName = "workspaceLogic.sh";
   absoluteWorkspaceLogicScriptPath = "${config.home.homeDirectory}/.config/hypr/${workspaceLogicScriptName}";
 in
-{ 
+{
   home.packages = with pkgs; [
     jq
   ];
@@ -53,7 +59,6 @@ in
         "$modifier,c,exec,${absoluteWorkspaceLogicScriptPath} 'c'"
         "$modifier,d,exec,${absoluteWorkspaceLogicScriptPath} 'd'"
 
-
         "$modifier SHIFT,a,exec,${absoluteWorkspaceLogicScriptPath} 'a move'"
         "$modifier SHIFT,r,exec,${absoluteWorkspaceLogicScriptPath} 'r move'"
         "$modifier SHIFT,s,exec,${absoluteWorkspaceLogicScriptPath} 's move'"
@@ -93,82 +98,81 @@ in
   };
   xdg.configFile."hypr/${workspaceLogicScriptName}" = {
     text = ''
-    #!/bin/sh
-    send_hyprland_notification() {
-      hyprctl notify -1 10000 "rgb(CC5500)" $1
-    }
+          #!/bin/sh
+          send_hyprland_notification() {
+            hyprctl notify -1 10000 "rgb(CC5500)" $1
+          }
 
-    handle_monitor_toggle() {
-	  if [ "$2" = "move" ]; then
-        alt_monitor=""
-        if [ "$focused_monitor" = "$main_monitor" ]; then
-		  alt_monitor=$vertical_monitor
-		elif [ "$focused_monitor" = "$vertical_monitor" ]; then
-		  alt_monitor=$main_monitor
-		else
-		  send_hyprland_notification "unable to toggle from unknown monitor"
-        fi
+          handle_monitor_toggle() {
+      	  if [ "$2" = "move" ]; then
+              alt_monitor=""
+              if [ "$focused_monitor" = "$main_monitor" ]; then
+      		  alt_monitor=$vertical_monitor
+      		elif [ "$focused_monitor" = "$vertical_monitor" ]; then
+      		  alt_monitor=$main_monitor
+      		else
+      		  send_hyprland_notification "unable to toggle from unknown monitor"
+              fi
 
-		altMonitorWorkspaceId=$(hyprctl monitors -j | jq -r ".[] | select (.name == \"$alt_monitor\") | .activeWorkspace.id")
-		hyprctl dispatch movetoworkspace $altMonitorWorkspaceId
-	  else
-        if [ "$focused_monitor" = "$main_monitor" ]; then
-          hyprctl dispatch focusmonitor "$vertical_monitor"
-        elif [ "$focused_monitor" = "$vertical_monitor" ]; then
-          hyprctl dispatch focusmonitor "$main_monitor"
-        else
-          send_hyprland_notification "unable to toggle from unknown monitor"
-        fi
-	  fi
-    }
+      		altMonitorWorkspaceId=$(hyprctl monitors -j | jq -r ".[] | select (.name == \"$alt_monitor\") | .activeWorkspace.id")
+      		hyprctl dispatch movetoworkspace $altMonitorWorkspaceId
+      	  else
+              if [ "$focused_monitor" = "$main_monitor" ]; then
+                hyprctl dispatch focusmonitor "$vertical_monitor"
+              elif [ "$focused_monitor" = "$vertical_monitor" ]; then
+                hyprctl dispatch focusmonitor "$main_monitor"
+              else
+                send_hyprland_notification "unable to toggle from unknown monitor"
+              fi
+      	  fi
+          }
 
-    handle_workspace_switching() {
-      workspacesPerMonitor=8
-      workspaceShift=0
-      if [ "$focused_monitor" = "$vertical_monitor" ]; then
-        workspaceShift=workspacesPerMonitor
-      fi
+          handle_workspace_switching() {
+            workspacesPerMonitor=8
+            workspaceShift=0
+            if [ "$focused_monitor" = "$vertical_monitor" ]; then
+              workspaceShift=workspacesPerMonitor
+            fi
 
-      subCommand="workspace"
-      if [ "$2" = "move" ];then
-        subCommand="movetoworkspace"
-      fi
+            subCommand="workspace"
+            if [ "$2" = "move" ];then
+              subCommand="movetoworkspace"
+            fi
 
-      if [ "$1" = "a" ]; then
-        hyprctl dispatch "$subCommand" $((1 + workspaceShift))
-      elif [ "$1" = "r" ]; then
-        hyprctl dispatch "$subCommand" $((2 + workspaceShift))
-      elif [ "$1" = "s" ]; then
-        hyprctl dispatch "$subCommand" $((3 + workspaceShift))
-      elif [ "$1" = "t" ]; then
-        hyprctl dispatch "$subCommand" $((4 + workspaceShift))
-      elif [ "$1" = "z" ]; then
-        hyprctl dispatch "$subCommand" $((5 + workspaceShift))
-      elif [ "$1" = "x" ]; then
-        hyprctl dispatch "$subCommand" $((6 + workspaceShift))
-      elif [ "$1" = "c" ]; then
-        hyprctl dispatch "$subCommand" $((7 + workspaceShift))
-      elif [ "$1" = "d" ]; then
-        hyprctl dispatch "$subCommand" $((8 + workspaceShift))
-      else
-        send_hyprland_notification "unknown bind encountered while trying to switch workspace ($1)"
-      fi
-    }
+            if [ "$1" = "a" ]; then
+              hyprctl dispatch "$subCommand" $((1 + workspaceShift))
+            elif [ "$1" = "r" ]; then
+              hyprctl dispatch "$subCommand" $((2 + workspaceShift))
+            elif [ "$1" = "s" ]; then
+              hyprctl dispatch "$subCommand" $((3 + workspaceShift))
+            elif [ "$1" = "t" ]; then
+              hyprctl dispatch "$subCommand" $((4 + workspaceShift))
+            elif [ "$1" = "z" ]; then
+              hyprctl dispatch "$subCommand" $((5 + workspaceShift))
+            elif [ "$1" = "x" ]; then
+              hyprctl dispatch "$subCommand" $((6 + workspaceShift))
+            elif [ "$1" = "c" ]; then
+              hyprctl dispatch "$subCommand" $((7 + workspaceShift))
+            elif [ "$1" = "d" ]; then
+              hyprctl dispatch "$subCommand" $((8 + workspaceShift))
+            else
+              send_hyprland_notification "unknown bind encountered while trying to switch workspace ($1)"
+            fi
+          }
 
-    main_monitor="${mainMonitor}"
-    vertical_monitor="${verticalMonitor}"
+          main_monitor="${mainMonitor}"
+          vertical_monitor="${verticalMonitor}"
 
-    focused_monitor=$(hyprctl monitors -j | jq -r ".[] | select (.focused == true) | .name")
+          focused_monitor=$(hyprctl monitors -j | jq -r ".[] | select (.focused == true) | .name")
 
-    toggle_monitor_key="g"
+          toggle_monitor_key="g"
 
-    if [ "$1" = "$toggle_monitor_key" ]; then
-      handle_monitor_toggle $1 $2
-    else
-      handle_workspace_switching $1 $2
-    fi
+          if [ "$1" = "$toggle_monitor_key" ]; then
+            handle_monitor_toggle $1 $2
+          else
+            handle_workspace_switching $1 $2
+          fi
     '';
     executable = true;
   };
 }
-

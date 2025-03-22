@@ -1,4 +1,11 @@
-{ lib, pkgs, config, hyprland, nixvim, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  hyprland,
+  nixvim,
+  ...
+}:
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -70,10 +77,10 @@
       directory = {
         format = "at [$path]($style)[$read_only]($read_only_style)";
         truncation_length = 5;
-	truncation_symbol = ".../";
-	home_symbol = " ~";
-	read_only = "  ";
-	read_only_style = "red";
+        truncation_symbol = ".../";
+        home_symbol = " ~";
+        read_only = "  ";
+        read_only_style = "red";
       };
     };
   };
