@@ -42,6 +42,7 @@ in
         "$modifier,SPACE,layoutmsg,swapwithmaster"
 
         "$modifier,g,exec,${absoluteWorkspaceLogicScriptPath} 'g'"
+        "$modifier SHIFT,g,exec,${absoluteWorkspaceLogicScriptPath} g move"
 
         "$modifier,a,exec,${absoluteWorkspaceLogicScriptPath} 'a'"
         "$modifier,r,exec,${absoluteWorkspaceLogicScriptPath} 'r'"
@@ -98,13 +99,27 @@ in
     }
 
     handle_monitor_toggle() {
-      if [ "$focused_monitor" = "$main_monitor" ]; then
-        hyprctl dispatch focusmonitor "$vertical_monitor"
-      elif [ "$focused_monitor" = "$vertical_monitor" ]; then
-        hyprctl dispatch focusmonitor "$main_monitor"
-      else
-        send_hyprland_notification "unable to toggle from unknown monitor"
-      fi
+	  if [ "$2" = "move" ]; then
+        alt_monitor=""
+        if [ "$focused_monitor" = "$main_monitor" ]; then
+		  alt_monitor=$vertical_monitor
+		elif [ "$focused_monitor" = "$vertical_monitor" ]; then
+		  alt_monitor=$main_monitor
+		else
+		  send_hyprland_notification "unable to toggle from unknown monitor"
+        fi
+
+		altMonitorWorkspaceId=$(hyprctl monitors -j | jq -r ".[] | select (.name == \"$alt_monitor\") | .activeWorkspace.id")
+		hyprctl dispatch movetoworkspace $altMonitorWorkspaceId
+	  else
+        if [ "$focused_monitor" = "$main_monitor" ]; then
+          hyprctl dispatch focusmonitor "$vertical_monitor"
+        elif [ "$focused_monitor" = "$vertical_monitor" ]; then
+          hyprctl dispatch focusmonitor "$main_monitor"
+        else
+          send_hyprland_notification "unable to toggle from unknown monitor"
+        fi
+	  fi
     }
 
     handle_workspace_switching() {
@@ -136,7 +151,7 @@ in
       elif [ "$1" = "d" ]; then
         hyprctl dispatch "$subCommand" $((8 + workspaceShift))
       else
-        send_hyprland_notification "unknown bind encountered while trying to switch workspace"
+        send_hyprland_notification "unknown bind encountered while trying to switch workspace ($1)"
       fi
     }
 
@@ -148,7 +163,7 @@ in
     toggle_monitor_key="g"
 
     if [ "$1" = "$toggle_monitor_key" ]; then
-      handle_monitor_toggle
+      handle_monitor_toggle $1 $2
     else
       handle_workspace_switching $1 $2
     fi
