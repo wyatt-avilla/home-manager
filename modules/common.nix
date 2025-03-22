@@ -1,4 +1,4 @@
-{ lib, pkgs, config, hyprland, ... }:
+{ lib, pkgs, config, hyprland, nixvim, ... }:
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -10,6 +10,7 @@
   ];
 
   home.packages = with pkgs; [
+    nixvim.packages.${pkgs.system}.default
     wget
     fastfetch
     wl-clipboard
@@ -40,6 +41,7 @@
       cat = "bat";
       grep = "rg";
       lf = "yazi";
+      vim = "nvim";
     };
 
     profileExtra = ''
@@ -97,26 +99,5 @@
     options = {
       "selection-clipboard" = "clipboard";
     };
-  };
-
-  programs.neovim = {
-    enable = true;
-    vimAlias = true;
-    defaultEditor = true;
-    plugins = [
-      pkgs.vimPlugins.vim-wakatime
-    ];
-    extraLuaConfig = ''
-      vim.opt.nu = true
-      vim.keymap.set({ "n", "x" }, "n", "h", { noremap = true })
-      vim.keymap.set({ "n", "x" }, "e", "j", { noremap = true })
-      vim.keymap.set({ "n", "x" }, "i", "k", { noremap = true })
-      vim.keymap.set({ "n", "x" }, "o", "l", { noremap = true })
-
-      vim.keymap.set({ "n", "v" }, "h", "i", { noremap = true })
-      vim.keymap.set({ "n", "v" }, "j", "o", { noremap = true })
-      vim.keymap.set({ "n", "v" }, "k", "n", { noremap = true })
-      vim.keymap.set({ "n", "v" }, "l", "e", { noremap = true })
-    '';
   };
 }

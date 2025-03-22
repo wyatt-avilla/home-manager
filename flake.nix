@@ -9,10 +9,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixvim = {
+      url = "github:wyatt-avilla/nixvim/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hyprland.url = "github:hyprwm/Hyprland";
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, ... }:
+  outputs = { self, nixpkgs, home-manager, hyprland, nixvim, ... }:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -23,6 +28,7 @@
           inherit pkgs;
 	  extraSpecialArgs = {
 	    inherit hyprland;
+	    inherit nixvim;
 	  };
           modules = [
 	    ./hosts/desktop.nix
