@@ -41,6 +41,7 @@
     fira-code
     jq
     tree
+    hyprpicker
   ];
 
   config.fonts.fontconfig.enable = true;
