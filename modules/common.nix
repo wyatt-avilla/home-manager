@@ -36,6 +36,17 @@
     ./fuzzel.nix
   ];
 
+  config.xdg.mimeApps = {
+    enable = true;
+
+    defaultApplications = {
+      "x-scheme-handler/http" = "google-chrome.desktop";
+      "x-scheme-handler/https" = "google-chrome.desktop";
+      "text/html" = "google-chrome.desktop";
+      "application/pdf" = "org.pwmt.zathura.desktop";
+    };
+  };
+
   config.home.packages = with pkgs; [
     nixvim.packages.${pkgs.system}.default
     wget
