@@ -11,6 +11,7 @@ let
   verticalMonitor = "HDMI-A-1";
   workspaceLogicScriptName = "workspaceLogic.sh";
   absoluteWorkspaceLogicScriptPath = "${config.home.homeDirectory}/.config/hypr/${workspaceLogicScriptName}";
+  terminal = "ghostty";
 in
 {
   home.packages = with pkgs; [
@@ -36,13 +37,14 @@ in
       ];
       master = {
         new_on_top = true;
+        special_scale_factor = ".75";
       };
       input = {
         repeat_rate = 60;
         repeat_delay = 400;
       };
       bind = [
-        "$modifier,code:47,exec,ghostty"
+        "$modifier,code:47,exec,${terminal}"
         "$modifier,w,exec,google-chrome-stable"
         "$modifier,q,killactive"
 
@@ -52,6 +54,8 @@ in
 
         "$modifier,g,exec,${absoluteWorkspaceLogicScriptPath} 'g'"
         "$modifier SHIFT,g,exec,${absoluteWorkspaceLogicScriptPath} g move"
+
+        "$modifier,p,togglespecialworkspace,popupterm"
 
         "$modifier,a,exec,${absoluteWorkspaceLogicScriptPath} 'a'"
         "$modifier,r,exec,${absoluteWorkspaceLogicScriptPath} 'r'"
@@ -80,6 +84,7 @@ in
         "$modifier,mouse:273,resizewindow"
       ];
       workspace = [
+        "special:popupterm,on-created-empty:${terminal}"
         "1,monitor:${mainMonitor}"
         "2,monitor:${mainMonitor}"
         "3,monitor:${mainMonitor}"
