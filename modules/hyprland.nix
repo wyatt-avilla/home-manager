@@ -56,6 +56,7 @@ in
         "$modifier SHIFT,g,exec,${absoluteWorkspaceLogicScriptPath} g move"
 
         "$modifier,p,togglespecialworkspace,popupterm"
+        "$modifier,b,fullscreen,1"
 
         "$modifier,a,exec,${absoluteWorkspaceLogicScriptPath} 'a'"
         "$modifier,r,exec,${absoluteWorkspaceLogicScriptPath} 'r'"
