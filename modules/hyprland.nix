@@ -46,6 +46,7 @@ in
         "$modifier,SPACE,layoutmsg,swapwithmaster"
 
         "$modifier,f,exec,fuzzel"
+        "$modifier SHIFT,f,exec,grim -g \"$(slurp -d)\" - | wl-copy"
         "$modifier,p,togglespecialworkspace,popupterm"
         "$modifier,b,fullscreen,1"
       ];

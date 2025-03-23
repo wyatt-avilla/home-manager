@@ -48,6 +48,10 @@
     jq
     tree
     hyprpicker
+
+    hyprshot
+    grim
+    slurp
   ];
 
   config.fonts.fontconfig.enable = true;
