@@ -48,6 +48,7 @@
     jq
     tree
     hyprpicker
+    cloc
 
     hyprshot
     grim
