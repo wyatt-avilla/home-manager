@@ -39,26 +39,38 @@ in
       };
     };
     style = ''
-            * {
-      	padding: 0px;
-      	margin: 0px;
-      	min-height: 0;
-            }
-            window#waybar {
-      	background: ${barBackground};
-      	border-bottom: ${borderWidth}px ${barBorderColor};
-      	color: white;
-      	font-size: 14px;
-            }
-            .${barName} {
-      	font-family: Fira Code;
-            }
-            #workspaces {
-      	border: ${borderWidth}px solid ${moduleBorderColor};
-            }
-            #workspaces button.active {
-              color: ${moduleBorderColor};
-            }
+      * {
+          padding: 0px;
+          margin: 0px;
+          min-height: 0;
+      }
+
+      window#waybar {
+      background: ${barBackground};
+          border-bottom: ${borderWidth}px ${barBorderColor};
+          color: white;
+          font-size: 14px;
+      }
+
+      .${barName} {
+          font-family: Fira Code;
+      }
+
+      #workspaces {
+          padding-left: 15px;
+      }
+
+      #clock.time {
+          padding-right: 15px;
+      }
+
+      #workspaces button {
+        color: #838384;
+      }
+
+      #workspaces button.active {
+        color: ${moduleBorderColor};
+      }
     '';
   };
 }
