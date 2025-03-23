@@ -27,6 +27,9 @@ in
         "$modifier" = "SUPER";
         layout = "master";
       };
+      misc = {
+        disable_hyprland_logo = true;
+      };
       monitor = [
         "${mainMonitor},2560x1440@165,0x0,1"
         "${verticalMonitor},1920x1080,2560x-200,1,transform,1"
