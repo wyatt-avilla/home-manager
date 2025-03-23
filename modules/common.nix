@@ -26,6 +26,7 @@
     ./river.nix
     ./waybar.nix
     ./hyprland.nix
+    ./fuzzel.nix
   ];
 
   config.home.packages = with pkgs; [

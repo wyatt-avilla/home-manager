@@ -45,6 +45,7 @@ in
         "$modifier,i,layoutmsg,cycleprev"
         "$modifier,SPACE,layoutmsg,swapwithmaster"
 
+        "$modifier,f,exec,fuzzel"
         "$modifier,p,togglespecialworkspace,popupterm"
         "$modifier,b,fullscreen,1"
       ];
