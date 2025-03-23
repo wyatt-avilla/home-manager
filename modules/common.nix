@@ -138,6 +138,7 @@
       };
 
       starship = {
+        enableZshIntegration = true;
         enable = true;
         settings = {
           format = "󱄅(red) $username $directory $all";
