@@ -15,6 +15,12 @@
       default = "ghostty";
       description = "Default teriminal";
     };
+
+    fontFamily = lib.mkOption {
+      type = lib.types.str;
+      default = "Fira Code";
+      description = "Default font";
+    };
   };
 
   config.home.sessionVariables = {
@@ -100,7 +106,7 @@
     settings = {
       confirm-close-surface = false;
       window-decoration = false;
-      font-family = "Fira Code";
+      font-family = config.variables.fontFamily;
     };
   };
 

@@ -1,6 +1,12 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 
 let
+  font = config.variables.fontFamily;
   barName = "mainMonitorBar";
   monitorName = "DP-1";
 
@@ -53,7 +59,7 @@ in
       }
 
       .${barName} {
-          font-family: Fira Code;
+          font-family: ${font};
       }
 
       #workspaces {
