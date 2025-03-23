@@ -7,7 +7,13 @@
   ...
 }:
 {
-  config.nixpkgs.config.allowUnfree = true;
+  imports = [
+    ./yazi.nix
+    ./river.nix
+    ./waybar.nix
+    ./hyprland.nix
+    ./fuzzel.nix
+  ];
 
   options.variables = {
     terminal = lib.mkOption {
@@ -23,126 +29,124 @@
     };
   };
 
-  config.home.sessionVariables = {
-    EDITOR = "nvim";
-    NIXOS_OZONE_WL = 1;
-  };
+  config = {
+    nixpkgs.config.allowUnfree = true;
 
-  imports = [
-    ./yazi.nix
-    ./river.nix
-    ./waybar.nix
-    ./hyprland.nix
-    ./fuzzel.nix
-  ];
-
-  config.xdg.mimeApps = {
-    enable = true;
-
-    defaultApplications = {
-      "x-scheme-handler/http" = "google-chrome.desktop";
-      "x-scheme-handler/https" = "google-chrome.desktop";
-      "text/html" = "google-chrome.desktop";
-      "application/pdf" = "org.pwmt.zathura.desktop";
-    };
-  };
-
-  config.home.packages = with pkgs; [
-    nixvim.packages.${pkgs.system}.default
-    wget
-    fastfetch
-    wl-clipboard
-    google-chrome
-    eza
-    bat
-    ripgrep
-    fira-code
-    jq
-    tree
-    hyprpicker
-    cloc
-
-    hyprshot
-    grim
-    slurp
-  ];
-
-  config.services.cliphist.enable = true;
-
-  config.fonts.fontconfig.enable = true;
-
-  config.programs.git = {
-    userName = "Wyatt Avilla";
-    userEmail = "wyattmurphy1@gmail.com";
-    extraConfig.init.defaultBranch = "main";
-  };
-
-  config.programs.zsh = {
-    enable = true;
-    autosuggestion.enable = true;
-
-    shellAliases = {
-      ls = "eza --group-directories-first --icons";
-      cat = "bat";
-      grep = "rg";
-      lf = "yazi";
-      vim = "nvim";
+    home.sessionVariables = {
+      EDITOR = "nvim";
+      NIXOS_OZONE_WL = 1;
     };
 
-    profileExtra = ''
-      if [[ -z $SSH_TTY && $TTY == /dev/tty1 ]]; then
-        Hyprland > /dev/null
-      fi
-    '';
-  };
+    xdg.mimeApps = {
+      enable = true;
 
-  config.programs.starship = {
-    enable = true;
-    settings = {
-      format = "󱄅(red) $username $directory $all";
-      add_newline = true;
-
-      username = {
-        format = "[$user]($style)";
-        show_always = true;
-        style_user = "purple bold";
-      };
-
-      directory = {
-        format = "at [$path]($style)[$read_only]($read_only_style)";
-        truncation_length = 5;
-        truncation_symbol = ".../";
-        home_symbol = " ~";
-        read_only = "  ";
-        read_only_style = "red";
+      defaultApplications = {
+        "x-scheme-handler/http" = "google-chrome.desktop";
+        "x-scheme-handler/https" = "google-chrome.desktop";
+        "text/html" = "google-chrome.desktop";
+        "application/pdf" = "org.pwmt.zathura.desktop";
       };
     };
-  };
 
-  config.programs.ghostty = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = {
-      confirm-close-surface = false;
-      window-decoration = false;
-      font-family = config.variables.fontFamily;
-    };
-  };
+    home.packages = with pkgs; [
+      nixvim.packages.${pkgs.system}.default
+      wget
+      fastfetch
+      wl-clipboard
+      google-chrome
+      eza
+      bat
+      ripgrep
+      fira-code
+      jq
+      tree
+      hyprpicker
+      cloc
 
-  config.programs.zathura = {
-    enable = true;
-    mappings = {
-      "n" = "scroll left";
-      "e" = "scroll down";
-      "i" = "scroll up";
-      "o" = "scroll right";
+      hyprshot
+      grim
+      slurp
+    ];
 
-      "E" = "navigate next";
-      "I" = "navigate previous";
-    };
+    services.cliphist.enable = true;
 
-    options = {
-      "selection-clipboard" = "clipboard";
+    fonts.fontconfig.enable = true;
+
+    programs = {
+      git = {
+        userName = "Wyatt Avilla";
+        userEmail = "wyattmurphy1@gmail.com";
+        extraConfig.init.defaultBranch = "main";
+      };
+
+      zsh = {
+        enable = true;
+        autosuggestion.enable = true;
+
+        shellAliases = {
+          ls = "eza --group-directories-first --icons";
+          cat = "bat";
+          grep = "rg";
+          lf = "yazi";
+          vim = "nvim";
+        };
+
+        profileExtra = ''
+          if [[ -z $SSH_TTY && $TTY == /dev/tty1 ]]; then
+            Hyprland > /dev/null
+          fi
+        '';
+      };
+
+      starship = {
+        enable = true;
+        settings = {
+          format = "󱄅(red) $username $directory $all";
+          add_newline = true;
+
+          username = {
+            format = "[$user]($style)";
+            show_always = true;
+            style_user = "purple bold";
+          };
+
+          directory = {
+            format = "at [$path]($style)[$read_only]($read_only_style)";
+            truncation_length = 5;
+            truncation_symbol = ".../";
+            home_symbol = " ~";
+            read_only = "  ";
+            read_only_style = "red";
+          };
+        };
+      };
+
+      ghostty = {
+        enable = true;
+        enableZshIntegration = true;
+        settings = {
+          confirm-close-surface = false;
+          window-decoration = false;
+          font-family = config.variables.fontFamily;
+        };
+      };
+
+      zathura = {
+        enable = true;
+        mappings = {
+          "n" = "scroll left";
+          "e" = "scroll down";
+          "i" = "scroll up";
+          "o" = "scroll right";
+
+          "E" = "navigate next";
+          "I" = "navigate previous";
+        };
+
+        options = {
+          "selection-clipboard" = "clipboard";
+        };
+      };
     };
   };
 }
