@@ -7,9 +7,17 @@
   ...
 }:
 {
-  nixpkgs.config.allowUnfree = true;
+  config.nixpkgs.config.allowUnfree = true;
 
-  home.sessionVariables = {
+  options.variables = {
+    terminal = lib.mkOption {
+      type = lib.types.str;
+      default = "ghostty";
+      description = "Default teriminal";
+    };
+  };
+
+  config.home.sessionVariables = {
     NIXOS_OZONE_WL = 1;
   };
 
@@ -20,7 +28,7 @@
     ./hyprland.nix
   ];
 
-  home.packages = with pkgs; [
+  config.home.packages = with pkgs; [
     nixvim.packages.${pkgs.system}.default
     wget
     fastfetch
@@ -34,15 +42,15 @@
     tree
   ];
 
-  fonts.fontconfig.enable = true;
+  config.fonts.fontconfig.enable = true;
 
-  programs.git = {
+  config.programs.git = {
     userName = "Wyatt Avilla";
     userEmail = "wyattmurphy1@gmail.com";
     extraConfig.init.defaultBranch = "main";
   };
 
-  programs.zsh = {
+  config.programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
 
@@ -61,7 +69,7 @@
     '';
   };
 
-  programs.starship = {
+  config.programs.starship = {
     enable = true;
     settings = {
       format = "󱄅(red) $username $directory $all";
@@ -84,7 +92,7 @@
     };
   };
 
-  programs.ghostty = {
+  config.programs.ghostty = {
     enable = true;
     enableZshIntegration = true;
     settings = {
@@ -94,7 +102,7 @@
     };
   };
 
-  programs.zathura = {
+  config.programs.zathura = {
     enable = true;
     mappings = {
       "n" = "scroll left";

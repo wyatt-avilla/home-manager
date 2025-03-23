@@ -1,7 +1,14 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
+
 {
   imports = [
-    ../modules/common.nix
+    ./hyprland.nix
+    ../../modules/common.nix
   ];
 
   home = {

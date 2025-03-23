@@ -40,7 +40,7 @@
             inherit nixvim;
           };
           modules = [
-            ./hosts/desktop.nix
+            ./hosts/desktop/default.nix
           ];
         };
       };
