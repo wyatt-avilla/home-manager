@@ -54,6 +54,8 @@
     slurp
   ];
 
+  config.services.cliphist.enable = true;
+
   config.fonts.fontconfig.enable = true;
 
   config.programs.git = {

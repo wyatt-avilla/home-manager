@@ -49,6 +49,7 @@ in
         "$modifier SHIFT,f,exec,grim -g \"$(slurp -d)\" - | wl-copy"
         "$modifier,p,togglespecialworkspace,popupterm"
         "$modifier,b,fullscreen,1"
+        "$modifier,u,exec, cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"
       ];
 
       binde = [
