@@ -17,10 +17,6 @@ in
     ../../modules/hyprland.nix
   ];
 
-  home.packages = with pkgs; [
-    jq
-  ];
-
   wayland.windowManager.hyprland = {
     settings = {
       monitor = [
@@ -71,6 +67,11 @@ in
       ];
     };
   };
+
+  home.packages = with pkgs; [
+    jq
+  ];
+
   xdg.configFile."hypr/${workspaceLogicScriptName}" = {
     text = ''
           #!/bin/sh
