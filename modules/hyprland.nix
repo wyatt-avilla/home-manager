@@ -85,6 +85,7 @@ in
         "$modifier,mouse:273,resizewindow"
       ];
       workspace = [
+        "m[${verticalMonitor}],layoutopt:orientation:top, mfact:0.5"
         "special:popupterm,on-created-empty:${terminal}"
         "1,monitor:${mainMonitor}"
         "2,monitor:${mainMonitor}"
