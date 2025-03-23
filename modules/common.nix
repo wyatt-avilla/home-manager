@@ -94,6 +94,41 @@
           vim = "nvim";
         };
 
+        initExtra = ''
+          bindkey -v
+
+          bindkey -M vicmd 'n' backward-char
+          bindkey -M vicmd 'e' down-line-or-history
+          bindkey -M vicmd 'i' up-line-or-history
+          bindkey -M vicmd 'o' forward-char
+          bindkey -M vicmd 'h' vi-insert
+          bindkey -v '^?' backward-delete-char
+
+          export KEYTIMEOUT=1
+
+          function zle-keymap-select {
+            if [[ ''${KEYMAP} == vicmd ]] ||
+               [[ $1 = 'block' ]]; then
+              echo -ne '\e[1 q'
+            elif [[ ''${KEYMAP} == main ]] ||
+                 [[ ''${KEYMAP} == viins ]] ||
+                 [[ ''${KEYMAP} = ''' ]] ||
+                 [[ $1 = 'beam' ]]; then
+              echo -ne '\e[5 q'
+            fi
+          }
+          zle -N zle-keymap-select
+
+          zle-line-init() {
+            zle -K viins
+            echo -ne "\e[5 q"
+          }
+          zle -N zle-line-init
+
+          echo -ne '\e[5 q'
+          preexec() { echo -ne '\e[5 q' ;}
+        '';
+
         profileExtra = ''
           if [[ -z $SSH_TTY && $TTY == /dev/tty1 ]]; then
             Hyprland > /dev/null
