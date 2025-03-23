@@ -85,6 +85,7 @@
       zsh = {
         enable = true;
         autosuggestion.enable = true;
+        syntaxHighlighting.enable = true;
 
         shellAliases = {
           ls = "eza --group-directories-first --icons";
