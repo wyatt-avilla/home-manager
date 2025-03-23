@@ -77,6 +77,9 @@
         userName = "Wyatt Avilla";
         userEmail = "wyattmurphy1@gmail.com";
         extraConfig.init.defaultBranch = "main";
+        signing = {
+          signByDefault = true;
+        };
       };
 
       zsh = {
