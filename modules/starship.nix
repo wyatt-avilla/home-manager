@@ -170,6 +170,12 @@ in
         read_only_style = "red";
       };
 
+      nix_shell = {
+        format = "via [$state($name)]($style)";
+        impure_msg = "󰼩 ";
+        pure_msg = "󱩰 ";
+      };
+
       git_branch = {
         format = "[$symbol$branch(:$remote_branch)]($style)";
         style = "white";
