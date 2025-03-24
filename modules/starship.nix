@@ -136,6 +136,7 @@ in
         lib.concatMapStringsSep "" (prependDollarAndJoinWith "") [
           languages
           buildTooling
+          environment
           containerization
           [
             "cmd_duration"
