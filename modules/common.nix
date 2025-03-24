@@ -13,6 +13,7 @@
     ./waybar.nix
     ./hyprland.nix
     ./fuzzel.nix
+    ./starship.nix
   ];
 
   options.variables = {
@@ -135,30 +136,6 @@
             Hyprland > /dev/null
           fi
         '';
-      };
-
-      starship = {
-        enableZshIntegration = true;
-        enable = true;
-        settings = {
-          format = "󱄅(red) $username $directory $all";
-          add_newline = true;
-
-          username = {
-            format = "[$user]($style)";
-            show_always = true;
-            style_user = "purple bold";
-          };
-
-          directory = {
-            format = "at [$path]($style)[$read_only]($read_only_style)";
-            truncation_length = 5;
-            truncation_symbol = ".../";
-            home_symbol = " ~";
-            read_only = "  ";
-            read_only_style = "red";
-          };
-        };
       };
 
       ghostty = {
