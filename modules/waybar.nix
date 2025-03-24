@@ -78,7 +78,7 @@ in
       }
 
       window#waybar {
-      background: ${barBackground};
+          background: ${barBackground};
           border-bottom: ${borderWidth}px ${barBorderColor};
           color: white;
           font-size: 14px;
