@@ -64,6 +64,9 @@
       hyprpicker
       cloc
 
+      discord
+      spotify
+
       hyprshot
       grim
       slurp
