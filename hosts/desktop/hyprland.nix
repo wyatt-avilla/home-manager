@@ -11,6 +11,26 @@ let
   verticalMonitor = "HDMI-A-1";
   workspaceLogicScriptName = "workspaceLogic.sh";
   absoluteWorkspaceLogicScriptPath = "${config.home.homeDirectory}/.config/hypr/${workspaceLogicScriptName}";
+  workspaceKeys = [
+    "a"
+    "r"
+    "s"
+    "t"
+    "g"
+    "z"
+    "x"
+    "c"
+    "d"
+  ];
+
+  mkWorkspaceBind =
+    key:
+    {
+      shouldShift ? false,
+    }:
+    "$modifier ${
+      if shouldShift then "SHIFT" else ""
+    }, ${key}, exec, ${absoluteWorkspaceLogicScriptPath} ${key} ${if shouldShift then "move" else ""}";
 in
 {
   imports = [
@@ -24,28 +44,9 @@ in
         "${verticalMonitor},1920x1080,2560x-200,1,transform,1"
       ];
 
-      bind = [
-        "$modifier,g,exec,${absoluteWorkspaceLogicScriptPath} 'g'"
-        "$modifier SHIFT,g,exec,${absoluteWorkspaceLogicScriptPath} g move"
-
-        "$modifier,a,exec,${absoluteWorkspaceLogicScriptPath} 'a'"
-        "$modifier,r,exec,${absoluteWorkspaceLogicScriptPath} 'r'"
-        "$modifier,s,exec,${absoluteWorkspaceLogicScriptPath} 's'"
-        "$modifier,t,exec,${absoluteWorkspaceLogicScriptPath} 't'"
-        "$modifier,z,exec,${absoluteWorkspaceLogicScriptPath} 'z'"
-        "$modifier,x,exec,${absoluteWorkspaceLogicScriptPath} 'x'"
-        "$modifier,c,exec,${absoluteWorkspaceLogicScriptPath} 'c'"
-        "$modifier,d,exec,${absoluteWorkspaceLogicScriptPath} 'd'"
-
-        "$modifier SHIFT,a,exec,${absoluteWorkspaceLogicScriptPath} 'a move'"
-        "$modifier SHIFT,r,exec,${absoluteWorkspaceLogicScriptPath} 'r move'"
-        "$modifier SHIFT,s,exec,${absoluteWorkspaceLogicScriptPath} 's move'"
-        "$modifier SHIFT,t,exec,${absoluteWorkspaceLogicScriptPath} 't move'"
-        "$modifier SHIFT,z,exec,${absoluteWorkspaceLogicScriptPath} 'z move'"
-        "$modifier SHIFT,x,exec,${absoluteWorkspaceLogicScriptPath} 'x move'"
-        "$modifier SHIFT,c,exec,${absoluteWorkspaceLogicScriptPath} 'c move'"
-        "$modifier SHIFT,d,exec,${absoluteWorkspaceLogicScriptPath} 'd move'"
-      ];
+      bind =
+        builtins.map (key: mkWorkspaceBind key { }) workspaceKeys
+        ++ builtins.map (key: mkWorkspaceBind key { shouldShift = true; }) workspaceKeys;
 
       workspace = [
         "1,monitor:${mainMonitor}"
