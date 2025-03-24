@@ -15,6 +15,7 @@ let
 
   borderWidth = "2";
   moduleBorderColor = "white";
+  swayncClient = lib.getExe' pkgs.swaynotificationcenter "swaync-client";
 in
 {
   programs.waybar = {
@@ -34,6 +35,7 @@ in
           "tray"
           "clock#date"
           "clock#time"
+          "custom/notification"
         ];
 
         "clock#date" = {
@@ -43,10 +45,32 @@ in
           format = "{:%H:%M:%OS}";
           interval = 1;
         };
+
+        "custom/notification" = {
+          "tooltip" = false;
+          "format" = "{icon}";
+          "format-icons" = {
+            "notification" = "<span foreground='red'><sup></sup></span>";
+            "none" = "";
+            "dnd-notification" = "󰂛<span foreground='red'><sup></sup></span>";
+            "dnd-none" = "󰂛";
+            "inhibited-notification" = "<span foreground='red'><sup></sup></span>";
+            "inhibited-none" = "";
+            "dnd-inhibited-notification" = "󰂛<span foreground='red'><sup></sup></span>";
+            "dnd-inhibited-none" = "󰂛";
+          };
+          "return-type" = "json";
+          "exec-if" = "which ${swayncClient}";
+          "exec" = "${swayncClient} -swb";
+          "on-click" = "${swayncClient} -t -sw";
+          "on-click-right" = "${swayncClient} -d -sw";
+          "escape" = true;
+        };
       };
     };
     style = ''
       * {
+          font-family: ${font};
           padding: 0px;
           margin: 0px;
           min-height: 0;
@@ -67,7 +91,7 @@ in
           padding-left: 15px;
       }
 
-      #clock.time {
+      #custom-notification {
           padding-right: 15px;
       }
 

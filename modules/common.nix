@@ -59,6 +59,8 @@
       bat
       ripgrep
       fira-code
+      nerd-fonts.fira-code
+
       jq
       tree
       hyprpicker
@@ -72,7 +74,10 @@
       slurp
     ];
 
-    services.cliphist.enable = true;
+    services = {
+      cliphist.enable = true;
+      swaync.enable = true;
+    };
 
     fonts.fontconfig.enable = true;
 
