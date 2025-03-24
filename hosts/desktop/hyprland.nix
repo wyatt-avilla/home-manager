@@ -31,6 +31,22 @@ let
     "$modifier ${
       if shouldShift then "SHIFT" else ""
     }, ${key}, exec, ${absoluteWorkspaceLogicScriptPath} ${key} ${if shouldShift then "move" else ""}";
+
+  mkMonitorAssociations =
+    { workspacesPer, monitors }:
+    builtins.concatLists (
+      builtins.genList (
+        monitorIndex:
+        builtins.genList (
+          wsIndex:
+          let
+            workspaceNum = (monitorIndex * workspacesPer) + wsIndex + 1;
+            monitorName = builtins.elemAt monitors monitorIndex;
+          in
+          "${toString workspaceNum},monitor:${monitorName}"
+        ) workspacesPer
+      ) (builtins.length monitors)
+    );
 in
 {
   imports = [
@@ -48,24 +64,13 @@ in
         builtins.map (key: mkWorkspaceBind key { }) workspaceKeys
         ++ builtins.map (key: mkWorkspaceBind key { shouldShift = true; }) workspaceKeys;
 
-      workspace = [
-        "1,monitor:${mainMonitor}"
-        "2,monitor:${mainMonitor}"
-        "3,monitor:${mainMonitor}"
-        "4,monitor:${mainMonitor}"
-        "5,monitor:${mainMonitor}"
-        "6,monitor:${mainMonitor}"
-        "7,monitor:${mainMonitor}"
-        "8,monitor:${mainMonitor}"
-        "9,monitor:${verticalMonitor}"
-        "10,monitor:${verticalMonitor}"
-        "11,monitor:${verticalMonitor}"
-        "12,monitor:${verticalMonitor}"
-        "13,monitor:${verticalMonitor}"
-        "14,monitor:${verticalMonitor}"
-        "15,monitor:${verticalMonitor}"
-        "16,monitor:${verticalMonitor}"
-      ];
+      workspace = mkMonitorAssociations {
+        workspacesPer = builtins.length workspaceKeys;
+        monitors = [
+          mainMonitor
+          verticalMonitor
+        ];
+      };
     };
   };
 
@@ -108,7 +113,7 @@ in
             workspacesPerMonitor=8
             workspaceShift=0
             if [ "$focused_monitor" = "$vertical_monitor" ]; then
-              workspaceShift=workspacesPerMonitor
+              workspaceShift=${toString (builtins.length workspaceKeys)}
             fi
 
             subCommand="workspace"
