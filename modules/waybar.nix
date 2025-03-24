@@ -71,6 +71,7 @@ in
     style = ''
       * {
           font-family: ${font};
+          font-weight: 500;
           padding: 0px;
           margin: 0px;
           min-height: 0;
