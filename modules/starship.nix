@@ -171,7 +171,7 @@ in
       };
 
       nix_shell = {
-        format = "via [$state($name)]($style)";
+        format = "via [$state($name)]($style) ";
         impure_msg = "󰼩 ";
         pure_msg = "󱩰 ";
       };
