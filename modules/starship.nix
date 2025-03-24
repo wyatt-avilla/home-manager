@@ -143,7 +143,10 @@ in
             "$fill"
           ]
       }${prependDollarAndJoinWith " " versionControl}$line_break$status $character";
+
       add_newline = true;
+
+      fill.symbol = " ";
 
       username = {
         format = "[$user]($style)";
