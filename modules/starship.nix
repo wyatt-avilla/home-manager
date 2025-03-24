@@ -133,15 +133,15 @@ in
     enableZshIntegration = true;
     settings = {
       format = "󱄅 (red)$username $directory ${
-        lib.concatMapStringsSep ""
-          (item: if builtins.isString item then item else prependDollarAndJoinWith "" item)
+        lib.concatMapStringsSep "" (prependDollarAndJoinWith "") [
+          languages
+          buildTooling
+          containerization
           [
-            languages
-            buildTooling
-            containerization
-            "$cmd_duration"
-            "$fill"
+            "cmd_duration"
+            "fill"
           ]
+        ]
       }${prependDollarAndJoinWith " " versionControl}$line_break$status $character";
 
       add_newline = true;
