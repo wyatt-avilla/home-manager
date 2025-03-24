@@ -92,7 +92,7 @@
           ls = "eza --group-directories-first --icons";
           cat = "bat";
           grep = "rg";
-          lf = "yazi";
+          lf = "${config.programs.yazi.shellWrapperName}";
           vim = "nvim";
         };
 
