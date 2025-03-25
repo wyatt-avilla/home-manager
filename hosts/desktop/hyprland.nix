@@ -51,9 +51,7 @@ let
   jq = lib.getExe pkgs.jq;
 in
 {
-  imports = [
-    ../../modules/hyprland.nix
-  ];
+  imports = [ ../../modules/hyprland.nix ];
 
   wayland.windowManager.hyprland = {
     settings = {

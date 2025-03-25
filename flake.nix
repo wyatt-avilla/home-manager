@@ -39,9 +39,7 @@
             inherit hyprland;
             inherit nixvim;
           };
-          modules = [
-            ./hosts/desktop/default.nix
-          ];
+          modules = [ ./hosts/desktop/default.nix ];
         };
       };
     };

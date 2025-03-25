@@ -64,9 +64,7 @@ in
         "$modifier,mouse:273,resizewindow"
       ];
 
-      workspace = [
-        "special:popupterm,on-created-empty:${terminal}"
-      ];
+      workspace = [ "special:popupterm,on-created-empty:${terminal}" ];
     };
   };
 }
