@@ -47,6 +47,8 @@ let
         ) workspacesPer
       ) (builtins.length monitors)
     );
+
+  jq = lib.getExe pkgs.jq;
 in
 {
   imports = [
@@ -76,10 +78,6 @@ in
     };
   };
 
-  home.packages = with pkgs; [
-    jq
-  ];
-
   xdg.configFile."hypr/${workspaceLogicScriptName}" = {
     text = ''
           #!/bin/sh
@@ -98,7 +96,7 @@ in
       		  send_hyprland_notification "unable to toggle from unknown monitor"
               fi
 
-      		altMonitorWorkspaceId=$(hyprctl monitors -j | jq -r ".[] | select (.name == \"$alt_monitor\") | .activeWorkspace.id")
+      	    altMonitorWorkspaceId=$(hyprctl monitors -j | ${jq} -r ".[] | select (.name == \"$alt_monitor\") | .activeWorkspace.id")
       		hyprctl dispatch movetoworkspace $altMonitorWorkspaceId
       	  else
               if [ "$focused_monitor" = "$main_monitor" ]; then
@@ -147,7 +145,7 @@ in
           main_monitor="${mainMonitor}"
           vertical_monitor="${verticalMonitor}"
 
-          focused_monitor=$(hyprctl monitors -j | jq -r ".[] | select (.focused == true) | .name")
+          focused_monitor=$(hyprctl monitors -j | ${jq} -r ".[] | select (.focused == true) | .name")
 
           toggle_monitor_key="g"
 

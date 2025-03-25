@@ -18,6 +18,7 @@ let
   swayncClient = lib.getExe' pkgs.swaynotificationcenter "swaync-client";
   playerctl = lib.getExe pkgs.playerctl;
   socat = lib.getExe pkgs.socat;
+  jq = lib.getExe pkgs.jq;
 
   workspaceQuery = pkgs.writeShellScript "workspaceQuery" ''
     #!/bin/sh
@@ -25,8 +26,8 @@ let
     QUERY_ID=$1
 
     determine_occupancy() {
-    	is_active=$(hyprctl workspaces -j | jq '.[] | select(.id == '"$QUERY_ID"')')
-    	focused_id=$(hyprctl activeworkspace -j | jq '.id')
+    	is_active=$(hyprctl workspaces -j | ${jq} '.[] | select(.id == '"$QUERY_ID"')')
+    	focused_id=$(hyprctl activeworkspace -j | ${jq} '.id')
 
     	if [ -z "$is_active" ] || [ "$is_active" = "null" ]; then
     		echo " "
@@ -198,9 +199,9 @@ in
 
             ${playerctl} --follow -a --player "$player_priority" metadata --format "$metadata_format" |
               while read -r _; do
-            	active_stream=$(${playerctl} -a --player "$player_priority" metadata --format "$metadata_format" | jq -s 'first([.[] | select(.status == "Playing")][] // empty)')
+            	active_stream=$(${playerctl} -a --player "$player_priority" metadata --format "$metadata_format" | ${jq} -s 'first([.[] | select(.status == "Playing")][] // empty)')
             	echo ""
-            	echo "$active_stream" | jq --unbuffered --compact-output \
+            	echo "$active_stream" | ${jq} --unbuffered --compact-output \
             	  '.class = .playerName | .alt = .playerName | .text = "\(.title) - \(.artist)"'
               done
           '';
