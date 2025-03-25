@@ -81,29 +81,29 @@ in
         };
 
         "custom/notification" = {
-          "tooltip" = false;
-          "format" = "{icon}";
-          "format-icons" = {
-            "notification" = "<span foreground='red'><sup></sup></span>";
-            "none" = "";
-            "dnd-notification" = "󰂛<span foreground='red'><sup></sup></span>";
-            "dnd-none" = "󰂛";
-            "inhibited-notification" = "<span foreground='red'><sup></sup></span>";
-            "inhibited-none" = "";
-            "dnd-inhibited-notification" = "󰂛<span foreground='red'><sup></sup></span>";
-            "dnd-inhibited-none" = "󰂛";
+          tooltip = false;
+          format = "{icon}";
+          format-icons = {
+            notification = "<span foreground='red'><sup></sup></span>";
+            none = "";
+            dnd-notification = "󰂛<span foreground='red'><sup></sup></span>";
+            dnd-none = "󰂛";
+            inhibited-notification = "<span foreground='red'><sup></sup></span>";
+            inhibited-none = "";
+            dnd-inhibited-notification = "󰂛<span foreground='red'><sup></sup></span>";
+            dnd-inhibited-none = "󰂛";
           };
-          "return-type" = "json";
-          "exec-if" = "which ${swayncClient}";
-          "exec" = "${swayncClient} -swb";
-          "on-click" = "${swayncClient} -t -sw";
-          "on-click-right" = "${swayncClient} -d -sw";
-          "escape" = true;
+          return-type = "json";
+          exec-if = "which ${swayncClient}";
+          exec = "${swayncClient} -swb";
+          on-click = "${swayncClient} -t -sw";
+          on-click-right = "${swayncClient} -d -sw";
+          escape = true;
         };
 
         "group/workspace-dots" = {
-          "orientation" = "inherit";
-          "modules" = [
+          orientation = "inherit";
+          modules = [
             "group/workspace-dot-vertical-pair#1"
             "group/workspace-dot-vertical-pair#2"
             "group/workspace-dot-vertical-pair#3"
@@ -112,87 +112,79 @@ in
         };
 
         "group/workspace-dot-vertical-pair#1" = {
-          "orientation" = "orthogonal";
-          "modules" = [
+          orientation = "orthogonal";
+          modules = [
             "custom/workspace-dot#1"
             "custom/workspace-dot#5"
           ];
         };
 
         "group/workspace-dot-vertical-pair#2" = {
-          "orientation" = "orthogonal";
-          "modules" = [
+          orientation = "orthogonal";
+          modules = [
             "custom/workspace-dot#2"
             "custom/workspace-dot#6"
           ];
         };
 
         "group/workspace-dot-vertical-pair#3" = {
-          "orientation" = "orthogonal";
-          "modules" = [
+          orientation = "orthogonal";
+          modules = [
             "custom/workspace-dot#3"
             "custom/workspace-dot#7"
           ];
         };
 
         "group/workspace-dot-vertical-pair#4" = {
-          "orientation" = "orthogonal";
-          "modules" = [
+          orientation = "orthogonal";
+          modules = [
             "custom/workspace-dot#4"
             "custom/workspace-dot#8"
           ];
         };
 
         "custom/workspace-dot#1" = {
-          format = "{}";
-          "exec" = "${workspaceQuery} 1";
+          exec = "${workspaceQuery} 1";
         };
 
         "custom/workspace-dot#2" = {
-          format = "{}";
-          "exec" = "${workspaceQuery} 2";
+          exec = "${workspaceQuery} 2";
         };
 
         "custom/workspace-dot#3" = {
-          format = "{}";
-          "exec" = "${workspaceQuery} 3";
+          exec = "${workspaceQuery} 3";
         };
 
         "custom/workspace-dot#4" = {
-          format = "{}";
-          "exec" = "${workspaceQuery} 4";
+          exec = "${workspaceQuery} 4";
         };
 
         "custom/workspace-dot#5" = {
-          format = "{}";
-          "exec" = "${workspaceQuery} 5";
+          exec = "${workspaceQuery} 5";
         };
 
         "custom/workspace-dot#6" = {
-          format = "{}";
-          "exec" = "${workspaceQuery} 6";
+          exec = "${workspaceQuery} 6";
         };
 
         "custom/workspace-dot#7" = {
-          format = "{}";
-          "exec" = "${workspaceQuery} 7";
+          exec = "${workspaceQuery} 7";
         };
 
         "custom/workspace-dot#8" = {
-          format = "{}";
-          "exec" = "${workspaceQuery} 8";
+          exec = "${workspaceQuery} 8";
         };
 
         "custom/media-playing" = {
-          "tooltip" = false;
-          "format" = "{icon} {}";
-          "format-icons" = {
-            "spotify" = "";
-            "chromium" = "";
+          tooltip = false;
+          format = "{icon} {}";
+          format-icons = {
+            spotify = "";
+            chromium = "";
           };
-          "return-type" = "json";
-          "exec-if" = "which ${playerctl}";
-          "exec" = pkgs.writeShellScript "queryMedia" ''
+          return-type = "json";
+          exec-if = "which ${playerctl}";
+          exec = pkgs.writeShellScript "queryMedia" ''
             #!/bin/sh
             metadata_format="{\"playerName\": \"{{ playerName }}\", \"status\": \"{{ status }}\", \"title\": \"{{ title }}\", \"artist\": \"{{ artist }}\"}"
             player_priority="spotify,chromium"
@@ -212,32 +204,32 @@ in
 
     style = ''
       * {
-          font-family: ${font};
-          font-weight: 500;
-          padding: 0px;
-          margin: 0px;
-          min-height: 0;
+        font-family: ${font};
+        font-weight: 500;
+        padding: 0px;
+        margin: 0px;
+        min-height: 0;
       }
 
       window#waybar {
-          background: ${barBackground};
-          border-bottom: ${borderWidth}px ${barBorderColor};
-          color: white;
-          font-size: 14px;
+        background: ${barBackground};
+        border-bottom: ${borderWidth}px ${barBorderColor};
+        color: white;
+        font-size: 14px;
       }
 
       .${barName} {
-          font-family: ${font};
+        font-family: ${font};
       }
 
       #custom-notification {
-          padding-right: 15px;
+        padding-right: 15px;
       }
 
       #workspace-dots {
-          padding-left: 15px;
-          font-size: 6px;
-          padding-top: 2px;
+        padding-left: 15px;
+        font-size: 6px;
+        padding-top: 2px;
       }
 
       #custom-workspace-dot {
