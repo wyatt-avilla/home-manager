@@ -64,13 +64,15 @@ in
         builtins.map (key: mkWorkspaceBind key { }) workspaceKeys
         ++ builtins.map (key: mkWorkspaceBind key { shouldShift = true; }) workspaceKeys;
 
-      workspace = mkMonitorAssociations {
-        workspacesPer = builtins.length workspaceKeys;
-        monitors = [
-          mainMonitor
-          verticalMonitor
-        ];
-      };
+      workspace =
+        mkMonitorAssociations {
+          workspacesPer = builtins.length workspaceKeys;
+          monitors = [
+            mainMonitor
+            verticalMonitor
+          ];
+        }
+        ++ [ "m[${verticalMonitor}], layoutopt:orientation:top, mfact:0.5" ];
     };
   };
 
