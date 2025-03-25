@@ -37,9 +37,40 @@ in
   config = {
     nixpkgs.config.allowUnfree = true;
 
-    home.sessionVariables = {
-      EDITOR = "nvim";
-      NIXOS_OZONE_WL = 1;
+    home = {
+      file."${allowedSigners}".text =
+        "* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/UBGJmU3oFOq4m7z0ZV9wzfUoU3UUdr4GE8x/VCjZU wyatt@puriel";
+
+      sessionVariables = {
+        EDITOR = "nvim";
+        NIXOS_OZONE_WL = 1;
+      };
+
+      packages = with pkgs; [
+        nixvim.packages.${pkgs.system}.default
+        wget
+        fastfetch
+        wl-clipboard
+        google-chrome
+        eza
+        bat
+        ripgrep
+        fira-code
+        nerd-fonts.fira-code
+
+        jq
+        tree
+        hyprpicker
+        cloc
+
+        discord
+        spotify
+
+        feh
+        hyprshot
+        grim
+        slurp
+      ];
     };
 
     xdg.mimeApps = {
@@ -59,41 +90,12 @@ in
       };
     };
 
-    home.packages = with pkgs; [
-      nixvim.packages.${pkgs.system}.default
-      wget
-      fastfetch
-      wl-clipboard
-      google-chrome
-      eza
-      bat
-      ripgrep
-      fira-code
-      nerd-fonts.fira-code
-
-      jq
-      tree
-      hyprpicker
-      cloc
-
-      discord
-      spotify
-
-      feh
-      hyprshot
-      grim
-      slurp
-    ];
-
     services = {
       cliphist.enable = true;
       swaync.enable = true;
     };
 
     fonts.fontconfig.enable = true;
-
-    home.file."${allowedSigners}".text =
-      "* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/UBGJmU3oFOq4m7z0ZV9wzfUoU3UUdr4GE8x/VCjZU wyatt@puriel";
 
     programs = {
       git = {
