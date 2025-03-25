@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  nixvim,
   ...
 }:
 
@@ -12,11 +13,11 @@
     syntaxHighlighting.enable = true;
 
     shellAliases = {
-      ls = "eza --group-directories-first --icons";
-      cat = "bat";
-      grep = "rg";
+      ls = "${lib.getExe pkgs.eza} --group-directories-first --icons";
+      cat = lib.getExe pkgs.bat;
+      grep = lib.getExe pkgs.ripgrep;
       lf = "${config.programs.yazi.shellWrapperName}";
-      vim = "nvim";
+      vim = lib.getExe nixvim.packages.${pkgs.system}.default;
     };
 
     initExtra = ''
@@ -60,5 +61,4 @@
       fi
     '';
   };
-
 }
