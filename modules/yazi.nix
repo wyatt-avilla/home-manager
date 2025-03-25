@@ -98,7 +98,7 @@
         }
 
         {
-          on = "O";
+          on = "<S-Enter>";
           run = "open --interactive";
           desc = "Open the selected files interactively";
         }
