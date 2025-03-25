@@ -16,6 +16,7 @@ let
   borderWidth = "2";
   moduleBorderColor = "white";
   swayncClient = lib.getExe' pkgs.swaynotificationcenter "swaync-client";
+  playerctl = lib.getExe pkgs.playerctl;
 in
 {
   programs.waybar = {
@@ -29,7 +30,10 @@ in
         height = 22;
         spacing = 12;
         output = monitorName;
-        modules-left = [ "hyprland/workspaces" ];
+        modules-left = [
+          "hyprland/workspaces"
+          "custom/media-playing"
+        ];
         modules-center = [ "hyprland/window" ];
         modules-right = [
           "tray"
@@ -66,6 +70,31 @@ in
           "on-click-right" = "${swayncClient} -d -sw";
           "escape" = true;
         };
+
+        "custom/media-playing" = {
+          "tooltip" = false;
+          "format" = "{icon} {}";
+          "format-icons" = {
+            "spotify" = "";
+            "chromium" = "";
+          };
+          "return-type" = "json";
+          "exec-if" = "which ${swayncClient}";
+          "exec" = pkgs.writeShellScript "queryMedia" ''
+            #!/bin/sh
+            metadata_format="{\"playerName\": \"{{ playerName }}\", \"status\": \"{{ status }}\", \"title\": \"{{ title }}\", \"artist\": \"{{ artist }}\"}"
+            player_priority="spotify,chromium"
+
+            ${playerctl} --follow -a --player "$player_priority" metadata --format "$metadata_format" |
+              while read -r _; do
+            	active_stream=$(${playerctl} -a --player "$player_priority" metadata --format "$metadata_format" | jq -s 'first([.[] | select(.status == "Playing")][] // empty)')
+            	echo ""
+            	echo "$active_stream" | jq --unbuffered --compact-output \
+            	  '.class = .playerName | .alt = .playerName | .text = "\(.title) - \(.artist)"'
+              done
+          '';
+        };
+
       };
     };
     style = ''
