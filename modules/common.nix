@@ -46,6 +46,12 @@
         "x-scheme-handler/https" = "google-chrome.desktop";
         "text/html" = "google-chrome.desktop";
         "application/pdf" = "org.pwmt.zathura.desktop";
+        "image/png" = "feh.desktop";
+        "image/jpeg" = "feh.desktop";
+        "image/gif" = "feh.desktop";
+        "image/webp" = "feh.desktop";
+        "image/bmp" = "feh.desktop";
+        "image/tiff" = "feh.desktop";
       };
     };
 
@@ -69,6 +75,7 @@
       discord
       spotify
 
+      feh
       hyprshot
       grim
       slurp
