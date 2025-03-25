@@ -6,6 +6,10 @@
   nixvim,
   ...
 }:
+
+let
+  allowedSigners = "${config.home.homeDirectory}/.ssh/allowed_signers";
+in
 {
   imports = [
     ./yazi.nix
@@ -88,12 +92,20 @@
 
     fonts.fontconfig.enable = true;
 
+    home.file."${allowedSigners}".text =
+      "* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/UBGJmU3oFOq4m7z0ZV9wzfUoU3UUdr4GE8x/VCjZU wyatt@puriel";
+
     programs = {
       git = {
+        enable = true;
         userName = "Wyatt Avilla";
         userEmail = "wyattmurphy1@gmail.com";
         extraConfig.init.defaultBranch = "main";
+        extraConfig.gpg.ssh.allowedSignersFile = allowedSigners;
+
         signing = {
+          key = "~/.ssh/id_ed25519.pub";
+          format = "ssh";
           signByDefault = true;
         };
       };
