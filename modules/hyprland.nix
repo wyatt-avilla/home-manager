@@ -6,7 +6,7 @@
   ...
 }:
 let
-  terminal = config.variables.terminal;
+  inherit (config.variables) terminal;
 in
 {
   wayland.windowManager.hyprland = {
