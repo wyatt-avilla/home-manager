@@ -17,6 +17,35 @@ let
   moduleBorderColor = "white";
   swayncClient = lib.getExe' pkgs.swaynotificationcenter "swaync-client";
   playerctl = lib.getExe pkgs.playerctl;
+  socat = lib.getExe pkgs.socat;
+
+  workspaceQuery = pkgs.writeShellScript "workspaceQuery" ''
+    #!/bin/sh
+
+    QUERY_ID=$1
+
+    determine_occupancy() {
+    	is_active=$(hyprctl workspaces -j | jq '.[] | select(.id == '"$QUERY_ID"')')
+    	focused_id=$(hyprctl activeworkspace -j | jq '.id')
+
+    	if [ -z "$is_active" ] || [ "$is_active" = "null" ]; then
+    		echo " "
+    	elif [ "$QUERY_ID" = "$focused_id" ]; then
+    		echo ""
+    	else
+    		echo ""
+    	fi
+    }
+
+    handle() {
+    	case $1 in
+    	workspacev2*) determine_occupancy ;;
+    	esac
+    }
+
+    ${socat} -U - UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock | while read -r line; do handle "$line"; done
+  '';
+
 in
 {
   programs.waybar = {
@@ -31,7 +60,7 @@ in
         spacing = 12;
         output = monitorName;
         modules-left = [
-          "hyprland/workspaces"
+          "group/workspace-dots"
           "custom/media-playing"
         ];
         modules-center = [ "hyprland/window" ];
@@ -69,6 +98,88 @@ in
           "on-click" = "${swayncClient} -t -sw";
           "on-click-right" = "${swayncClient} -d -sw";
           "escape" = true;
+        };
+
+        "group/workspace-dots" = {
+          "orientation" = "inherit";
+          "modules" = [
+            "group/workspace-dot-vertical-pair#1"
+            "group/workspace-dot-vertical-pair#2"
+            "group/workspace-dot-vertical-pair#3"
+            "group/workspace-dot-vertical-pair#4"
+          ];
+        };
+
+        "group/workspace-dot-vertical-pair#1" = {
+          "orientation" = "orthogonal";
+          "modules" = [
+            "custom/workspace-dot#1"
+            "custom/workspace-dot#5"
+          ];
+        };
+
+        "group/workspace-dot-vertical-pair#2" = {
+          "orientation" = "orthogonal";
+          "modules" = [
+            "custom/workspace-dot#2"
+            "custom/workspace-dot#6"
+          ];
+        };
+
+        "group/workspace-dot-vertical-pair#3" = {
+          "orientation" = "orthogonal";
+          "modules" = [
+            "custom/workspace-dot#3"
+            "custom/workspace-dot#7"
+          ];
+        };
+
+        "group/workspace-dot-vertical-pair#4" = {
+          "orientation" = "orthogonal";
+          "modules" = [
+            "custom/workspace-dot#4"
+            "custom/workspace-dot#8"
+          ];
+        };
+
+        "custom/workspace-dot#1" = {
+          format = "{}";
+          "exec" = "${workspaceQuery} 1";
+        };
+
+        "custom/workspace-dot#2" = {
+          format = "{}";
+          "exec" = "${workspaceQuery} 2";
+        };
+
+        "custom/workspace-dot#3" = {
+          format = "{}";
+          "exec" = "${workspaceQuery} 3";
+        };
+
+        "custom/workspace-dot#4" = {
+          format = "{}";
+          "exec" = "${workspaceQuery} 4";
+        };
+
+        "custom/workspace-dot#5" = {
+          format = "{}";
+          "exec" = "${workspaceQuery} 5";
+        };
+
+        "custom/workspace-dot#6" = {
+          format = "{}";
+          "exec" = "${workspaceQuery} 6";
+        };
+
+        "custom/workspace-dot#7" = {
+          format = "{}";
+          "exec" = "${workspaceQuery} 7";
+        };
+
+        "custom/workspace-dot#8" = {
+          format = "{}";
+          "exec" = "${workspaceQuery} 8";
         };
 
         "custom/media-playing" = {
@@ -118,12 +229,19 @@ in
           font-family: ${font};
       }
 
-      #workspaces {
-          padding-left: 15px;
-      }
-
       #custom-notification {
           padding-right: 15px;
+      }
+
+      #workspace-dots {
+          padding-left: 15px;
+          font-size: 6px;
+          padding-top: 2px;
+      }
+
+      #custom-workspace-dot {
+        padding-left: 5px;
+        padding-right: 5px;
       }
 
       #workspaces button {
