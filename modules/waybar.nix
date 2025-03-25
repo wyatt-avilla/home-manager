@@ -79,7 +79,7 @@ in
             "chromium" = "";
           };
           "return-type" = "json";
-          "exec-if" = "which ${swayncClient}";
+          "exec-if" = "which ${playerctl}";
           "exec" = pkgs.writeShellScript "queryMedia" ''
             #!/bin/sh
             metadata_format="{\"playerName\": \"{{ playerName }}\", \"status\": \"{{ status }}\", \"title\": \"{{ title }}\", \"artist\": \"{{ artist }}\"}"
@@ -97,6 +97,7 @@ in
 
       };
     };
+
     style = ''
       * {
           font-family: ${font};
