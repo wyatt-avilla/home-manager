@@ -13,14 +13,13 @@ jobs:
         shell: bash
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v25
       - name: Checkout
-
         with:
+          uses: actions/checkout@v4
           token: ${{ secrets.NIXVIM_UPDATE_TOKEN }}
 
       - name: Flake update
+        uses: cachix/install-nix-action@v25
         run: nix flake update nixvim
 
       - name: Commit update
