@@ -11,6 +11,8 @@ let
     url = "https://images.pexels.com/photos/3178786/pexels-photo-3178786.jpeg";
     sha256 = "sha256-E3YU/j5oLmUu9VS1aCXl4otLA86bxks3mw19Vi89gBw=";
   };
+
+  clipHist = lib.getExe pkgs.cliphist;
 in
 {
   services.hyprpaper = {
@@ -64,7 +66,7 @@ in
         "$modifier SHIFT,f,exec,grim -g \"$(slurp -d)\" - | wl-copy"
         "$modifier,p,togglespecialworkspace,popupterm"
         "$modifier,b,fullscreen,1"
-        "$modifier,u,exec, cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"
+        "$modifier,u,exec, ${clipHist} list | fuzzel --dmenu | ${clipHist} decode | wl-copy"
       ];
 
       binde = [
@@ -78,6 +80,8 @@ in
       ];
 
       workspace = [ "special:popupterm,on-created-empty:${terminal}" ];
+
+      exec-once = [ "${pkgs.wl-clipboard}/bin/wl-paste --watch ${clipHist}" ];
     };
   };
 }

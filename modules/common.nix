@@ -92,7 +92,6 @@ in
     };
 
     services = {
-      cliphist.enable = true;
       swaync.enable = true;
     };
 
