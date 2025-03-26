@@ -120,6 +120,35 @@ in
           confirm-close-surface = false;
           window-decoration = false;
           font-family = config.variables.fontFamily;
+          theme = "onedark-warmer";
+        };
+
+        themes = {
+          onedark-warmer = {
+            background = "#232326";
+            cursor-color = "#fafafa";
+            foreground = "#a7aab0";
+            palette = [
+              "0=#101012"
+              "1=#de5d68"
+              "2=#8fb573"
+              "3=#dbb671"
+              "4=#68aee8"
+              "5=#bb70d2"
+              "6=#51a8b3"
+              "7=#818387"
+              "8=#5a5b5e"
+              "9=#833b3b"
+              "10=#4D6B38"
+              "11=#7c5c20"
+              "12=#15588E"
+              "13=#79428a"
+              "14=#2b5d63"
+              "15=#dcdcdc"
+            ];
+            selection-background = "#35363b";
+            selection-foreground = "#e2ecfb";
+          };
         };
       };
 
