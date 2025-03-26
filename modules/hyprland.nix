@@ -7,8 +7,20 @@
 }:
 let
   inherit (config.variables) terminal;
+  wallpaperPath = builtins.fetchurl {
+    url = "https://images.pexels.com/photos/3178786/pexels-photo-3178786.jpeg";
+    sha256 = "sha256-E3YU/j5oLmUu9VS1aCXl4otLA86bxks3mw19Vi89gBw=";
+  };
 in
 {
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      preload = [ wallpaperPath ];
+      wallpaper = [ " , ${wallpaperPath}" ];
+    };
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     package = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
