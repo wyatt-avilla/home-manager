@@ -81,7 +81,10 @@ in
 
       workspace = [ "special:popupterm,on-created-empty:${terminal}" ];
 
-      exec-once = [ "${pkgs.wl-clipboard}/bin/wl-paste --watch ${clipHist}" ];
+      exec-once = [
+        "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${clipHist} store"
+        "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${clipHist} store"
+      ];
     };
   };
 }
