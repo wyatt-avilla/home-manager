@@ -69,8 +69,6 @@ in
 
         feh
         hyprshot
-        grim
-        slurp
       ];
     };
 

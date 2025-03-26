@@ -62,11 +62,11 @@ in
         "$modifier,i,layoutmsg,cycleprev"
         "$modifier,SPACE,layoutmsg,swapwithmaster"
 
-        "$modifier,f,exec,fuzzel"
-        "$modifier SHIFT,f,exec,grim -g \"$(slurp -d)\" - | wl-copy"
+        "$modifier,f,exec,${lib.getExe pkgs.fuzzel}"
+        "$modifier SHIFT,f,exec,${lib.getExe pkgs.grim} -g \"$(${lib.getExe pkgs.slurp} -d)\" - | ${pkgs.wl-clipboard}/bin/wl-copy"
         "$modifier,p,togglespecialworkspace,popupterm"
         "$modifier,b,fullscreen,1"
-        "$modifier,u,exec, ${clipHist} list | fuzzel --dmenu | ${clipHist} decode | wl-copy"
+        "$modifier,u,exec, ${clipHist} list | ${lib.getExe pkgs.fuzzel} --dmenu | ${clipHist} decode | ${pkgs.wl-clipboard}/bin/wl-copy"
       ];
 
       binde = [
