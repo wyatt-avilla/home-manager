@@ -54,11 +54,5 @@
       echo -ne '\e[5 q'
       preexec() { echo -ne '\e[5 q' ;}
     '';
-
-    profileExtra = ''
-      if [[ -z $SSH_TTY && $TTY == /dev/tty1 ]]; then
-        Hyprland > /dev/null
-      fi
-    '';
   };
 }
