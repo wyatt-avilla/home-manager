@@ -41,6 +41,7 @@ let
     handle() {
     	case $1 in
     	workspacev2*) determine_occupancy ;;
+    	focusedmonv2*) determine_occupancy ;;
     	esac
     }
 
