@@ -204,11 +204,11 @@ in
         conflicted = "🏳";
         deleted = "󰗨 ${starshipVar "count"} ";
         diverged = "⇕⇡${starshipVar "ahead_count"}⇣${starshipVar "behind_count"} ";
-        modified = "[ ${starshipVar "count"}](peach) ";
+        modified = "[ ${starshipVar "count"}]($style) ";
         staged = "[+$count](green) ";
         stashed = " ${starshipVar "count"} ";
         style = "red";
-        untracked = "[ ${starshipVar "count"}](sapphire) ";
+        untracked = "[ ${starshipVar "count"}]($style) ";
       };
 
       git_state = {

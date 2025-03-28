@@ -15,6 +15,8 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
+
+    stylix.url = "github:danth/stylix";
   };
 
   outputs =
@@ -24,6 +26,7 @@
       home-manager,
       hyprland,
       nixvim,
+      stylix,
       ...
     }:
     let
@@ -38,7 +41,10 @@
             inherit hyprland;
             inherit nixvim;
           };
-          modules = [ ./hosts/desktop/default.nix ];
+          modules = [
+            ./hosts/desktop/default.nix
+            stylix.homeManagerModules.stylix
+          ];
         };
       };
     };

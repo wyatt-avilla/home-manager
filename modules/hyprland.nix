@@ -7,10 +7,7 @@
 }:
 let
   inherit (config.variables) terminal;
-  wallpaperPath = builtins.fetchurl {
-    url = "https://images.pexels.com/photos/3178786/pexels-photo-3178786.jpeg";
-    sha256 = "sha256-E3YU/j5oLmUu9VS1aCXl4otLA86bxks3mw19Vi89gBw=";
-  };
+  inherit (config.variables) wallPaper;
 
   clipHist = lib.getExe pkgs.cliphist;
 in
@@ -18,8 +15,8 @@ in
   services.hyprpaper = {
     enable = true;
     settings = {
-      preload = [ wallpaperPath ];
-      wallpaper = [ " , ${wallpaperPath}" ];
+      preload = [ wallPaper ];
+      wallpaper = [ " , ${wallPaper}" ];
     };
   };
 

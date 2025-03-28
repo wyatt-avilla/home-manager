@@ -8,9 +8,6 @@
         anchor = "top";
         y-margin = 100;
       };
-      colors = {
-        background = "1D2025FF";
-      };
     };
   };
 }

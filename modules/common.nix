@@ -9,6 +9,7 @@
 
 let
   allowedSigners = "${config.home.homeDirectory}/.ssh/allowed_signers";
+  nixvim-stylix = nixvim.packages.${pkgs.system}.default;
 in
 {
   imports = [
@@ -19,6 +20,7 @@ in
     ./fuzzel.nix
     ./starship.nix
     ./zsh.nix
+    ./stylix.nix
   ];
 
   options.variables = {
@@ -28,10 +30,13 @@ in
       description = "Default teriminal";
     };
 
-    fontFamily = lib.mkOption {
-      type = lib.types.str;
-      default = "Fira Code";
-      description = "Default font";
+    wallPaper = lib.mkOption {
+      type = lib.types.path;
+      default = builtins.fetchurl {
+        url = "https://images.pexels.com/photos/3178786/pexels-photo-3178786.jpeg";
+        sha256 = "sha256-E3YU/j5oLmUu9VS1aCXl4otLA86bxks3mw19Vi89gBw=";
+      };
+      description = "Default wallpaper";
     };
   };
 
@@ -43,12 +48,12 @@ in
         "* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/UBGJmU3oFOq4m7z0ZV9wzfUoU3UUdr4GE8x/VCjZU wyatt@puriel";
 
       sessionVariables = {
-        EDITOR = "nvim";
+        EDITOR = lib.getExe nixvim-stylix;
         NIXOS_OZONE_WL = 1;
       };
 
       packages = with pkgs; [
-        nixvim.packages.${pkgs.system}.default
+        nixvim-stylix
         wget
         fastfetch
         wl-clipboard
@@ -116,35 +121,33 @@ in
         settings = {
           confirm-close-surface = false;
           window-decoration = false;
-          font-family = config.variables.fontFamily;
-          theme = "onedark-warmer";
+          theme = "nix-colors";
         };
 
         themes = {
-          onedark-warmer = {
-            background = "#232326";
-            cursor-color = "#fafafa";
-            foreground = "#a7aab0";
+          nix-colors = {
+            inherit (config.variables.colors) background;
+            inherit (config.variables.colors) foreground;
+            cursor-color = config.variables.colors.bright_white;
             palette = [
-              "0=#101012"
-              "1=#de5d68"
-              "2=#8fb573"
-              "3=#dbb671"
-              "4=#68aee8"
-              "5=#bb70d2"
-              "6=#51a8b3"
-              "7=#818387"
-              "8=#5a5b5e"
-              "9=#833b3b"
-              "10=#4D6B38"
-              "11=#7c5c20"
-              "12=#15588E"
-              "13=#79428a"
-              "14=#2b5d63"
-              "15=#dcdcdc"
+              "0=${config.variables.colors.darkest_black}"
+              "1=${config.variables.colors.red}"
+              "2=${config.variables.colors.green}"
+              "3=${config.variables.colors.yellow}"
+              "4=${config.variables.colors.blue}"
+              "5=${config.variables.colors.purple}"
+              "6=${config.variables.colors.cyan}"
+              "7=${config.variables.colors.light_grey}"
+              "8=${config.variables.colors.grey}"
+              "9=${config.variables.colors.bright_red}"
+              "10=${config.variables.colors.bright_green}"
+              "11=${config.variables.colors.bright_yellow}"
+              "12=${config.variables.colors.bright_blue}"
+              "13=${config.variables.colors.bright_purple}"
+              "14=${config.variables.colors.white}"
             ];
-            selection-background = "#35363b";
-            selection-foreground = "#e2ecfb";
+            selection-background = config.variables.colors.bright_black;
+            selection-foreground = config.variables.colors.white;
           };
         };
       };

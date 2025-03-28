@@ -205,22 +205,7 @@ in
 
     style = ''
       * {
-        font-family: ${font};
         font-weight: 500;
-        padding: 0px;
-        margin: 0px;
-        min-height: 0;
-      }
-
-      window#waybar {
-        background: ${barBackground};
-        border-bottom: ${borderWidth}px ${barBorderColor};
-        color: white;
-        font-size: 14px;
-      }
-
-      .${barName} {
-        font-family: ${font};
       }
 
       #custom-notification {
@@ -229,21 +214,13 @@ in
 
       #workspace-dots {
         padding-left: 15px;
-        font-size: 6px;
         padding-top: 2px;
       }
 
       #custom-workspace-dot {
+        font-size: 6px;
         padding-left: 5px;
         padding-right: 5px;
-      }
-
-      #workspaces button {
-        color: #838384;
-      }
-
-      #workspaces button.active {
-        color: ${moduleBorderColor};
       }
     '';
   };
