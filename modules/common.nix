@@ -74,6 +74,8 @@ in
 
         feh
         hyprshot
+
+        cargo
       ];
     };
 
