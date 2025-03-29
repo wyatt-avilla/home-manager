@@ -32,6 +32,7 @@ let
     spotify
     feh
     hyprshot
+    wl-clipboard
   ];
 
   dev = with pkgs; [ cargo ];
