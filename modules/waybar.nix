@@ -208,6 +208,10 @@ in
         font-weight: 500;
       }
 
+      window#waybar {
+        border-bottom: 1px solid ${config.variables.colors.grey};
+      }
+
       #custom-notification {
         padding-right: 15px;
       }
