@@ -10,6 +10,32 @@
 let
   allowedSigners = "${config.home.homeDirectory}/.ssh/allowed_signers";
   nixvim-stylix = nixvim.packages.${pkgs.system}.default;
+
+  commandLine = with pkgs; [
+    nixvim-stylix
+    wget
+    jq
+    tree
+    hyprpicker
+    cloc
+    eza
+    bat
+    ripgrep
+    fastfetch
+  ];
+
+  gui = with pkgs; [
+    fira-code
+    nerd-fonts.fira-code
+    google-chrome
+    discord
+    spotify
+    feh
+    hyprshot
+  ];
+
+  dev = with pkgs; [ cargo ];
+
 in
 {
   imports = [
@@ -52,30 +78,10 @@ in
         NIXOS_OZONE_WL = 1;
       };
 
-      packages = with pkgs; [
-        nixvim-stylix
-        wget
-        fastfetch
-        wl-clipboard
-        google-chrome
-        eza
-        bat
-        ripgrep
-        fira-code
-        nerd-fonts.fira-code
-
-        jq
-        tree
-        hyprpicker
-        cloc
-
-        discord
-        spotify
-
-        feh
-        hyprshot
-
-        cargo
+      packages = lib.flatten [
+        commandLine
+        gui
+        dev
       ];
     };
 
