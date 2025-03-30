@@ -21,6 +21,13 @@
     };
 
     initExtra = ''
+      fzf-history-widget() {
+        LBUFFER=$(fc -l 1 | ${lib.getExe pkgs.fzf} | sed 's/^[[:space:]]*[0-9]\+ //')
+        zle reset-prompt
+      }
+      zle -N fzf-history-widget
+      bindkey '^R' fzf-history-widget
+
       bindkey -v
 
       bindkey -M vicmd 'n' backward-char
