@@ -47,5 +47,16 @@
           ];
         };
       };
+
+      devShells.${system}.default = pkgs.mkShell {
+        packages = with pkgs; [
+          pre-commit
+          nixfmt-rfc-style
+          statix
+        ];
+        shellHook = ''
+          pre-commit install
+        '';
+      };
     };
 }
