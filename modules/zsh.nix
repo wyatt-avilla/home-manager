@@ -20,6 +20,11 @@
       vim = lib.getExe nixvim.packages.${pkgs.system}.default;
     };
 
+    profileExtra = ''
+      setopt HISTVERIFY
+      export KEYTIMEOUT=1
+    '';
+
     initExtra = ''
       fzf-history-widget() {
         LBUFFER=$(fc -l 1 | ${lib.getExe pkgs.fzf} | sed 's/^[[:space:]]*[0-9]\+ //')
@@ -36,8 +41,6 @@
       bindkey -M vicmd 'o' forward-char
       bindkey -M vicmd 'h' vi-insert
       bindkey -v '^?' backward-delete-char
-
-      export KEYTIMEOUT=1
 
       function zle-keymap-select {
         if [[ ''${KEYMAP} == vicmd ]] ||
