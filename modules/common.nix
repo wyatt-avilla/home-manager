@@ -23,6 +23,12 @@ let
     bat
     ripgrep
     fastfetch
+    fzf
+    fd
+    btop
+    delta
+    ffmpeg
+    duf
   ];
 
   gui = with pkgs; [
@@ -34,6 +40,7 @@ let
     feh
     hyprshot
     wl-clipboard
+    alsa-utils
   ];
 
   dev = with pkgs; [ cargo ];
@@ -132,6 +139,8 @@ in
           format = "ssh";
           signByDefault = true;
         };
+
+        delta.enable = true;
       };
 
       ghostty = {

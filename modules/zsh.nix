@@ -6,6 +6,10 @@
   ...
 }:
 
+let
+  grepAlias = "${lib.getExe pkgs.ripgrep} --json -C 2 | ${lib.getExe pkgs.delta}";
+in
+
 {
   programs.zsh = {
     enable = true;
@@ -15,7 +19,8 @@
     shellAliases = {
       ls = "${lib.getExe pkgs.eza} --group-directories-first --icons";
       cat = lib.getExe pkgs.bat;
-      grep = lib.getExe pkgs.ripgrep;
+      grep = grepAlias;
+      rg = grepAlias;
       lf = "${config.programs.yazi.shellWrapperName}";
       vim = lib.getExe nixvim.packages.${pkgs.system}.default;
     };
