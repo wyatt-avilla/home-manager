@@ -41,6 +41,7 @@ let
     hyprshot
     wl-clipboard
     alsa-utils
+    obs-studio
   ];
 
   dev = with pkgs; [ cargo ];
