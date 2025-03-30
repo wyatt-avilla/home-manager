@@ -85,6 +85,17 @@ in
         gui
         dev
       ];
+
+      file.".lesskey" = {
+        text = ''
+          # command
+          e forw-line
+          i back-line
+
+          k repeat-search
+          N reverse-search
+        '';
+      };
     };
 
     xdg.mimeApps = {
