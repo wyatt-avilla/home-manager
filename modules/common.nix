@@ -86,16 +86,14 @@ in
         dev
       ];
 
-      file.".lesskey" = {
-        text = ''
-          # command
-          e forw-line
-          i back-line
+      file.".lesskey".text = ''
+        # command
+        e forw-line
+        i back-line
 
-          k repeat-search
-          N reverse-search
-        '';
-      };
+        k repeat-search
+        N reverse-search
+      '';
     };
 
     xdg.mimeApps = {
