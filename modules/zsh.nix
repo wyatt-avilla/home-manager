@@ -6,10 +6,6 @@
   ...
 }:
 
-let
-  grepAlias = "${lib.getExe pkgs.ripgrep} --json -C 2 | ${lib.getExe pkgs.delta}";
-in
-
 {
   programs.zsh = {
     enable = true;
@@ -19,8 +15,6 @@ in
     shellAliases = {
       ls = "${lib.getExe pkgs.eza} --group-directories-first --icons";
       cat = lib.getExe pkgs.bat;
-      grep = grepAlias;
-      rg = grepAlias;
       lf = "${config.programs.yazi.shellWrapperName}";
       vim = lib.getExe nixvim.packages.${pkgs.system}.default;
     };
@@ -31,6 +25,10 @@ in
 
     initExtra = ''
       export KEYTIMEOUT=1
+
+      rg() {
+        command rg --json -C 2 "$@" | delta
+      }
 
       fzf-history-widget() {
         LBUFFER=$(fc -l 1 | ${lib.getExe pkgs.fzf} | sed 's/^[[:space:]]*[0-9]\+ //')
