@@ -27,10 +27,11 @@ in
 
     profileExtra = ''
       setopt HISTVERIFY
-      export KEYTIMEOUT=1
     '';
 
     initExtra = ''
+      export KEYTIMEOUT=1
+
       fzf-history-widget() {
         LBUFFER=$(fc -l 1 | ${lib.getExe pkgs.fzf} | sed 's/^[[:space:]]*[0-9]\+ //')
         zle reset-prompt
