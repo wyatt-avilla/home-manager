@@ -50,6 +50,10 @@ in
         repeat_delay = 400;
       };
 
+      cursor = {
+        inactive_timeout = 5;
+      };
+
       bind = [
         "$modifier,code:47,exec,${terminal}"
         "$modifier,w,exec,google-chrome-stable"
