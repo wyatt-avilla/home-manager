@@ -15,6 +15,8 @@
     username = "wyatt";
     homeDirectory = "/home/wyatt";
 
+    packages = with pkgs; [ amdgpu_top ];
+
     stateVersion = "24.11";
   };
 
