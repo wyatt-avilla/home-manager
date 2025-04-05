@@ -29,6 +29,8 @@ let
     delta
     ffmpeg
     duf
+    zip
+    unzip
   ];
 
   gui = with pkgs; [
