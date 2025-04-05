@@ -44,7 +44,10 @@ let
     obs-studio
   ];
 
-  dev = with pkgs; [ cargo ];
+  dev = with pkgs; [
+    cargo
+    python3
+  ];
 
 in
 {
