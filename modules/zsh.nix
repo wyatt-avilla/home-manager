@@ -19,12 +19,9 @@
       vim = lib.getExe nixvim.packages.${pkgs.system}.default;
     };
 
-    profileExtra = ''
-      setopt HISTVERIFY
-    '';
-
     initExtra = ''
       export KEYTIMEOUT=1
+      setopt HISTVERIFY
 
       rg() {
         command rg --json -C 2 "$@" | delta
