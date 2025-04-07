@@ -54,6 +54,11 @@ in
         inactive_timeout = 5;
       };
 
+      ecosystem = {
+        no_update_news = true;
+        no_donation_nag = true;
+      };
+
       bind = [
         "$modifier,code:47,exec,${terminal}"
         "$modifier,w,exec,google-chrome-stable"
