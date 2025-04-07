@@ -140,8 +140,11 @@ in
         enable = true;
         userName = "Wyatt Avilla";
         userEmail = "wyattmurphy1@gmail.com";
-        extraConfig.init.defaultBranch = "main";
-        extraConfig.gpg.ssh.allowedSignersFile = allowedSigners;
+        extraConfig = {
+          init.defaultBranch = "main";
+          gpg.ssh.allowedSignersFile = allowedSigners;
+          push.autoSetupRemote = true;
+        };
 
         signing = {
           key = "~/.ssh/id_ed25519.pub";
