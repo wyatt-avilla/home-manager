@@ -82,11 +82,6 @@ in
 
       workspace = [ "special:popupterm,on-created-empty:${terminal}" ];
 
-      exec-once = [
-        "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${clipHist} store"
-        "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${clipHist} store"
-      ];
-
       windowrule = [
         "bordercolor rgb(${lib.removePrefix "#" config.variables.colors.red}), fullscreen:1"
       ];

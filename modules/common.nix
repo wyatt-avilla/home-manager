@@ -130,6 +130,7 @@ in
 
     services = {
       swaync.enable = true;
+      cliphist.enable = true;
     };
 
     fonts.fontconfig.enable = true;
