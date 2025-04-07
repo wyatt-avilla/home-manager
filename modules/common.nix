@@ -49,6 +49,7 @@ let
   dev = with pkgs; [
     cargo
     python3
+    gh
     pre-commit
   ];
 
