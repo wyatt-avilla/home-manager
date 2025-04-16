@@ -31,6 +31,7 @@ let
     duf
     zip
     unzip
+    file
   ];
 
   gui = with pkgs; [
