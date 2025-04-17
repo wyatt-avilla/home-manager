@@ -32,6 +32,7 @@ let
     zip
     unzip
     file
+    usbutils
   ];
 
   gui = with pkgs; [
