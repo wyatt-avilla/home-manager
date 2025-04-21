@@ -78,6 +78,8 @@ in
       binde = [
         "$modifier,o,resizeactive,10 0"
         "$modifier,n,resizeactive,-10 0"
+        ",XF86AudioRaiseVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        ",XF86AudioLowerVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ];
 
       bindm = [
