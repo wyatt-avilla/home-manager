@@ -150,7 +150,7 @@
         }
         {
           on = "r";
-          run = "rename --cursor=before_ext";
+          run = "rename";
           desc = "Rename a file or directory";
         }
         {
