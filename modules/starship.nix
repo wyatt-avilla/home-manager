@@ -143,7 +143,7 @@ in
             "fill"
           ]
         ]
-      }${prependDollarAndJoinWith " " versionControl}$line_break$status $character";
+      }${prependDollarAndJoinWith " " versionControl}$line_break$character";
 
       add_newline = true;
 
@@ -157,7 +157,7 @@ in
 
       character = {
         success_symbol = "[[>](fg)](fg)";
-        error_symbol = "[[>](fg)](fg)";
+        error_symbol = "[[>](red)](fg)";
         vicmd_symbol = "[[>](fg)](fg)";
       };
 
