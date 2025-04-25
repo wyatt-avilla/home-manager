@@ -81,7 +81,7 @@
         {
           on = "s";
           run = [
-            "select --state=none"
+            "toggle"
             "arrow 1"
           ];
           desc = "Toggle the current selection state";
