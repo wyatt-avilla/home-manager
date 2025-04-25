@@ -155,12 +155,12 @@
         }
         {
           on = ";";
-          run = "shell";
+          run = "shell --interactive";
           desc = "Run a shell command";
         }
         {
           on = ":";
-          run = "shell --block";
+          run = "shell --block --interactive";
           desc = "Run a shell command (blocking)";
         }
         {
