@@ -19,7 +19,7 @@
       vim = lib.getExe nixvim.packages.${pkgs.system}.default;
     };
 
-    initExtra = ''
+    initContent = ''
       export KEYTIMEOUT=1
       setopt HISTVERIFY
 
