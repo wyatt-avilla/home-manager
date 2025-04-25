@@ -769,11 +769,11 @@
         "nixvim": "nixvim_2"
       },
       "locked": {
-        "lastModified": 1745550276,
-        "narHash": "sha256-VJdfHGfCkrzmtO4V1dVI60Bo6wGZP7BEk6DKc4Iou/4=",
+        "lastModified": 1745551702,
+        "narHash": "sha256-lR9+rNmKu999FY3goJSIifljKYcFteu0/S92lzJNobE=",
         "owner": "wyatt-avilla",
         "repo": "nixvim",
-        "rev": "12580b77216ff56d8d18a937e436e1615c743430",
+        "rev": "ccc039afa231749caccc522ddd642ed626b09b37",
         "type": "github"
       },
       "original": {
