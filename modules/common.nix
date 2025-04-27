@@ -58,7 +58,6 @@ in
 {
   imports = [
     ./yazi.nix
-    ./river.nix
     ./waybar.nix
     ./hyprland.nix
     ./fuzzel.nix
