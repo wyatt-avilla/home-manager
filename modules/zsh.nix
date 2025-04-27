@@ -8,6 +8,7 @@
 }:
 
 {
+  programs.fzf.enableZshIntegration = true;
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -22,18 +23,12 @@
 
     initContent = ''
       export KEYTIMEOUT=1
+      export FZF_COMPLETION_TRIGGER='**'
       setopt HISTVERIFY
 
       rg() {
         command rg --json -C 2 "$@" | delta
       }
-
-      fzf-history-widget() {
-        LBUFFER=$(fc -l 1 | ${lib.getExe pkgs.fzf} | sed 's/^[[:space:]]*[0-9]\+ //')
-        zle reset-prompt
-      }
-      zle -N fzf-history-widget
-      bindkey '^R' fzf-history-widget
 
       bindkey -v
 
@@ -62,6 +57,11 @@
         echo -ne "\e[5 q"
       }
       zle -N zle-line-init
+
+      if [[ $options[zle] = on ]]; then
+        . $(${pkgs.fzf}/bin/fzf-share)/completion.zsh
+        . $(${pkgs.fzf}/bin/fzf-share)/key-bindings.zsh
+      fi
 
       echo -ne '\e[5 q'
       preexec() { echo -ne '\e[5 q' ;}
