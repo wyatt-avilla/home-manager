@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  inputs,
   config,
   nixvim,
   ...
@@ -16,7 +17,7 @@
       ls = "${lib.getExe pkgs.eza} --group-directories-first --icons";
       cat = lib.getExe pkgs.bat;
       lf = "${config.programs.yazi.shellWrapperName}";
-      vim = lib.getExe nixvim.packages.${pkgs.system}.default;
+      vim = lib.getExe inputs.nixvim.packages.${pkgs.system}.default;
     };
 
     initContent = ''

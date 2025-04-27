@@ -1,15 +1,14 @@
 {
   lib,
   pkgs,
+  inputs,
   config,
-  hyprland,
-  nixvim,
   ...
 }:
 
 let
   allowedSigners = "${config.home.homeDirectory}/.ssh/allowed_signers";
-  nixvim-stylix = nixvim.packages.${pkgs.system}.default;
+  nixvim-stylix = inputs.nixvim.packages.${pkgs.system}.default;
 
   commandLine = with pkgs; [
     (lib.hiPrio uutils-coreutils-noprefix)

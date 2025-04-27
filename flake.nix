@@ -25,7 +25,7 @@
   };
 
   outputs =
-    {
+    inputs@{
       self,
       nixpkgs,
       home-manager,
@@ -43,11 +43,7 @@
       homeConfigurations = {
         desktop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = {
-            inherit hyprland;
-            inherit nixvim;
-            inherit spicetify-nix;
-          };
+          extraSpecialArgs = { inherit inputs; };
           modules = [
             ./hosts/desktop/default.nix
             stylix.homeManagerModules.stylix
