@@ -223,6 +223,11 @@
           run = "find_arrow --previous";
           desc = "Go to previousfound file";
         }
+        {
+          on = "<A-c>";
+          run = "plugin fzf";
+          desc = "Fuzzily change to directory";
+        }
       ];
 
       select.keymap = [
