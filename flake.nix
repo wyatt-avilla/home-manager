@@ -17,6 +17,11 @@
     hyprland.url = "github:hyprwm/Hyprland";
 
     stylix.url = "github:danth/stylix";
+
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -27,6 +32,7 @@
       hyprland,
       nixvim,
       stylix,
+      spicetify-nix,
       ...
     }:
     let
@@ -40,10 +46,12 @@
           extraSpecialArgs = {
             inherit hyprland;
             inherit nixvim;
+            inherit spicetify-nix;
           };
           modules = [
             ./hosts/desktop/default.nix
             stylix.homeManagerModules.stylix
+            spicetify-nix.homeManagerModules.spicetify
           ];
         };
       };

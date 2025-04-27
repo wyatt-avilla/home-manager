@@ -41,7 +41,6 @@ let
     nerd-fonts.fira-code
     google-chrome
     discord
-    spotify
     feh
     hyprshot
     wl-clipboard
@@ -67,6 +66,7 @@ in
     ./starship.nix
     ./zsh.nix
     ./stylix.nix
+    ./spicetify.nix
   ];
 
   options.variables = {
