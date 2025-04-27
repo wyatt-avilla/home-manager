@@ -6,15 +6,8 @@
 }:
 
 let
-  font = config.variables.fontFamily;
   barName = "mainMonitorBar";
   monitorName = "DP-1";
-
-  barBackground = "rgba(43, 48, 59, 0.5)";
-  barBorderColor = "solid rgba(100, 114, 125, 0.5)";
-
-  borderWidth = "2";
-  moduleBorderColor = "white";
   swayncClient = lib.getExe' pkgs.swaynotificationcenter "swaync-client";
   playerctl = lib.getExe pkgs.playerctl;
   socat = lib.getExe pkgs.socat;
