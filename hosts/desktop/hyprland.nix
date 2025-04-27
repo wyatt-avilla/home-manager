@@ -73,6 +73,13 @@ in
           ];
         }
         ++ [ "m[${verticalMonitor}], layoutopt:orientation:top, mfact:0.5" ];
+
+      decoration = {
+        rounding = 3;
+        blur = {
+          passes = 2;
+        };
+      };
     };
   };
 
