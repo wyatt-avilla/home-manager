@@ -11,4 +11,17 @@ in
       shuffle
     ];
   };
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      spotify = prev.spotify.overrideAttrs (oldAttrs: {
+        postInstall =
+          (oldAttrs.postInstall or "")
+          + ''
+            substituteInPlace $out/share/applications/spotify.desktop \
+              --replace "spotify %U" "spotify %U --enable-features=UseOzonePlatform --ozone-platform=wayland"
+          '';
+      });
+    })
+  ];
 }
