@@ -13,13 +13,14 @@
         }
         {
           on = "<Esc>";
-          run = "escape";
-          desc = "Exit visual mode, clear selected, or cancel search";
-        }
-        {
-          on = "q";
           run = "quit";
           dect = "Exit the process";
+        }
+
+        {
+          on = "<Esc>";
+          run = "escape";
+          desc = "Exit visual mode, clear selected, or cancel search";
         }
 
         {
