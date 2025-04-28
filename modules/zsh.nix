@@ -26,6 +26,8 @@
       export FZF_COMPLETION_TRIGGER='**'
       export FZF_DEFAULT_OPTS='
         --preview "bat --style=numbers --color=always {} | head -100"
+        --bind ctrl-u:preview-up
+        --bind ctrl-d:preview-down
       '
       export FZF_DEFAULT_COMMAND='${lib.getExe pkgs.fd} --type f'
 
