@@ -891,11 +891,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1745151211,
-        "narHash": "sha256-qFXfTdO1yvW6DmUPfVLIJgDHfkSd5yimZWvBMrlP/ow=",
+        "lastModified": 1745802398,
+        "narHash": "sha256-9Y1EYqqrwE0h2BUu+5xD+0hhrN2N6CM87WdpbzC2DUQ=",
         "owner": "Gerg-L",
         "repo": "spicetify-nix",
-        "rev": "1dd4328f82115887901a685ecd9fa6e1d1db2d0c",
+        "rev": "24e8c27b60856ee6d812757be078ec6c95bc36af",
         "type": "github"
       },
       "original": {
