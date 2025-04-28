@@ -16,13 +16,11 @@
           run = "quit";
           dect = "Exit the process";
         }
-
         {
           on = "<Esc>";
           run = "escape";
           desc = "Exit visual mode, clear selected, or cancel search";
         }
-
         {
           on = "i";
           run = "arrow -1";
@@ -43,7 +41,6 @@
           run = "arrow 5";
           desc = "Move cursor down 5 lines";
         }
-
         {
           on = "n";
           run = "leave";
@@ -64,7 +61,6 @@
           run = "forward";
           desc = "Go forward to the next directory";
         }
-
         {
           on = [
             "g"
@@ -78,7 +74,6 @@
           run = "arrow bot";
           desc = "Move cursor to the bottom";
         }
-
         {
           on = "s";
           run = [
@@ -97,7 +92,6 @@
           run = "visual_mode --unset";
           desc = "Enter visual selection unset mode";
         }
-
         {
           on = "<S-Enter>";
           run = "open --interactive";
@@ -108,7 +102,6 @@
           run = "open";
           desc = "Open the selected files";
         }
-
         {
           on = "y";
           run = "yank";
@@ -169,7 +162,6 @@
           run = "hidden toggle";
           desc = "Toggle the visibility of hidden files";
         }
-
         {
           on = "<Space>";
           run = "search fd";
@@ -183,7 +175,6 @@
           run = "search rg";
           desc = "Search file contents by using ripgrep";
         }
-
         {
           on = [
             "c"
@@ -208,7 +199,6 @@
           run = "copy filename";
           desc = "Copy the name of the file";
         }
-
         {
           on = "/";
           run = "find --smart";
@@ -252,7 +242,6 @@
           run = "close --submit";
           desc = "Submit the selection";
         }
-
         {
           on = "i";
           run = "arrow -1";
@@ -296,7 +285,6 @@
           run = "close --submit";
           desc = "Submit the selection";
         }
-
         {
           on = "h";
           run = "insert";
@@ -337,7 +325,6 @@
           ];
           desc = "Enter visual mode and select all";
         }
-
         {
           on = "n";
           run = "move -1";
@@ -368,13 +355,11 @@
           run = "move 999";
           desc = "Move to the EOL";
         }
-
         {
           on = "<Backspace>";
           run = "backspace";
           desc = "Delete the character before the cursor";
         }
-
         {
           on = "d";
           run = "delete --cut";
@@ -424,7 +409,6 @@
           run = "paste --before";
           desc = "Paste the copied characters before the cursor";
         }
-
         {
           on = "u";
           run = "undo";
@@ -448,7 +432,6 @@
           run = "close";
           desc = "Exit the process";
         }
-
         {
           on = "i";
           run = "arrow -1";
@@ -469,7 +452,6 @@
           run = "arrow 5";
           desc = "Move cursor down 5 lines";
         }
-
         {
           on = "/";
           run = "filter";
