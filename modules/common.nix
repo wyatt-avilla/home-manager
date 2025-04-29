@@ -45,6 +45,7 @@ let
     wl-clipboard
     alsa-utils
     obs-studio
+    gimp
   ];
 
   dev = with pkgs; [
