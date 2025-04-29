@@ -13,6 +13,9 @@ let
   socat = lib.getExe pkgs.socat;
   jq = lib.getExe pkgs.jq;
 
+  workspaceColumns = 4;
+  workspaceRows = 2;
+
   workspaceQuery = pkgs.writeShellScript "workspaceQuery" ''
     #!/bin/sh
 
@@ -48,152 +51,102 @@ in
     enable = true;
     systemd.enable = true;
     settings = {
-      "$barName" = {
-        css-name = barName;
-        layer = "top";
-        position = "top";
-        height = 22;
-        spacing = 12;
-        output = monitorName;
-        modules-left = [
-          "group/workspace-dots"
-          "custom/media-playing"
-        ];
-        modules-center = [ "hyprland/window" ];
-        modules-right = [
-          "tray"
-          "clock#date"
-          "clock#time"
-          "custom/notification"
-        ];
+      "$barName" =
+        {
+          css-name = barName;
+          layer = "top";
+          position = "top";
+          height = 22;
+          spacing = 12;
+          output = monitorName;
+          modules-left = [
+            "group/workspace-dots"
+            "custom/media-playing"
+          ];
+          modules-center = [ "hyprland/window" ];
+          modules-right = [
+            "tray"
+            "clock#date"
+            "clock#time"
+            "custom/notification"
+          ];
 
-        "clock#date" = {
-          format = "{:%a %b %d}";
-        };
-        "clock#time" = {
-          format = "{:%H:%M:%OS}";
-          interval = 1;
-        };
-
-        "custom/notification" = {
-          tooltip = false;
-          format = "{icon}";
-          format-icons = {
-            notification = "<span foreground='red'><sup></sup></span>";
-            none = "";
-            dnd-notification = "󰂛<span foreground='red'><sup></sup></span>";
-            dnd-none = "󰂛";
-            inhibited-notification = "<span foreground='red'><sup></sup></span>";
-            inhibited-none = "";
-            dnd-inhibited-notification = "󰂛<span foreground='red'><sup></sup></span>";
-            dnd-inhibited-none = "󰂛";
+          "clock#date" = {
+            format = "{:%a %b %d}";
           };
-          return-type = "json";
-          exec-if = "which ${swayncClient}";
-          exec = "${swayncClient} -swb";
-          on-click = "${swayncClient} -t -sw";
-          on-click-right = "${swayncClient} -d -sw";
-          escape = true;
-        };
-
-        "group/workspace-dots" = {
-          orientation = "inherit";
-          modules = [
-            "group/workspace-dot-vertical-pair#1"
-            "group/workspace-dot-vertical-pair#2"
-            "group/workspace-dot-vertical-pair#3"
-            "group/workspace-dot-vertical-pair#4"
-          ];
-        };
-
-        "group/workspace-dot-vertical-pair#1" = {
-          orientation = "orthogonal";
-          modules = [
-            "custom/workspace-dot#1"
-            "custom/workspace-dot#5"
-          ];
-        };
-
-        "group/workspace-dot-vertical-pair#2" = {
-          orientation = "orthogonal";
-          modules = [
-            "custom/workspace-dot#2"
-            "custom/workspace-dot#6"
-          ];
-        };
-
-        "group/workspace-dot-vertical-pair#3" = {
-          orientation = "orthogonal";
-          modules = [
-            "custom/workspace-dot#3"
-            "custom/workspace-dot#7"
-          ];
-        };
-
-        "group/workspace-dot-vertical-pair#4" = {
-          orientation = "orthogonal";
-          modules = [
-            "custom/workspace-dot#4"
-            "custom/workspace-dot#8"
-          ];
-        };
-
-        "custom/workspace-dot#1" = {
-          exec = "${workspaceQuery} 1";
-        };
-
-        "custom/workspace-dot#2" = {
-          exec = "${workspaceQuery} 2";
-        };
-
-        "custom/workspace-dot#3" = {
-          exec = "${workspaceQuery} 3";
-        };
-
-        "custom/workspace-dot#4" = {
-          exec = "${workspaceQuery} 4";
-        };
-
-        "custom/workspace-dot#5" = {
-          exec = "${workspaceQuery} 5";
-        };
-
-        "custom/workspace-dot#6" = {
-          exec = "${workspaceQuery} 6";
-        };
-
-        "custom/workspace-dot#7" = {
-          exec = "${workspaceQuery} 7";
-        };
-
-        "custom/workspace-dot#8" = {
-          exec = "${workspaceQuery} 8";
-        };
-
-        "custom/media-playing" = {
-          tooltip = false;
-          format = "{icon} {}";
-          format-icons = {
-            spotify = "";
-            chromium = "";
+          "clock#time" = {
+            format = "{:%H:%M:%OS}";
+            interval = 1;
           };
-          return-type = "json";
-          exec-if = "which ${playerctl}";
-          exec = pkgs.writeShellScript "queryMedia" ''
-            #!/bin/sh
-            metadata_format="{\"playerName\": \"{{ playerName }}\", \"status\": \"{{ status }}\", \"title\": \"{{ title }}\", \"artist\": \"{{ artist }}\"}"
-            player_priority="spotify,chromium"
 
-            ${playerctl} --follow -a --player "$player_priority" metadata --format "$metadata_format" |
-              while read -r _; do
-            	active_stream=$(${playerctl} -a --player "$player_priority" metadata --format "$metadata_format" | ${jq} -s 'first([.[] | select(.status == "Playing")][] // empty)')
-            	echo ""
-            	echo "$active_stream" | ${jq} --unbuffered --compact-output \
-            	  '.class = .playerName | .alt = .playerName | .text = "\(.title) - \(.artist)"'
-              done
-          '';
+          "custom/notification" = {
+            tooltip = false;
+            format = "{icon}";
+            format-icons = {
+              notification = "<span foreground='red'><sup></sup></span>";
+              none = "";
+              dnd-notification = "󰂛<span foreground='red'><sup></sup></span>";
+              dnd-none = "󰂛";
+              inhibited-notification = "<span foreground='red'><sup></sup></span>";
+              inhibited-none = "";
+              dnd-inhibited-notification = "󰂛<span foreground='red'><sup></sup></span>";
+              dnd-inhibited-none = "󰂛";
+            };
+            return-type = "json";
+            exec-if = "which ${swayncClient}";
+            exec = "${swayncClient} -swb";
+            on-click = "${swayncClient} -t -sw";
+            on-click-right = "${swayncClient} -d -sw";
+            escape = true;
+          };
+
+          "custom/media-playing" = {
+            tooltip = false;
+            format = "{icon} {}";
+            format-icons = {
+              spotify = "";
+              chromium = "";
+            };
+            return-type = "json";
+            exec-if = "which ${playerctl}";
+            exec = pkgs.writeShellScript "queryMedia" ''
+              #!/bin/sh
+              metadata_format="{\"playerName\": \"{{ playerName }}\", \"status\": \"{{ status }}\", \"title\": \"{{ title }}\", \"artist\": \"{{ artist }}\"}"
+              player_priority="spotify,chromium"
+
+              ${playerctl} --follow -a --player "$player_priority" metadata --format "$metadata_format" |
+                while read -r _; do
+              	active_stream=$(${playerctl} -a --player "$player_priority" metadata --format "$metadata_format" | ${jq} -s 'first([.[] | select(.status == "Playing")][] // empty)')
+              	echo ""
+              	echo "$active_stream" | ${jq} --unbuffered --compact-output \
+              	  '.class = .playerName | .alt = .playerName | .text = "\(.title) - \(.artist)"'
+                done
+            '';
+          };
+        }
+        // builtins.listToAttrs (
+          builtins.genList (i: {
+            name = "custom/workspace-dot#${toString (i + 1)}";
+            value.exec = "${workspaceQuery} ${toString (i + 1)}";
+          }) (workspaceRows * workspaceColumns)
+        )
+        // builtins.listToAttrs (
+          builtins.genList (i: {
+            name = "group/workspace-dot-vertical-group-of${toString workspaceRows}#${toString (i + 1)}";
+            value.orientation = "orthogonal";
+            value.modules = builtins.genList (
+              j: "custom/workspace-dot#${toString (i + 1 + (j * workspaceColumns))}"
+            ) workspaceRows;
+          }) workspaceColumns
+        )
+        // {
+          "group/workspace-dots" = {
+            orientation = "inherit";
+            modules = builtins.genList (
+              i: "group/workspace-dot-vertical-group-of${toString workspaceRows}#${toString (i + 1)}"
+            ) workspaceColumns;
+          };
         };
-      };
     };
 
     style = ''
