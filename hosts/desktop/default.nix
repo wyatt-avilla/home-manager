@@ -8,6 +8,7 @@
 {
   imports = [
     ./hyprland.nix
+    ./waybar.nix
     ../../modules/common.nix
   ];
 
