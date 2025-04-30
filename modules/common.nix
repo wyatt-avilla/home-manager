@@ -33,6 +33,7 @@ let
     file
     usbutils
     entr
+    killall
   ];
 
   gui = with pkgs; [
