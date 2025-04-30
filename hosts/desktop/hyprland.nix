@@ -60,7 +60,8 @@ in
       ];
 
       bind =
-        builtins.map (key: mkWorkspaceBind key { }) workspaceKeys
+        [ "$modifier,m,layoutmsg,swapwithmaster" ]
+        ++ builtins.map (key: mkWorkspaceBind key { }) workspaceKeys
         ++ builtins.map (key: mkWorkspaceBind key { shouldShift = true; }) workspaceKeys;
 
       workspace =

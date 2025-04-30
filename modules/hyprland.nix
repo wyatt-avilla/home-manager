@@ -67,7 +67,8 @@ in
 
         "$modifier,e,layoutmsg,cyclenext"
         "$modifier,i,layoutmsg,cycleprev"
-        "$modifier,SPACE,layoutmsg,swapwithmaster"
+        "$modifier SHIFT,e,layoutmsg,swapnext"
+        "$modifier SHIFT,i,layoutmsg,swapprev"
 
         "$modifier,f,exec,${lib.getExe pkgs.fuzzel}"
         "$modifier SHIFT,f,exec,${lib.getExe pkgs.grim} -g \"$(${lib.getExe pkgs.slurp} -d)\" - | ${pkgs.wl-clipboard}/bin/wl-copy"
