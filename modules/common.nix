@@ -7,7 +7,6 @@
 }:
 
 let
-  allowedSigners = "${config.home.homeDirectory}/.ssh/allowed_signers";
   nixvim-stylix = inputs.nixvim.packages.${pkgs.system}.default;
 
   commandLine = with pkgs; [
@@ -34,6 +33,7 @@ let
     usbutils
     entr
     killall
+    sops
   ];
 
   gui = with pkgs; [
@@ -66,6 +66,9 @@ in
     ./zsh.nix
     ./stylix.nix
     ./spicetify.nix
+    ./git.nix
+    ./ssh.nix
+    ./sops.nix
   ];
 
   options.variables = {
@@ -92,9 +95,6 @@ in
     };
 
     home = {
-      file."${allowedSigners}".text =
-        "* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/UBGJmU3oFOq4m7z0ZV9wzfUoU3UUdr4GE8x/VCjZU wyatt@puriel";
-
       sessionVariables = {
         EDITOR = lib.getExe nixvim-stylix;
         NIXOS_OZONE_WL = 1;
@@ -141,25 +141,6 @@ in
     fonts.fontconfig.enable = true;
 
     programs = {
-      git = {
-        enable = true;
-        userName = "Wyatt Avilla";
-        userEmail = "wyattmurphy1@gmail.com";
-        extraConfig = {
-          init.defaultBranch = "main";
-          gpg.ssh.allowedSignersFile = allowedSigners;
-          push.autoSetupRemote = true;
-        };
-
-        signing = {
-          key = "~/.ssh/id_ed25519.pub";
-          format = "ssh";
-          signByDefault = true;
-        };
-
-        delta.enable = true;
-      };
-
       ghostty = {
         enable = true;
         enableZshIntegration = true;

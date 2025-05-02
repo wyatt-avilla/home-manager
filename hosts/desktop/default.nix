@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  inputs,
   config,
   ...
 }:
@@ -20,6 +21,8 @@
 
     stateVersion = "24.11";
   };
+
+  sops.defaultSopsFile = "${inputs.nix-secrets}/secrets/desktop.yaml";
 
   services.hypridle = {
     enable = true;

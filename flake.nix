@@ -22,6 +22,11 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-secrets = {
+      url = "git+ssh://git@github.com/wyatt-avilla/nix-secrets";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -33,6 +38,7 @@
       nixvim,
       stylix,
       spicetify-nix,
+      nix-secrets,
       ...
     }:
     let
@@ -48,6 +54,7 @@
             ./hosts/desktop/default.nix
             stylix.homeManagerModules.stylix
             spicetify-nix.homeManagerModules.spicetify
+            nix-secrets.homeManagerModules.desktop
           ];
         };
       };
