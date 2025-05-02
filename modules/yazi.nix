@@ -13,13 +13,8 @@
         }
         {
           on = "<Esc>";
-          run = "quit";
-          dect = "Exit the process";
-        }
-        {
-          on = "<Esc>";
-          run = "escape";
-          desc = "Exit visual mode, clear selected, or cancel search";
+          run = "plugin super-escape";
+          desc = "Exit visual mode, clear selected, cancel search, or exit";
         }
         {
           on = "i";
@@ -221,49 +216,6 @@
         }
       ];
 
-      select.keymap = [
-        {
-          on = "?";
-          run = "help";
-          desc = "Open help";
-        }
-        {
-          on = "<C-q>";
-          run = "close";
-          desc = "Cancel selection";
-        }
-        {
-          on = "<Esc>";
-          run = "close";
-          desc = "Cancel selection";
-        }
-        {
-          on = "<Enter>";
-          run = "close --submit";
-          desc = "Submit the selection";
-        }
-        {
-          on = "i";
-          run = "arrow -1";
-          desc = "Move cursor up";
-        }
-        {
-          on = "e";
-          run = "arrow 1";
-          desc = "Move cursor down";
-        }
-        {
-          on = "I";
-          run = "arrow -5";
-          desc = "Move cursor up 5 lines";
-        }
-        {
-          on = "E";
-          run = "arrow 5";
-          desc = "Move cursor down 5 lines";
-        }
-      ];
-
       input.keymap = [
         {
           on = "?";
@@ -277,7 +229,7 @@
         }
         {
           on = "<Esc>";
-          run = "close";
+          run = "escape";
           desc = "Go back to normal mode or cancel selection";
         }
         {
@@ -458,6 +410,26 @@
           desc = "Apply a filter to the help items";
         }
       ];
+    };
+
+    plugins = {
+      super-escape = pkgs.writeTextDir "main.lua" ''
+        ---@sync entry
+        return {
+          entry = function()
+            local visual_active = cx.active.mode.is_select
+            local selected = #cx.active.selected
+
+        	if visual_active  then
+        		ya.mgr_emit("escape", { visual = true })
+        	elseif selected > 0 then
+        		ya.mgr_emit("escape", { visual = true, select = true })
+        	else
+        		ya.mgr_emit("close", { visual = true })
+        	end
+          end,
+        }
+      '';
     };
   };
 }
