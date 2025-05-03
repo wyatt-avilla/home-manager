@@ -12,6 +12,8 @@ let
   playerctl = lib.getExe pkgs.playerctl;
   socat = lib.getExe pkgs.socat;
   jq = lib.getExe pkgs.jq;
+  cpuThreads = 32;
+  moduleSpacing = 8;
 
   workspaceColumns = 4;
   workspaceRows = 2;
@@ -44,7 +46,6 @@ let
     determine_occupancy
     ${socat} -U - UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock | while read -r line; do handle "$line"; done
   '';
-
 in
 {
   programs.waybar = {
@@ -57,43 +58,105 @@ in
           layer = "top";
           position = "top";
           height = 22;
-          spacing = 12;
+          spacing = moduleSpacing;
           output = monitorName;
           modules-left = [
-            "group/workspace-dots"
+            "memory"
+            "temperature"
+            "cpu"
             "custom/media-playing"
           ];
-          modules-center = [ "hyprland/window" ];
+          modules-center = [
+            "clock#date"
+            "group/workspace-dots"
+            "clock#time"
+          ];
           modules-right = [
             "tray"
-            "clock#date"
-            "clock#time"
+            "wireplumber"
+            "systemd-failed-units"
+            "network"
             "custom/notification"
           ];
+
+          "tray" = {
+            spacing = moduleSpacing / 3;
+          };
 
           "clock#date" = {
             format = "{:%a %b %d}";
           };
+
           "clock#time" = {
             format = "{:%H:%M:%OS}";
             interval = 1;
+          };
+
+          temperature = {
+            hwmon-path = "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input";
+            format = "";
+            critical-threshold = 75;
+            format-critical = "<span foreground='${config.variables.colors.orange}'>{temperatureC}°C </span>";
+            interval = 10;
+          };
+
+          wireplumber = {
+            format = "{volume}% {icon}";
+            format-muted = "";
+            format-icons = [
+              ""
+              ""
+              ""
+            ];
+          };
+
+          network = {
+            format-ethernet = "󰱓";
+            format-disconnected = "<span foreground='${config.variables.colors.red}'>󰅛</span>";
+            tooltip-format-ethernet = "{ifname}";
+          };
+
+          memory = {
+            format = "";
+            interval = 10;
+            states = {
+              low = 0;
+              medium = 50;
+              high = 75;
+            };
+          };
+
+          cpu = {
+            format = builtins.concatStringsSep "" (
+              map (icon: "{${icon}}") (builtins.genList (i: "icon${toString i}") cpuThreads)
+            );
+            interval = 1;
+            format-icons = [
+              "<span color='${config.variables.colors.green}'>▁</span>"
+              "<span color='${config.variables.colors.blue}'>▂</span>"
+              "<span color='${config.variables.colors.white}'>▃</span>"
+              "<span color='${config.variables.colors.white}'>▄</span>"
+              "<span color='${config.variables.colors.yellow}'>▅</span>"
+              "<span color='${config.variables.colors.yellow}'>▆</span>"
+              "<span color='${config.variables.colors.orange}'>▇</span>"
+              "<span color='${config.variables.colors.red}'>█</span>"
+            ];
           };
 
           "custom/notification" = {
             tooltip = false;
             format = "{icon}";
             format-icons = {
-              notification = "<span foreground='red'><sup></sup></span>";
+              notification = "<span foreground='${config.variables.colors.red}'><sup></sup></span>";
               none = "";
-              dnd-notification = "󰂛<span foreground='red'><sup></sup></span>";
+              dnd-notification = "󰂛<span foreground='${config.variables.colors.red}'><sup></sup></span>";
               dnd-none = "󰂛";
-              inhibited-notification = "<span foreground='red'><sup></sup></span>";
+              inhibited-notification = "<span foreground='${config.variables.colors.red}'><sup></sup></span>";
               inhibited-none = "";
-              dnd-inhibited-notification = "󰂛<span foreground='red'><sup></sup></span>";
+              dnd-inhibited-notification = "󰂛<span foreground='${config.variables.colors.red}'><sup></sup></span>";
               dnd-inhibited-none = "󰂛";
             };
             return-type = "json";
-            exec-if = "which ${swayncClient}";
             exec = "${swayncClient} -swb";
             on-click = "${swayncClient} -t -sw";
             on-click-right = "${swayncClient} -d -sw";
@@ -158,19 +221,53 @@ in
         border-bottom: 1px solid ${config.variables.colors.grey};
       }
 
-      #custom-notification {
-        padding-right: 15px;
+      .modules-left, .modules-right {
+        margin-right: 10px;
+        margin-left: 10px;
+      }
+
+      #memory {
+        padding-left: 0px;
+        padding-right: 8px;
+      }
+
+      #memory.medium {
+        color: ${config.variables.colors.orange};
+      }
+
+      #memory.high {
+        color: ${config.variables.colors.red};
+      }
+
+      #temperature {
+        padding-left: 0px;
+        padding-right: 0px;
+      }
+
+      #cpu {
+        padding-left: 0px;
+        padding-right: 0px;
       }
 
       #workspace-dots {
-        padding-left: 15px;
         padding-top: 2px;
+        border: 1px solid ${config.variables.colors.grey};
+        border-radius: 6px;
       }
 
       #custom-workspace-dot {
         font-size: 6px;
         padding-left: 5px;
         padding-right: 5px;
+      }
+
+      pipewire {
+        padding-right: 0px;
+        margin-right: 0px;
+      }
+
+      #custom-notification {
+        padding-right: 2px;
       }
     '';
   };
