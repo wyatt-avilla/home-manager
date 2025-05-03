@@ -85,6 +85,7 @@ in
 
           "clock#date" = {
             format = "{:%a %b %d}";
+            tooltip-format = "<tt><small>{calendar}</small></tt>";
           };
 
           "clock#time" = {
