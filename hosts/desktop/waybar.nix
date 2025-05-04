@@ -167,6 +167,7 @@ in
           "custom/media-playing" = {
             tooltip = false;
             format = "{icon} {}";
+            max-length = 120;
             format-icons = {
               spotify = "";
               chromium = "";
