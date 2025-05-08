@@ -21,6 +21,27 @@
       vim = lib.getExe inputs.nixvim.packages.${pkgs.system}.default;
     };
 
+    zsh-abbr = {
+      enable = true;
+      abbreviations = {
+        gd = "git diff";
+        gs = "git status";
+        gbr = "git branch";
+        gco = "git checkout";
+        gsw = "git switch";
+        gcm = "git commit -m \"%\"";
+        gpl = "git pull";
+        gph = "git push";
+        grs = "git restore";
+
+        try = "nix-shell -p % --run zsh";
+        nd = "nix develop";
+        nb = "nix build";
+
+        py = "python3";
+      };
+    };
+
     initContent = ''
       export KEYTIMEOUT=1
       export FZF_COMPLETION_TRIGGER='**'
@@ -30,6 +51,8 @@
         --bind ctrl-d:preview-down
       '
       export FZF_DEFAULT_COMMAND='${lib.getExe pkgs.fd} --type f'
+
+      export ABBR_SET_EXPANSION_CURSOR=1
 
       setopt HISTVERIFY
 
