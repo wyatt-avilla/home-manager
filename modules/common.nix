@@ -69,6 +69,7 @@ in
     ./git.nix
     ./ssh.nix
     ./sops.nix
+    ./syncthing.nix
   ];
 
   options.variables = {
