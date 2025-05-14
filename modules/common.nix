@@ -34,6 +34,7 @@ let
     entr
     killall
     sops
+    tldr
   ];
 
   gui = with pkgs; [
