@@ -52,13 +52,17 @@ in
 {
   systemd.user.services.cpu-temp-link = {
     Unit = {
-      Description = "Generates an allowed signers file from the user's decrypted public ssh key";
+      Description = "Generates a persistent temperature file for the CPU";
     };
 
     Service = {
       ExecStart = "${pkgs.writeShellScript "cpu-temp-link" ''
-        dir="$(dirname $(grep -l k10temp /sys/class/hwmon/hwmon*/name))"
-        ln -sf $dir/temp1_input ${cpuTempFile}
+        dir="$(${pkgs.coreutils}/bin/dirname $(${pkgs.gnugrep}/bin/grep -l k10temp /sys/class/hwmon/hwmon*/name))"
+        if [ -z "$dir" ]; then
+          echo "Error: CPU temperature directory not found." >&2
+          exit 1
+        fi
+        ${pkgs.coreutils}/bin/ln -sf "$dir/temp1_input" ${cpuTempFile}
       ''}";
       Type = "oneshot";
     };
