@@ -93,8 +93,8 @@ in
           ];
           modules-right = [
             "tray"
-            "wireplumber"
             "systemd-failed-units"
+            "wireplumber"
             "network"
             "custom/notification"
           ];
@@ -264,6 +264,10 @@ in
       #temperature {
         padding-left: 0px;
         padding-right: 0px;
+      }
+
+      #systemd-failed-units {
+        color: ${config.variables.colors.red};
       }
 
       #cpu {
