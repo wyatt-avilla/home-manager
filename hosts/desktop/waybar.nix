@@ -21,7 +21,9 @@ let
   workspaceRows = 2;
 
   workspaceQuery = pkgs.writeShellScript "workspaceQuery" ''
-    #!/bin/sh
+    #!/bin/bash
+
+    declare -A URGENT_MAP
 
     QUERY_ID=$1
 
@@ -29,12 +31,22 @@ let
     	is_active=$(hyprctl workspaces -j | ${jq} '.[] | select(.id == '"$QUERY_ID"')')
     	focused_id=$(hyprctl activeworkspace -j | ${jq} '.id')
 
+        if [[ -n "$1" ]]; then
+          urgent_workspace_id=$(hyprctl clients -j | jq --arg addr "0x$1" '.[] | select(.address == $addr) | .workspace.id')
+          URGENT_MAP[$urgent_workspace_id]=1
+        fi
+
     	if [ -z "$is_active" ] || [ "$is_active" = "null" ]; then
-    		echo " "
+            echo '{ "text": " " }'
     	elif [ "$QUERY_ID" = "$focused_id" ]; then
-    		echo ""
+            echo '{ "text": "" }'
+            URGENT_MAP[$QUERY_ID]=0
     	else
-    		echo ""
+            if [[ "''${URGENT_MAP[$QUERY_ID]}" -eq 1 ]]; then
+                echo '{ "text": "", "class": "urgent" }'
+            else
+                echo '{ "text": "" }'
+            fi
     	fi
     }
 
@@ -42,6 +54,7 @@ let
     	case $1 in
     	workspacev2*) determine_occupancy ;;
     	focusedmonv2*) determine_occupancy ;;
+    	urgent*) determine_occupancy ''${1#*>>} ;;
     	esac
     }
 
@@ -217,6 +230,7 @@ in
           builtins.genList (i: {
             name = "custom/workspace-dot#${toString (i + 1)}";
             value.exec = "${workspaceQuery} ${toString (i + 1)}";
+            value.return-type = "json";
           }) (workspaceRows * workspaceColumns)
         )
         // builtins.listToAttrs (
@@ -290,6 +304,21 @@ in
         padding-left: 5px;
         padding-right: 5px;
       }
+
+      @keyframes blink {
+        to {
+          color: ${config.variables.colors.red};
+        }
+      }
+
+      #custom-workspace-dot.urgent {
+        animation-name: blink;
+        animation-duration: 0.5s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+      }
+
 
       pipewire {
         padding-right: 0px;
