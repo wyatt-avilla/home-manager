@@ -15,6 +15,8 @@ let
   cpuThreads = 32;
   moduleSpacing = 8;
 
+  cpuTempFile = "/tmp/cpu_temp";
+
   workspaceColumns = 4;
   workspaceRows = 2;
 
@@ -48,6 +50,24 @@ let
   '';
 in
 {
+  systemd.user.services.cpu-temp-link = {
+    Unit = {
+      Description = "Generates an allowed signers file from the user's decrypted public ssh key";
+    };
+
+    Service = {
+      ExecStart = "${pkgs.writeShellScript "cpu-temp-link" ''
+        dir="$(dirname $(grep -l k10temp /sys/class/hwmon/hwmon*/name))"
+        ln -sf $dir/temp1_input ${cpuTempFile}
+      ''}";
+      Type = "oneshot";
+    };
+
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+  };
+
   programs.waybar = {
     enable = true;
     systemd.enable = true;
@@ -94,7 +114,7 @@ in
           };
 
           temperature = {
-            hwmon-path = "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input";
+            hwmon-path = cpuTempFile;
             format = "";
             critical-threshold = 75;
             format-critical = "<span foreground='${config.variables.colors.orange}'>{temperatureC}°C </span>";
