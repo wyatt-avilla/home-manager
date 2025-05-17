@@ -33,7 +33,9 @@ let
 
         if [[ -n "$1" ]]; then
           urgent_workspace_id=$(hyprctl clients -j | jq --arg addr "0x$1" '.[] | select(.address == $addr) | .workspace.id')
-          URGENT_MAP[$urgent_workspace_id]=1
+          if [[ "$urgent_workspace_id" =~ ^[0-9]+$ ]]; then
+            URGENT_MAP[$urgent_workspace_id]=1
+          fi
         fi
 
     	if [ -z "$is_active" ] || [ "$is_active" = "null" ]; then
