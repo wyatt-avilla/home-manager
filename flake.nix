@@ -52,7 +52,7 @@
           extraSpecialArgs = { inherit inputs; };
           modules = [
             ./hosts/desktop/default.nix
-            stylix.homeManagerModules.stylix
+            stylix.homeModules.stylix
             spicetify-nix.homeManagerModules.spicetify
             nix-secrets.homeManagerModules.desktop
           ];

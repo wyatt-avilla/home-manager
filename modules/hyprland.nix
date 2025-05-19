@@ -62,7 +62,7 @@ in
 
       bind = [
         "$modifier,code:47,exec,${terminal}"
-        "$modifier,w,exec,${lib.getExe pkgs.google-chrome}"
+        "$modifier,w,exec,${lib.getExe' pkgs.google-chrome "google-chrome"}"
         "$modifier,q,killactive"
 
         "$modifier,e,layoutmsg,cyclenext"
