@@ -40,8 +40,8 @@ let
   gui = with pkgs; [
     fira-code
     nerd-fonts.fira-code
-    google-chrome
     discord
+    google-chrome
     feh
     hyprshot
     wl-clipboard
@@ -93,7 +93,7 @@ in
   config = {
     nixpkgs = {
       config.allowUnfree = true;
-      overlays = [ (import ../overlays/discord.nix) ];
+      overlays = [ (import ../overlays/electron.nix) ];
     };
 
     home = {
