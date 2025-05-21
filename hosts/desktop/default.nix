@@ -10,6 +10,7 @@
   imports = [
     ./hyprland.nix
     ./waybar.nix
+    ./suspend.nix
     ../../modules/common.nix
   ];
 
@@ -23,14 +24,4 @@
   };
 
   sops.defaultSopsFile = "${inputs.nix-secrets}/secrets/desktop.yaml";
-
-  services.hypridle = {
-    enable = true;
-    settings = {
-      listener = {
-        timeout = 60 * 20;
-        on-timeout = "${pkgs.systemd}/bin/systemctl suspend";
-      };
-    };
-  };
 }

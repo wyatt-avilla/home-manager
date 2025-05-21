@@ -40,7 +40,7 @@ let
   gui = with pkgs; [
     fira-code
     nerd-fonts.fira-code
-    discord
+    webcord
     google-chrome
     feh
     hyprshot
