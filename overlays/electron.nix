@@ -1,17 +1,12 @@
 let
-
   hardwareAccelerationFlags =
     "--enable-features="
     + builtins.concatStringsSep "," [
-      "VaapiVideoDecodeLinuxGL"
-      "VaapiVideoEncoder"
-      "Vulkan"
-      "VulkanFromANGLE"
-      "DefaultANGLEVulkan"
-      "VaapiIgnoreDriverChecks"
       "VaapiVideoDecoder"
-      "PlatformHEVCDecoderSupport"
-      "UseMultiPlaneFormatForHardwareVideo"
+      "VaapiIgnoreDriverChecks"
+      "Vulkan"
+      "DefaultANGLEVulkan"
+      "VulkanFromANGLE"
     ];
 
   waylandFlags = "--ozone-platform=wayland";
