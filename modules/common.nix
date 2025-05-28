@@ -35,6 +35,8 @@ let
     killall
     sops
     tldr
+    hyperfine
+    dust
   ];
 
   gui = with pkgs; [
@@ -44,6 +46,7 @@ let
     google-chrome
     feh
     hyprshot
+    hyprpicker
     wl-clipboard
     alsa-utils
     obs-studio
