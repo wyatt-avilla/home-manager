@@ -37,6 +37,7 @@ let
     tldr
     hyperfine
     dust
+    img2pdf
   ];
 
   gui = with pkgs; [
