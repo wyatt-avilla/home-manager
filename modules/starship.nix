@@ -156,9 +156,9 @@ in
       };
 
       character = {
-        success_symbol = "[[>](fg)](fg)";
-        error_symbol = "[[>](red)](fg)";
-        vicmd_symbol = "[[>](fg)](fg)";
+        success_symbol = "[>](bold)";
+        error_symbol = "[>](red bold)";
+        vicmd_symbol = "[>](bold)";
       };
 
       directory = {
