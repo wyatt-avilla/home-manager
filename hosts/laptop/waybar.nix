@@ -7,7 +7,7 @@
 
 let
   barName = "mainMonitorBar";
-  monitorName = "DP-1";
+  monitorName = "LVDS-1";
   swayncClient = lib.getExe' pkgs.swaynotificationcenter "swaync-client";
   moduleSpacing = 8;
 in
