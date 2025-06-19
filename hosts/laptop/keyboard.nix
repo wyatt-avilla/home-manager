@@ -1,25 +1,22 @@
-{ config, ... }:
 let
-  xkbFileName = "colemak-dh-swaps";
-  xkbFilePath = ".config/xkb/symbols/us/${xkbFileName}";
+  xkbVariantName = "colemak-dh-swaps";
 in
 {
   # relevant keyboard FRU: 45N2242 45N2102 45N2172
 
-  config = {
-    home.file.xkbFilePath.text = ''
-        xkb_symbols "${xkbFileName}" {
-      	include "us(colemak_dh_ortho)"
+  xdg.configFile."xkb/symbols/us" = {
+    text = ''
+      xkb_symbols "${xkbVariantName}" {
+        include "us(colemak_dh_ortho)"
 
-      	key <MUHE> { [ BackSpace, BackSpace ] };
-      	key <HENK> { [ space,     space ] };
-        };
+        key <MUHE> { [ BackSpace, BackSpace ] };
+        key <HENK> { [ space,     space ] };
+      };
     '';
+  };
 
-    wayland.windowManager.hyprland.settings.input = {
-      kb_file = "${config.home.homeDirectory}/${xkbFilePath}";
-      kb_layout = "us";
-      kb_variant = xkbFileName;
-    };
+  wayland.windowManager.hyprland.settings.input = {
+    kb_layout = "us";
+    kb_variant = xkbVariantName;
   };
 }
