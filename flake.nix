@@ -57,6 +57,17 @@
             nix-secrets.homeManagerModules.desktop
           ];
         };
+
+        laptop = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/laptop/default.nix
+            stylix.homeModules.stylix
+            spicetify-nix.homeManagerModules.spicetify
+            nix-secrets.homeManagerModules.laptop
+          ];
+        };
       };
 
       devShells.${system}.default = pkgs.mkShell {
