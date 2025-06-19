@@ -10,6 +10,7 @@
   imports = [
     ./hyprland.nix
     ./waybar.nix
+    ./keyboard.nix
     ../../modules/common.nix
   ];
 
