@@ -1,10 +1,11 @@
 let
   xkbFileName = "colemak-dh-swaps";
+  xkbFilePath = "xkb/symbols/us/${xkbFileName}";
 in
 {
   # relevant keyboard FRU: 45N2242 45N2102 45N2172
 
-  xdg.configFile."xkb/symbols/us/${xkbFileName}" = {
+  xdg.configFile.xkbFilePath = {
     text = ''
       xkb_symbols "${xkbFileName}" {
         include "us(colemak_dh_ortho)"
@@ -13,5 +14,9 @@ in
         key <HENK> { [ space,     space ] };
       };
     '';
+  };
+
+  wayland.windowManager.hyprland.settings.input = {
+    kb_file = ".config/${xkbFilePath}";
   };
 }
