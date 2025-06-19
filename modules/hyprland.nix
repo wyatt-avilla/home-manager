@@ -31,7 +31,6 @@ in
       animations.enabled = false;
 
       general = {
-        "$modifier" = "SUPER";
         layout = "master";
       };
 
@@ -61,7 +60,6 @@ in
       };
 
       bind = [
-        "$modifier,code:47,exec,${terminal}"
         "$modifier,w,exec,${lib.getExe' pkgs.google-chrome "google-chrome"}"
         "$modifier,q,killactive"
 

@@ -4,14 +4,23 @@
   config,
   ...
 }:
+let
+  inherit (config.variables) terminal;
+in
 {
   imports = [ ../../modules/hyprland.nix ];
 
   wayland.windowManager.hyprland = {
     settings = {
+      general = {
+        "$modifier" = "ALT";
+      };
+
       monitor = [ ", preferred, auto, 1" ];
 
       bind = [
+        "$modifier, Return, exec, ${terminal}"
+
         "$modifier, 1, workspace, 1"
         "$modifier, 1, movetoworkspace, 1"
         "$modifier, 2, workspace, 2"
