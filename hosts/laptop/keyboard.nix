@@ -6,16 +6,18 @@ in
 {
   # relevant keyboard FRU: 45N2242 45N2102 45N2172
 
-  config.home.xkbFilePath.text = ''
-      xkb_symbols "${xkbFileName}" {
-    	include "us(colemak_dh_ortho)"
+  config = {
+    home.xkbFilePath.text = ''
+        xkb_symbols "${xkbFileName}" {
+      	include "us(colemak_dh_ortho)"
 
-    	key <MUHE> { [ BackSpace, BackSpace ] };
-    	key <HENK> { [ space,     space ] };
-      };
-  '';
+      	key <MUHE> { [ BackSpace, BackSpace ] };
+      	key <HENK> { [ space,     space ] };
+        };
+    '';
 
-  wayland.windowManager.hyprland.settings.input = {
-    kb_file = "${config.home.homeDirectory}/${xkbFilePath}";
+    wayland.windowManager.hyprland.settings.input = {
+      kb_file = "${config.home.homeDirectory}/${xkbFilePath}";
+    };
   };
 }
