@@ -18,6 +18,8 @@ in
 
     wayland.windowManager.hyprland.settings.input = {
       kb_file = "${config.home.homeDirectory}/${xkbFilePath}";
+      kb_layout = "us";
+      kb_variant = xkbFileName;
     };
   };
 }
