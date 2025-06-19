@@ -7,7 +7,7 @@ in
   # relevant keyboard FRU: 45N2242 45N2102 45N2172
 
   config = {
-    home.xkbFilePath.text = ''
+    home.file.xkbFilePath.text = ''
         xkb_symbols "${xkbFileName}" {
       	include "us(colemak_dh_ortho)"
 
