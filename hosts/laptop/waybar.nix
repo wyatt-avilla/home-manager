@@ -20,17 +20,20 @@ in
         css-name = barName;
         layer = "top";
         position = "top";
-        height = 22;
+        height = 17;
         spacing = moduleSpacing;
         output = monitorName;
-        modules-left = [ ];
+        modules-left = [ "hyprland/workspaces" ];
         modules-center = [
           "clock#date"
+          "custom/center-icon"
           "clock#time"
         ];
         modules-right = [
           "tray"
           "systemd-failed-units"
+          "backlight"
+          "battery"
           "wireplumber"
           "network"
           "custom/notification"
@@ -52,7 +55,7 @@ in
 
         wireplumber = {
           format = "{volume}% {icon}";
-          format-muted = "";
+          format-muted = "<span foreground='${config.variables.colors.red}'></span>";
           format-icons = [
             ""
             ""
@@ -62,8 +65,58 @@ in
 
         network = {
           format-ethernet = "󰱓";
+          format-wifi = "{essid} {icon}";
           format-disconnected = "<span foreground='${config.variables.colors.red}'>󰅛</span>";
           tooltip-format-ethernet = "{ifname}";
+          tooltip-format-wifi = "{frequency}GHz {signalStrength}%";
+          format-icons = [
+            "󰤟"
+            "󰤢"
+            "󰤥"
+            "󰤨"
+          ];
+        };
+
+        battery = {
+          format = "{capacity}% {icon}";
+          tooltip-format = "{time}";
+          format-charging = "{capacity}% <span foreground='${config.variables.colors.green}'>󰂄</span>";
+          states = {
+            warning = 30;
+            critical = 15;
+          };
+          format-icons = [
+            "󰁺"
+            "󰁻"
+            "󰁼"
+            "󰁽"
+            "󰁾"
+            "󰁿"
+            "󰂁"
+            "󰂂"
+            "󰂀"
+            "󰁹"
+          ];
+        };
+
+        backlight = {
+          format = "{percent}% {icon}";
+          format-icons = [
+            "󱩎"
+            "󱩏"
+            "󱩐"
+            "󱩑"
+            "󱩒"
+            "󱩓"
+            "󱩔"
+            "󱩕"
+            "󱩖"
+            "󰛨"
+          ];
+        };
+
+        "custom/center-icon" = {
+          format = " 󰥔 ";
         };
 
         "custom/notification" = {
@@ -91,6 +144,7 @@ in
     style = ''
       * {
         font-weight: 500;
+        font-size: 12px;
       }
 
       window#waybar {
@@ -113,6 +167,23 @@ in
 
       #custom-notification {
         padding-right: 2px;
+      }
+
+      #workspaces button {
+        min-height: 0px;
+        padding: 0px;
+        margin: 0px;
+        border-radius: 0px;
+      }
+
+      #battery.critical:not(.charging) {
+        background-color: ${config.variables.colors.red};
+        color: ${config.variables.colors.white};
+        animation-name: blink;
+        animation-duration: 0.5s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
       }
     '';
   };
