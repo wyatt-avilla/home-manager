@@ -4,8 +4,8 @@
   config,
   ...
 }:
-
 let
+  inherit (config.variables) terminal;
   mainMonitor = "DP-1";
   verticalMonitor = "HDMI-A-1";
   workspaceLogicScriptName = "workspaceLogic.sh";
@@ -59,8 +59,15 @@ in
         "${verticalMonitor},1920x1080,2560x-200,1,transform,1"
       ];
 
+      general = {
+        "$modifier" = "SUPER";
+      };
+
       bind =
-        [ "$modifier,m,layoutmsg,swapwithmaster" ]
+        [
+          "$modifier,code:47,exec,${terminal}"
+          "$modifier,m,layoutmsg,swapwithmaster"
+        ]
         ++ builtins.map (key: mkWorkspaceBind key { }) workspaceKeys
         ++ builtins.map (key: mkWorkspaceBind key { shouldShift = true; }) workspaceKeys;
 
