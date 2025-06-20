@@ -24,4 +24,6 @@
   };
 
   sops.defaultSopsFile = "${inputs.nix-secrets}/secrets/laptop.yaml";
+
+  programs.ghostty.settings.font-size = 11;
 }
