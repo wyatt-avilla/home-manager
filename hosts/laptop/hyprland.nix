@@ -16,6 +16,11 @@ in
         "$modifier" = "ALT";
       };
 
+      decoration = {
+        blur.enabled = false;
+        shadow.enabled = false;
+      };
+
       monitor = [ ", preferred, auto, 1" ];
 
       bind = [
