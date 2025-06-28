@@ -5,7 +5,7 @@
     enable = true;
     enableZshIntegration = true;
     keymap = {
-      manager.keymap = [
+      mgr.keymap = [
         {
           on = "?";
           run = "help";
