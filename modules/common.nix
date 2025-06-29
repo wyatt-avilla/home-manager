@@ -75,6 +75,7 @@ in
     ./ssh.nix
     ./sops.nix
     ./syncthing.nix
+    ./waybar.nix
   ];
 
   options.variables = {
