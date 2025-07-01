@@ -26,7 +26,7 @@ let
     EOF
     )
 
-    selected_mode=$(echo "''${selection_choices}" | ${fuzzel} --dmenu)
+    selected_mode=$(echo "''${selection_choices}" | ${fuzzel} --dmenu --lines 3)
 
     case "''${selected_mode}" in
     Monitor)
