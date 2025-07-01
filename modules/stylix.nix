@@ -43,7 +43,6 @@ in
 
   config.stylix = {
     enable = true;
-    image = config.variables.wallPaper;
     polarity = "dark";
 
     base16Scheme = {
