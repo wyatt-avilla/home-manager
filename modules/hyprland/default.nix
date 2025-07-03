@@ -14,6 +14,7 @@ in
   imports = [
     ./hyprpaper.nix
     ./screenshot.nix
+    ./move_all_windows.nix
   ];
 
   wayland.windowManager.hyprland = {

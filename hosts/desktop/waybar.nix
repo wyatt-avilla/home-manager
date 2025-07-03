@@ -53,6 +53,8 @@ let
     	case $1 in
     	workspacev2*) determine_occupancy ;;
     	focusedmonv2*) determine_occupancy ;;
+    	createworkspacev2*) determine_occupancy ;;
+    	destroyworkspacev2*) determine_occupancy ;;
     	urgent*) determine_occupancy ''${1#*>>} ;;
     	esac
     }
