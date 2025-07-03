@@ -803,11 +803,11 @@
         "nixvim": "nixvim_2"
       },
       "locked": {
-        "lastModified": 1751176331,
-        "narHash": "sha256-YZUHIFMMqtSCZosgbVPEgRw+bvIGuUr3PmAILX893wI=",
+        "lastModified": 1751586849,
+        "narHash": "sha256-AAiewDC2zGry57IVP46o9jBFlAgRQXseZRB8cNohHp0=",
         "owner": "wyatt-avilla",
         "repo": "nixvim",
-        "rev": "216b7ee9a496474c498239b2feda3be03336fb64",
+        "rev": "74177efe778362a2378f0cf598a8526bc4f1ea6a",
         "type": "github"
       },
       "original": {
