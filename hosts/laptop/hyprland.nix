@@ -8,7 +8,7 @@ let
   inherit (config.variables) terminal;
 in
 {
-  imports = [ ../../modules/hyprland.nix ];
+  imports = [ ../../modules/hyprland ];
 
   wayland.windowManager.hyprland = {
     settings = {

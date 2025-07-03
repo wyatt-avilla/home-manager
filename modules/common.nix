@@ -64,8 +64,8 @@ let
 in
 {
   imports = [
+    ./hyprland
     ./yazi.nix
-    ./hyprland.nix
     ./fuzzel.nix
     ./starship.nix
     ./zsh.nix
