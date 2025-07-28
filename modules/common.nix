@@ -60,7 +60,6 @@ let
     gh
     pre-commit
   ];
-
 in
 {
   imports = [
@@ -83,15 +82,6 @@ in
       type = lib.types.str;
       default = "ghostty";
       description = "Default teriminal";
-    };
-
-    wallPaper = lib.mkOption {
-      type = lib.types.path;
-      default = builtins.fetchurl {
-        url = "https://images.pexels.com/photos/3178786/pexels-photo-3178786.jpeg";
-        sha256 = "sha256-E3YU/j5oLmUu9VS1aCXl4otLA86bxks3mw19Vi89gBw=";
-      };
-      description = "Default wallpaper";
     };
   };
 
