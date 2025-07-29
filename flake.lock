@@ -624,15 +624,15 @@
       "locked": {
         "lastModified": 1753764242,
         "narHash": "sha256-dhoA9pnMppaCJO5tzNQaTDV9mQEaL9ijgSRRxDibYKY=",
-        "ref": "refs/heads/main",
+        "owner": "wyatt-avilla",
+        "repo": "nix-ci",
         "rev": "9ef2f997abc1fa03c4e18de0dd3a35858dd9f5e8",
-        "revCount": 30,
-        "type": "git",
-        "url": "ssh://git@github.com/wyatt-avilla/nix-ci"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/wyatt-avilla/nix-ci"
+        "owner": "wyatt-avilla",
+        "repo": "nix-ci",
+        "type": "github"
       }
     },
     "nix-secrets": {
@@ -761,11 +761,11 @@
         "nixvim": "nixvim_2"
       },
       "locked": {
-        "lastModified": 1753770650,
-        "narHash": "sha256-5DNu8yh8QiFlqMnzNzirjQotgmpJC0LPD++mdS9ltjc=",
+        "lastModified": 1753771101,
+        "narHash": "sha256-uvLAMgtHPG6GeMlrq6L2AsrCUPP3P3Brtt31OypQPGE=",
         "owner": "wyatt-avilla",
         "repo": "nixvim",
-        "rev": "d9df498d0484a55f35aa3240fab64b11eeb8df31",
+        "rev": "0fe960fdac7d8816ef0e111b4088ec0772047ccb",
         "type": "github"
       },
       "original": {
