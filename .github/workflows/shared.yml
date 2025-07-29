@@ -18,6 +18,14 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v25
 
+      - name: Set up SSH deploy key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.CI_DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global url."git@github.com:".insteadOf "https://github.com/"
+
       - name: Check Formatting
         run: nix build .#checks.x86_64-linux.formatting
 
@@ -31,6 +39,14 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v25
 
+      - name: Set up SSH deploy key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.CI_DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global url."git@github.com:".insteadOf "https://github.com/"
+
       - name: Check Formatting
         run: nix build .#checks.x86_64-linux.linting
 
@@ -43,6 +59,14 @@ jobs:
 
       - name: Install Nix
         uses: cachix/install-nix-action@v25
+
+      - name: Set up SSH deploy key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.CI_DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global url."git@github.com:".insteadOf "https://github.com/"
 
       - name: Check Formatting
         run: nix build .#checks.x86_64-linux.dead-code
