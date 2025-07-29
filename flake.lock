@@ -614,6 +614,27 @@
         "url": "ssh://git@github.com/wyatt-avilla/nix-ci"
       }
     },
+    "nix-checks_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixvim",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1753764242,
+        "narHash": "sha256-dhoA9pnMppaCJO5tzNQaTDV9mQEaL9ijgSRRxDibYKY=",
+        "ref": "refs/heads/main",
+        "rev": "9ef2f997abc1fa03c4e18de0dd3a35858dd9f5e8",
+        "revCount": 30,
+        "type": "git",
+        "url": "ssh://git@github.com/wyatt-avilla/nix-ci"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/wyatt-avilla/nix-ci"
+      }
+    },
     "nix-secrets": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -733,17 +754,18 @@
     "nixvim": {
       "inputs": {
         "flake-parts": "flake-parts",
+        "nix-checks": "nix-checks_2",
         "nixpkgs": [
           "nixpkgs"
         ],
         "nixvim": "nixvim_2"
       },
       "locked": {
-        "lastModified": 1753760699,
-        "narHash": "sha256-YDjoEJAQ2f54fD+SVy9CfoU/k9yvA1yCtsqO8741c8k=",
+        "lastModified": 1753770650,
+        "narHash": "sha256-5DNu8yh8QiFlqMnzNzirjQotgmpJC0LPD++mdS9ltjc=",
         "owner": "wyatt-avilla",
         "repo": "nixvim",
-        "rev": "bf8114ee09a425582a68c44924aeb32221b2a3c8",
+        "rev": "d9df498d0484a55f35aa3240fab64b11eeb8df31",
         "type": "github"
       },
       "original": {
