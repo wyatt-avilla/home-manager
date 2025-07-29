@@ -87,118 +87,117 @@ in
   };
 
   programs.waybar = {
-    settings.${config.variables.waybarName} =
-      {
-        height = 22;
-        spacing = moduleSpacing;
-        output = monitorName;
-        modules-left = [
-          "memory"
-          "temperature"
-          "cpu"
-          "custom/media-playing"
-        ];
-        modules-center = [
-          "clock#date"
-          "group/workspace-dots"
-          "clock#time"
-        ];
-        modules-right = [
-          "tray"
-          "systemd-failed-units"
-          "wireplumber"
-          "network"
-          "custom/notification"
-        ];
+    settings.${config.variables.waybarName} = {
+      height = 22;
+      spacing = moduleSpacing;
+      output = monitorName;
+      modules-left = [
+        "memory"
+        "temperature"
+        "cpu"
+        "custom/media-playing"
+      ];
+      modules-center = [
+        "clock#date"
+        "group/workspace-dots"
+        "clock#time"
+      ];
+      modules-right = [
+        "tray"
+        "systemd-failed-units"
+        "wireplumber"
+        "network"
+        "custom/notification"
+      ];
 
-        "tray" = {
-          spacing = moduleSpacing / 3;
-        };
+      "tray" = {
+        spacing = moduleSpacing / 3;
+      };
 
-        temperature = {
-          hwmon-path = cpuTempFile;
-          format = "";
-          critical-threshold = 75;
-          format-critical = "<span foreground='${config.variables.colors.orange}'>{temperatureC}°C </span>";
-          interval = 10;
-        };
+      temperature = {
+        hwmon-path = cpuTempFile;
+        format = "";
+        critical-threshold = 75;
+        format-critical = "<span foreground='${config.variables.colors.orange}'>{temperatureC}°C </span>";
+        interval = 10;
+      };
 
-        memory = {
-          format = "";
-          interval = 10;
-          states = {
-            low = 0;
-            medium = 50;
-            high = 75;
-          };
-        };
-
-        cpu = {
-          format = builtins.concatStringsSep "" (
-            map (icon: "{${icon}}") (builtins.genList (i: "icon${toString i}") cpuThreads)
-          );
-          interval = 1;
-          format-icons = [
-            "<span color='${config.variables.colors.green}'>▁</span>"
-            "<span color='${config.variables.colors.blue}'>▂</span>"
-            "<span color='${config.variables.colors.white}'>▃</span>"
-            "<span color='${config.variables.colors.white}'>▄</span>"
-            "<span color='${config.variables.colors.yellow}'>▅</span>"
-            "<span color='${config.variables.colors.yellow}'>▆</span>"
-            "<span color='${config.variables.colors.orange}'>▇</span>"
-            "<span color='${config.variables.colors.red}'>█</span>"
-          ];
-        };
-
-        "custom/media-playing" = {
-          tooltip = false;
-          format = "{icon} {}";
-          max-length = 120;
-          format-icons = {
-            spotify = "";
-            chromium = "";
-          };
-          return-type = "json";
-          exec-if = "which ${playerctl}";
-          exec = pkgs.writeShellScript "queryMedia" ''
-            #!/bin/sh
-            metadata_format="{\"playerName\": \"{{ playerName }}\", \"status\": \"{{ status }}\", \"title\": \"{{ title }}\", \"artist\": \"{{ artist }}\"}"
-            player_priority="spotify,chromium"
-
-            ${playerctl} --follow -a --player "$player_priority" metadata --format "$metadata_format" |
-              while read -r _; do
-            	active_stream=$(${playerctl} -a --player "$player_priority" metadata --format "$metadata_format" | ${jq} -s 'first([.[] | select(.status == "Playing")][] // empty)')
-            	echo ""
-            	echo "$active_stream" | ${jq} --unbuffered --compact-output \
-            	  '.class = .playerName | .alt = .playerName | .text = "\(.title) - \(.artist)"'
-              done
-          '';
-        };
-      }
-      // builtins.listToAttrs (
-        builtins.genList (i: {
-          name = "custom/workspace-dot#${toString (i + 1)}";
-          value.exec = "${workspaceQuery} ${toString (i + 1)}";
-          value.return-type = "json";
-        }) (workspaceRows * workspaceColumns)
-      )
-      // builtins.listToAttrs (
-        builtins.genList (i: {
-          name = "group/workspace-dot-vertical-group-of${toString workspaceRows}#${toString (i + 1)}";
-          value.orientation = "orthogonal";
-          value.modules = builtins.genList (
-            j: "custom/workspace-dot#${toString (i + 1 + (j * workspaceColumns))}"
-          ) workspaceRows;
-        }) workspaceColumns
-      )
-      // {
-        "group/workspace-dots" = {
-          orientation = "inherit";
-          modules = builtins.genList (
-            i: "group/workspace-dot-vertical-group-of${toString workspaceRows}#${toString (i + 1)}"
-          ) workspaceColumns;
+      memory = {
+        format = "";
+        interval = 10;
+        states = {
+          low = 0;
+          medium = 50;
+          high = 75;
         };
       };
+
+      cpu = {
+        format = builtins.concatStringsSep "" (
+          map (icon: "{${icon}}") (builtins.genList (i: "icon${toString i}") cpuThreads)
+        );
+        interval = 1;
+        format-icons = [
+          "<span color='${config.variables.colors.green}'>▁</span>"
+          "<span color='${config.variables.colors.blue}'>▂</span>"
+          "<span color='${config.variables.colors.white}'>▃</span>"
+          "<span color='${config.variables.colors.white}'>▄</span>"
+          "<span color='${config.variables.colors.yellow}'>▅</span>"
+          "<span color='${config.variables.colors.yellow}'>▆</span>"
+          "<span color='${config.variables.colors.orange}'>▇</span>"
+          "<span color='${config.variables.colors.red}'>█</span>"
+        ];
+      };
+
+      "custom/media-playing" = {
+        tooltip = false;
+        format = "{icon} {}";
+        max-length = 120;
+        format-icons = {
+          spotify = "";
+          chromium = "";
+        };
+        return-type = "json";
+        exec-if = "which ${playerctl}";
+        exec = pkgs.writeShellScript "queryMedia" ''
+          #!/bin/sh
+          metadata_format="{\"playerName\": \"{{ playerName }}\", \"status\": \"{{ status }}\", \"title\": \"{{ title }}\", \"artist\": \"{{ artist }}\"}"
+          player_priority="spotify,chromium"
+
+          ${playerctl} --follow -a --player "$player_priority" metadata --format "$metadata_format" |
+            while read -r _; do
+          	active_stream=$(${playerctl} -a --player "$player_priority" metadata --format "$metadata_format" | ${jq} -s 'first([.[] | select(.status == "Playing")][] // empty)')
+          	echo ""
+          	echo "$active_stream" | ${jq} --unbuffered --compact-output \
+          	  '.class = .playerName | .alt = .playerName | .text = "\(.title) - \(.artist)"'
+            done
+        '';
+      };
+    }
+    // builtins.listToAttrs (
+      builtins.genList (i: {
+        name = "custom/workspace-dot#${toString (i + 1)}";
+        value.exec = "${workspaceQuery} ${toString (i + 1)}";
+        value.return-type = "json";
+      }) (workspaceRows * workspaceColumns)
+    )
+    // builtins.listToAttrs (
+      builtins.genList (i: {
+        name = "group/workspace-dot-vertical-group-of${toString workspaceRows}#${toString (i + 1)}";
+        value.orientation = "orthogonal";
+        value.modules = builtins.genList (
+          j: "custom/workspace-dot#${toString (i + 1 + (j * workspaceColumns))}"
+        ) workspaceRows;
+      }) workspaceColumns
+    )
+    // {
+      "group/workspace-dots" = {
+        orientation = "inherit";
+        modules = builtins.genList (
+          i: "group/workspace-dot-vertical-group-of${toString workspaceRows}#${toString (i + 1)}"
+        ) workspaceColumns;
+      };
+    };
 
     style = ''
       #memory {
