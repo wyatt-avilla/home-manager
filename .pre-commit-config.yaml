@@ -14,7 +14,7 @@ repos:
         entry: nix build .#checks.x86_64-linux.linting
 
       - id: deadnix
-        name: Run statix
+        name: Run Deadnix
         language: system
         pass_filenames: false
         entry: nix build .#checks.x86_64-linux.dead-code
