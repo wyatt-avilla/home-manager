@@ -4,4 +4,4 @@
 
 ## Screenshot
 
-![Desktop Screenshot](https://raw.githubusercontent.com/wiki/wyatt-avilla/home-manager/desktop_screenshot.png)
+![Desktop Screenshot](https://raw.githubusercontent.com/wiki/wyatt-avilla/home-manager/screenshots/desktop_screenshot.png)
