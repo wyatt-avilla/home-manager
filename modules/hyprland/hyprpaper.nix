@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
   wallpapers = [
     (pkgs.fetchurl {
@@ -27,24 +32,44 @@ let
     })
   ];
 
-  randomWallpaperScript = pkgs.writeShellScriptBin "random-wallpaper" ''
-    wallpapers=(
-    ${lib.concatStringsSep "\n" (builtins.map (w: "\"${w}\"") wallpapers)}
-    )
+  randomWallpaperScript = pkgs.writeShellScript "set-random-wallpaper" ''
+    #!/usr/bin/env bash
+
+    wallpapers=(${lib.concatStringsSep " " (map (w: "\"${w}\"") wallpapers)})
 
     random_wallpaper="''${wallpapers[$RANDOM % ''${#wallpapers[@]}]}"
 
-    hyprctl ${lib.getExe pkgs.hyprpaper} reload , "$random_wallpaper"
+    mkdir -p "${config.home.homeDirectory}/.config/hypr"
+
+    cat > "${config.home.homeDirectory}/.config/hypr/hyprpaper.conf" << EOF
+    # Available wallpapers:
+    ${lib.concatStringsSep "\n" (builtins.map (p: "#${p}") wallpapers)}
+    preload = $random_wallpaper
+    wallpaper = , $random_wallpaper
+    EOF
   '';
 in
 {
-  wayland.windowManager.hyprland.settings.exec = [ "${randomWallpaperScript}/bin/random-wallpaper" ];
-
   services.hyprpaper = {
-    enable = false;
-    settings = {
-      preload = [ ];
-      wallpapers = [ ];
+    enable = true;
+  };
+
+  systemd.user.services.random-wallpaper = {
+    Unit = {
+      Description = "Set random wallpaper for hyprpaper";
+      Before = [ "graphical-session.target" ];
+      Wants = [ "graphical-session-pre.target" ];
+      After = [ "graphical-session-pre.target" ];
+    };
+
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${randomWallpaperScript}";
+      RemainAfterExit = true;
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
     };
   };
 }
