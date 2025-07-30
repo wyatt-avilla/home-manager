@@ -4,7 +4,6 @@
   config,
   ...
 }:
-
 let
   keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
   sopsPrivateKey = "${config.variables.secretsDirectory}/sops-private-key";

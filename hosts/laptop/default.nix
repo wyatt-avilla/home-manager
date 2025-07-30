@@ -1,11 +1,4 @@
-{
-  lib,
-  pkgs,
-  inputs,
-  config,
-  ...
-}:
-
+{ lib, inputs, ... }:
 {
   imports = [
     ./hyprland.nix
@@ -14,16 +7,20 @@
     ../../modules/common.nix
   ];
 
-  home = {
-    username = "wyatt";
-    homeDirectory = "/home/wyatt";
+  config = {
+    home.stateVersion = "25.05";
 
-    packages = with pkgs; [ ];
+    sops.defaultSopsFile = "${inputs.nix-secrets}/secrets/laptop.yaml";
 
-    stateVersion = "25.05";
+    programs.ghostty.settings.font-size = 11;
   };
 
-  sops.defaultSopsFile = "${inputs.nix-secrets}/secrets/laptop.yaml";
-
-  programs.ghostty.settings.font-size = 11;
+  options.variables = {
+    laptop.monitors = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = {
+        mainMonitor = "LVDS-1";
+      };
+    };
+  };
 }

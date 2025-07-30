@@ -84,6 +84,9 @@ in
   };
 
   home = {
+    username = "wyatt";
+    homeDirectory = "/home/wyatt";
+
     sessionVariables = {
       EDITOR = lib.getExe nixvim-stylix;
       NIXOS_OZONE_WL = 1;

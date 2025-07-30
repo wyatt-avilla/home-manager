@@ -1,10 +1,4 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}:
-
+{ pkgs, config, ... }:
 let
   email = "wyattmurphy1@gmail.com";
   allowedSigners = "${config.home.homeDirectory}/.ssh/allowed_signers";

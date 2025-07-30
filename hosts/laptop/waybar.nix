@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  monitorName = "LVDS-1";
+  inherit (config.variables.laptop.monitors) mainMonitor;
   moduleSpacing = 8;
 in
 {
@@ -9,7 +9,7 @@ in
       css-name = config.variables.waybarName;
       height = 17;
       spacing = moduleSpacing;
-      output = monitorName;
+      output = mainMonitor;
       modules-left = [ "hyprland/workspaces" ];
       modules-center = [
         "clock#date"

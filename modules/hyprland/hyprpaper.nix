@@ -41,7 +41,7 @@ in
   wayland.windowManager.hyprland.settings.exec = [ "${randomWallpaperScript}/bin/random-wallpaper" ];
 
   services.hyprpaper = {
-    enable = true;
+    enable = false;
     settings = {
       preload = [ ];
       wallpapers = [ ];

@@ -6,8 +6,8 @@
 }:
 let
   inherit (config.variables) terminal;
-  mainMonitor = "DP-1";
-  verticalMonitor = "HDMI-A-1";
+  inherit (config.variables.desktop.monitors) mainMonitor;
+  inherit (config.variables.desktop.monitors) verticalMonitor;
   workspaceLogicScriptName = "workspaceLogic.sh";
   absoluteWorkspaceLogicScriptPath = "${config.home.homeDirectory}/.config/hypr/${workspaceLogicScriptName}";
   workspaceKeys = [

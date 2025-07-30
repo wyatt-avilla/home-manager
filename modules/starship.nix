@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}:
+{ lib, ... }:
 
 let
   prependDollarAndJoinWith =

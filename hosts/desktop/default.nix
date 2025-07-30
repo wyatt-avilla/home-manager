@@ -2,7 +2,6 @@
   lib,
   pkgs,
   inputs,
-  config,
   ...
 }:
 
@@ -14,14 +13,23 @@
     ../../modules/common.nix
   ];
 
-  home = {
-    username = "wyatt";
-    homeDirectory = "/home/wyatt";
+  config = {
+    home = {
+      packages = with pkgs; [ amdgpu_top ];
 
-    packages = with pkgs; [ amdgpu_top ];
+      stateVersion = "24.11";
+    };
 
-    stateVersion = "24.11";
+    sops.defaultSopsFile = "${inputs.nix-secrets}/secrets/desktop.yaml";
   };
 
-  sops.defaultSopsFile = "${inputs.nix-secrets}/secrets/desktop.yaml";
+  options.variables = {
+    desktop.monitors = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = {
+        mainMonitor = "DP-1";
+        verticalMonitor = "HDMI-A-1";
+      };
+    };
+  };
 }
