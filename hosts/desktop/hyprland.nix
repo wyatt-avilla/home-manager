@@ -65,7 +65,6 @@ in
 
       bind = [
         "$modifier,code:47,exec,${terminal}"
-        "$modifier,m,layoutmsg,swapwithmaster"
       ]
       ++ builtins.map (key: mkWorkspaceBind key { }) workspaceKeys
       ++ builtins.map (key: mkWorkspaceBind key { shouldShift = true; }) workspaceKeys;

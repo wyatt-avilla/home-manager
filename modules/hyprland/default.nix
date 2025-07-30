@@ -69,6 +69,9 @@ in
         "$modifier,p,togglespecialworkspace,popupterm"
         "$modifier,b,fullscreen,1"
         "$modifier,u,exec, ${clipHist} list | ${lib.getExe pkgs.fuzzel} --dmenu | ${clipHist} decode | ${pkgs.wl-clipboard}/bin/wl-copy"
+
+        "$modifier SHIFT,V,togglefloating"
+        "$modifier,m,layoutmsg,swapwithmaster"
       ];
 
       binde = [
