@@ -43,7 +43,7 @@ let
     comment = "Move all windows from current workspace to another";
     exec = "${moveAllWindows}/bin/move_all_windows.sh";
     categories = [ "Utility" ];
-    icon = "${pkgs.adwaita-icon-theme}/share/icons/Adwaita/16x16/mimetypes/text-x-script.png";
+    icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus/16x16/mimetypes/text-x-script.svg";
     terminal = false;
   };
 in
