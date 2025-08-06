@@ -30,6 +30,19 @@ in
   };
 
   config = {
+    programs.ssh = {
+      enable = true;
+      matchBlocks = {
+        "homelab" = {
+          hostname = "10.0.5.69";
+          user = "wyatt";
+          setEnv = {
+            TERM = "xterm-256color";
+          };
+        };
+      };
+    };
+
     services.ssh-agent.enable = true;
     systemd.user.services.ssh-key-load = {
       Unit = {
