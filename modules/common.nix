@@ -58,6 +58,7 @@ let
     python3
     gh
     pre-commit
+    nix-output-monitor
   ];
 in
 {
