@@ -32,6 +32,40 @@ let
       . $(${pkgs.fzf}/bin/fzf-share)/key-bindings.zsh
     fi
   '';
+
+  vimMode = ''
+    export KEYTIMEOUT=1
+    bindkey -v
+
+    bindkey -M vicmd 'n' backward-char
+    bindkey -M vicmd 'e' down-line-or-history
+    bindkey -M vicmd 'i' up-line-or-history
+    bindkey -M vicmd 'o' forward-char
+    bindkey -M vicmd 'h' vi-insert
+    bindkey -v '^?' backward-delete-char
+
+    function zle-keymap-select {
+      if [[ ''${KEYMAP} == vicmd ]] ||
+         [[ $1 = 'block' ]]; then
+        echo -ne '\e[2 q'
+      elif [[ ''${KEYMAP} == main ]] ||
+           [[ ''${KEYMAP} == viins ]] ||
+           [[ ''${KEYMAP} = ''' ]] ||
+           [[ $1 = 'beam' ]]; then
+        echo -ne '\e[5 q'
+      fi
+    }
+    zle -N zle-keymap-select
+
+    zle-line-init() {
+      zle -K viins
+      echo -ne "\e[5 q"
+    }
+    zle -N zle-line-init
+
+    echo -ne '\e[5 q'
+    preexec() { echo -ne '\e[5 q' ;}
+  '';
 in
 {
   programs.fzf.enableZshIntegration = true;
@@ -68,44 +102,15 @@ in
       };
     };
 
-    initContent = fzfConfig + ''
-      export KEYTIMEOUT=1
-      setopt HISTVERIFY
+    initContent =
+      fzfConfig
+      + vimMode
+      + ''
+        setopt HISTVERIFY
 
-      rg() {
-        command rg --json -C 2 "$@" | delta
-      }
-
-      bindkey -v
-
-      bindkey -M vicmd 'n' backward-char
-      bindkey -M vicmd 'e' down-line-or-history
-      bindkey -M vicmd 'i' up-line-or-history
-      bindkey -M vicmd 'o' forward-char
-      bindkey -M vicmd 'h' vi-insert
-      bindkey -v '^?' backward-delete-char
-
-      function zle-keymap-select {
-        if [[ ''${KEYMAP} == vicmd ]] ||
-           [[ $1 = 'block' ]]; then
-          echo -ne '\e[2 q'
-        elif [[ ''${KEYMAP} == main ]] ||
-             [[ ''${KEYMAP} == viins ]] ||
-             [[ ''${KEYMAP} = ''' ]] ||
-             [[ $1 = 'beam' ]]; then
-          echo -ne '\e[5 q'
-        fi
-      }
-      zle -N zle-keymap-select
-
-      zle-line-init() {
-        zle -K viins
-        echo -ne "\e[5 q"
-      }
-      zle -N zle-line-init
-
-      echo -ne '\e[5 q'
-      preexec() { echo -ne '\e[5 q' ;}
-    '';
+        rg() {
+          command rg --json -C 2 "$@" | delta
+        }
+      '';
   };
 }
