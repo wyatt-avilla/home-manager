@@ -6,9 +6,11 @@
   ...
 }:
 let
+  ezaTree = "${lib.getExe pkgs.eza} --tree --level=3 --color=always --group-directories-first --icons";
+
   fzfPreview = pkgs.writeShellScriptBin "fzf-preview" ''
     if [[ -d "$1" ]]; then
-      ${lib.getExe pkgs.eza} --tree --level=2 --color=always --group-directories-first --icons "$1"
+      ${ezaTree} "$1"
     elif [[ -f "$1" ]]; then
       ${lib.getExe pkgs.bat} --style=numbers --color=always "$1" | head -100
     else
@@ -79,6 +81,7 @@ in
       cat = lib.getExe pkgs.bat;
       lf = "${config.programs.yazi.shellWrapperName}";
       vim = lib.getExe inputs.nixvim.packages.${pkgs.system}.default;
+      lt = ezaTree;
     };
 
     zsh-abbr = {
