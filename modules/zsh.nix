@@ -5,7 +5,34 @@
   config,
   ...
 }:
+let
+  fzfPreview = pkgs.writeShellScriptBin "fzf-preview" ''
+    if [[ -d "$1" ]]; then
+      ${lib.getExe pkgs.eza} --tree --level=2 --color=always --group-directories-first --icons "$1"
+    elif [[ -f "$1" ]]; then
+      ${lib.getExe pkgs.bat} --style=numbers --color=always "$1" | head -100
+    else
+      echo "Cannot preview: $1"
+    fi
+  '';
 
+  fzfConfig = ''
+    export FZF_COMPLETION_TRIGGER='**'
+    export FZF_DEFAULT_OPTS='
+      --preview "${lib.getExe fzfPreview} {}"
+      --bind ctrl-u:preview-up
+      --bind ctrl-d:preview-down
+    '
+    export FZF_DEFAULT_COMMAND='${lib.getExe pkgs.fd} --type f'
+
+    export ABBR_SET_EXPANSION_CURSOR=1
+
+    if [[ $options[zle] = on ]]; then
+      . $(${pkgs.fzf}/bin/fzf-share)/completion.zsh
+      . $(${pkgs.fzf}/bin/fzf-share)/key-bindings.zsh
+    fi
+  '';
+in
 {
   programs.fzf.enableZshIntegration = true;
   programs.zsh = {
@@ -41,18 +68,8 @@
       };
     };
 
-    initContent = ''
+    initContent = fzfConfig + ''
       export KEYTIMEOUT=1
-      export FZF_COMPLETION_TRIGGER='**'
-      export FZF_DEFAULT_OPTS='
-        --preview "bat --style=numbers --color=always {} | head -100"
-        --bind ctrl-u:preview-up
-        --bind ctrl-d:preview-down
-      '
-      export FZF_DEFAULT_COMMAND='${lib.getExe pkgs.fd} --type f'
-
-      export ABBR_SET_EXPANSION_CURSOR=1
-
       setopt HISTVERIFY
 
       rg() {
@@ -86,11 +103,6 @@
         echo -ne "\e[5 q"
       }
       zle -N zle-line-init
-
-      if [[ $options[zle] = on ]]; then
-        . $(${pkgs.fzf}/bin/fzf-share)/completion.zsh
-        . $(${pkgs.fzf}/bin/fzf-share)/key-bindings.zsh
-      fi
 
       echo -ne '\e[5 q'
       preexec() { echo -ne '\e[5 q' ;}
