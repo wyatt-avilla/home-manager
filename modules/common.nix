@@ -68,7 +68,7 @@ in
     ./fuzzel.nix
     ./starship.nix
     ./zsh.nix
-    ./ghostty.nix
+    ./wezterm.nix
     ./zathura.nix
     ./stylix.nix
     ./spicetify.nix

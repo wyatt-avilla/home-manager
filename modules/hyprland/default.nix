@@ -89,7 +89,7 @@ in
       workspace = [ "special:popupterm,on-created-empty:${terminal}" ];
 
       windowrule = [
-        "opacity 0.9 override 0.75 override, class:.*(${terminal}).*"
+        "opacity 0.95 override 0.8 override, class:.*(${terminal}).*"
         "opacity 0.8 override 0.65 override, class:[Ss]potify"
         "opacity 0.8 override 0.65 override, class:[Ww]eb[Cc]ord"
         "bordercolor rgb(${lib.removePrefix "#" config.variables.colors.red}), fullscreen:1"
