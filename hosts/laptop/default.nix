@@ -11,8 +11,6 @@
     home.stateVersion = "25.05";
 
     sops.defaultSopsFile = "${inputs.nix-secrets}/secrets/laptop.yaml";
-
-    programs.ghostty.settings.font-size = 11;
   };
 
   options.variables = {
