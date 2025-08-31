@@ -37,6 +37,7 @@ let
     hyperfine
     dust
     img2pdf
+    hexyl
   ];
 
   gui = with pkgs; [
@@ -51,6 +52,7 @@ let
     alsa-utils
     obs-studio
     gimp
+    obsidian
   ];
 
   dev = with pkgs; [
