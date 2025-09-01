@@ -11,6 +11,8 @@
     home.stateVersion = "25.05";
 
     sops.defaultSopsFile = "${inputs.nix-secrets}/secrets/laptop.yaml";
+
+    variables.weztermConfig.font_size = 10;
   };
 
   options.variables = {
