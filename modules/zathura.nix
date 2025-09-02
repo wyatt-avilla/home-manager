@@ -9,6 +9,9 @@
 
       E = "navigate next";
       I = "navigate previous";
+
+      k = "search forward";
+      N = "search previous";
     };
 
     options = {
