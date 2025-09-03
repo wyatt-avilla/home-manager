@@ -9,6 +9,8 @@ in
     settings = {
       general = {
         "$modifier" = "ALT";
+        gaps_in = 3;
+        gaps_out = 7;
       };
 
       decoration = {

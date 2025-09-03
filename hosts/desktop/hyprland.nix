@@ -61,6 +61,8 @@ in
 
       general = {
         "$modifier" = "SUPER";
+        gaps_in = 5;
+        gaps_out = 10;
       };
 
       bind = [
