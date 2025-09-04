@@ -20,6 +20,8 @@ in
 
       monitor = [ ", preferred, auto, 1" ];
 
+      windowrule = [ "opacity 0.95 override 0.8 override, class:.*(${terminal}).*" ];
+
       bind = [
         "$modifier, Return, exec, ${terminal}"
 
