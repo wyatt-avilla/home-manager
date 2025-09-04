@@ -58,4 +58,16 @@ self: super: {
     cp -r ${super.google-chrome}/share/icons $out/share/icons
   '';
 
+  obsidian = self.runCommand "obsidian" { nativeBuildInputs = [ self.makeWrapper ]; } ''
+    mkdir -p $out/bin $out/share/applications
+
+    makeWrapper ${super.obsidian}/bin/obsidian $out/bin/obsidian \
+      --add-flags "${extraFlags}"
+
+    substitute ${super.obsidian}/share/applications/obsidian.desktop \
+      $out/share/applications/obsidian.desktop \
+      --replace-fail "Exec=obsidian" "Exec=$out/bin/obsidian"
+
+    cp -r ${super.obsidian}/share/icons $out/share/icons
+  '';
 }
