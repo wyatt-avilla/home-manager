@@ -114,6 +114,21 @@ in
         rg() {
           command rg --json -C 2 "$@" | delta
         }
+
+        nix-temp() {
+          packages=$(
+            nix search nixpkgs ''' --json 2>/dev/null |
+            ${lib.getExe pkgs.jq} -r 'keys[]' |
+            ${lib.getExe pkgs.gnused} 's/^legacyPackages\.${pkgs.system}\.//' |
+            ${lib.getExe pkgs.fzf} -m --preview 'pkg={}; nix search nixpkgs "$pkg" --json 2>/dev/null | jq -r --arg pkg "$pkg" ".[\"legacyPackages.${pkgs.system}.$pkg\"].description // \"No description\""' |
+            ${lib.getExe' pkgs.coreutils "paste"} -sd ' '
+          )
+
+          if [[ -n "$packages" ]]; then
+            pkg_array=(''${=packages})
+            nix-shell -p "''${pkg_array[@]}" --run zsh
+          fi
+        }
       '';
   };
 }
