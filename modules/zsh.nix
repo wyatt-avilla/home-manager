@@ -116,17 +116,36 @@ in
         }
 
         nix-temp() {
-          packages=$(
-            nix search nixpkgs ''' --json 2>/dev/null |
-            ${lib.getExe pkgs.jq} -r 'keys[]' |
-            ${lib.getExe pkgs.gnused} 's/^legacyPackages\.${pkgs.system}\.//' |
-            ${lib.getExe pkgs.fzf} -m --preview 'pkg={}; nix search nixpkgs "$pkg" --json 2>/dev/null | jq -r --arg pkg "$pkg" ".[\"legacyPackages.${pkgs.system}.$pkg\"].description // \"No description\""' |
-            ${lib.getExe' pkgs.coreutils "paste"} -sd ' '
+          pkgs_json_file="/tmp/nixpkgs.json"
+
+          if ! [[ -f "$pkgs_json_file" ]] || [[ $(find "$pkgs_json_file" -mtime +1 2>/dev/null) ]]; then
+            nix search nixpkgs ''' --json 1>"$pkgs_json_file" 2>/dev/null
+          fi
+
+          selected_packages=$(
+            ${lib.getExe' pkgs.coreutils "cat"} "$pkgs_json_file" |
+              ${lib.getExe pkgs.jq} -r 'keys[]' |
+              ${lib.getExe pkgs.gnused} 's/^legacyPackages\.${pkgs.system}\.//' |
+              ${lib.getExe pkgs.fzf} -m --preview-window=wrap --wrap-sign=''' --preview "
+                pkg={}
+                version=\$(${lib.getExe pkgs.jq} -r \".[\\\"legacyPackages.x86_64-linux.\$pkg\\\"].version // empty\" '$pkgs_json_file')
+                description=\$(${lib.getExe pkgs.jq} -r \".[\\\"legacyPackages.x86_64-linux.\$pkg\\\"].description // empty\" '$pkgs_json_file')
+                
+                if [[ -n \"\$version\" ]]; then
+                    echo \"Version: \$version\"
+                fi
+                
+                if [[ -n \"\$description\" ]]; then
+                    echo \"\$description\"
+                else
+                    echo \"No Description\"
+                fi
+              "
           )
 
-          if [[ -n "$packages" ]]; then
-            pkg_array=(''${=packages})
-            nix-shell -p "''${pkg_array[@]}" --run zsh
+          if [[ -n $selected_packages ]]; then
+          	pkg_array=(''${=selected_packages})
+          	nix-shell -p "''${pkg_array[@]}" --run zsh
           fi
         }
       '';
