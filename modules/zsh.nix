@@ -110,6 +110,12 @@ let
       command rg --json -C 2 "$@" | delta
     }
   '';
+
+  style = ''
+    zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
+    zstyle ':completion:*:descriptions' format '[%d]'
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview '${lib.getExe pkgs.eza} -1 --icons=always --color=always $realpath'
+  '';
 in
 {
   programs.fzf.enableZshIntegration = true;
@@ -147,10 +153,18 @@ in
       };
     };
 
+    plugins = [
+      {
+        name = "fzf-tab";
+        src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
+      }
+    ];
+
     initContent = ''
       setopt HISTVERIFY
     ''
     + fzfConfig
+    + style
     + vimMode
     + nixTemp
     + ripGrep;

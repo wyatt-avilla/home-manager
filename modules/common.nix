@@ -9,7 +9,6 @@ let
   nixvim-stylix = inputs.nixvim.packages.${pkgs.system}.default;
 
   commandLine = with pkgs; [
-    (lib.hiPrio uutils-coreutils-noprefix)
     nixvim-stylix
     wget
     jq
