@@ -107,7 +107,7 @@ let
 
   ripGrep = ''
     rg() {
-      command rg --json -C 2 "$@" | delta
+      command ${lib.getExe pkgs.ripgrep} --json -C 2 "$@" | ${lib.getExe pkgs.delta}
     }
   '';
 
