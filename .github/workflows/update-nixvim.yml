@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.NIXVIM_UPDATE_TOKEN }}
+          token: ${{ secrets.NIX_PAT }}
 
       - name: Install Nix
         uses: cachix/install-nix-action@v25
