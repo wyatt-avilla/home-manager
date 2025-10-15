@@ -83,8 +83,8 @@ let
           ${lib.getExe pkgs.gnused} 's/^legacyPackages\.${pkgs.system}\.//' |
           ${lib.getExe pkgs.fzf} -m --preview-window=down:40%,wrap --wrap-sign=''' --preview "
             pkg={}
-            version=\$(${lib.getExe pkgs.jq} -r \".[\\\"legacyPackages.x86_64-linux.\$pkg\\\"].version // empty\" '$pkgs_json_file')
-            description=\$(${lib.getExe pkgs.jq} -r \".[\\\"legacyPackages.x86_64-linux.\$pkg\\\"].description // empty\" '$pkgs_json_file')
+            version=\$(${lib.getExe pkgs.jq} -r \".[\\\"legacyPackages.${pkgs.system}.\$pkg\\\"].version // empty\" '$pkgs_json_file')
+            description=\$(${lib.getExe pkgs.jq} -r \".[\\\"legacyPackages.${pkgs.system}.\$pkg\\\"].description // empty\" '$pkgs_json_file')
             
             if [[ -n \"\$version\" ]]; then
                 echo \"Version: \$version\"
