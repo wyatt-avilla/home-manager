@@ -151,7 +151,7 @@ in
 
       "custom/media-playing" = {
         tooltip = false;
-        format = "{icon} {}";
+        format = "{icon} {text}";
         max-length = 120;
         format-icons = {
           spotify = "";
