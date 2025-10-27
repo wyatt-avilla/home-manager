@@ -28,8 +28,11 @@ in
       format = "ssh";
       signByDefault = true;
     };
+  };
 
-    delta.enable = true;
+  programs.difftastic = {
+    enable = true;
+    git.enable = true;
   };
 
   systemd.user.services.allowed-signers-file-gen = {
