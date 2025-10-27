@@ -12,9 +12,12 @@ in
 {
   programs.git = {
     enable = true;
-    userName = "Wyatt Avilla";
-    userEmail = email;
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Wyatt Avilla";
+        inherit email;
+      };
+
       init.defaultBranch = "main";
       gpg.ssh.allowedSignersFile = allowedSigners;
       push.autoSetupRemote = true;
