@@ -69,6 +69,22 @@
           desc = "Move cursor to the bottom";
         }
         {
+          on = [
+            "g"
+            "h"
+          ];
+          run = "cd ~/";
+          desc = "Change to home directory";
+        }
+        {
+          on = [
+            "g"
+            "t"
+          ];
+          run = "cd /tmp";
+          desc = "Change to /tmp";
+        }
+        {
           on = "s";
           run = [
             "toggle"
