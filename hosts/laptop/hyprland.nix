@@ -18,7 +18,7 @@ in
         shadow.enabled = false;
       };
 
-      monitor = [ ", preferred, auto, 1" ];
+      monitor = [ ", preferred, auto, 1, mirror, LVDS-1" ];
 
       windowrule = [ "opacity 0.95 override 0.8 override, class:.*(${terminal}).*" ];
 
