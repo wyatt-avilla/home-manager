@@ -91,7 +91,6 @@ in
       windowrule = [
         "opacity 0.8 override 0.7 override, class:[Oo]bsidian"
         "opacity 0.8 override 0.65 override, class:[Ss]potify"
-        "opacity 0.8 override 0.65 override, class:[Ww]eb[Cc]ord"
         "bordercolor rgb(${lib.removePrefix "#" config.variables.colors.red}), fullscreen:1"
       ];
     };

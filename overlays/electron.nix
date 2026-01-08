@@ -32,19 +32,6 @@ self: super: {
     cp ${super.discord}/share/pixmaps/discord.png $out/share/pixmaps/discord.png
   '';
 
-  webcord = self.runCommand "webcord" { nativeBuildInputs = [ self.makeWrapper ]; } ''
-    mkdir -p $out/bin $out/share/applications $out/share/pixmaps
-
-    makeWrapper ${super.webcord}/bin/webcord $out/bin/webcord \
-      --add-flags "${extraFlags}"
-
-    substitute ${super.webcord}/share/applications/webcord.desktop \
-      $out/share/applications/webcord.desktop \
-      --replace-fail "Exec=webcord" "Exec=$out/bin/webcord" \
-
-    cp -r ${super.webcord}/share/icons $out/share/icons
-  '';
-
   google-chrome = self.runCommand "google-chrome" { nativeBuildInputs = [ self.makeWrapper ]; } ''
     mkdir -p $out/bin $out/share/applications
 

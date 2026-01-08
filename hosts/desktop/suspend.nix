@@ -46,18 +46,11 @@ let
       ${lib.concatStringsSep "\n  " (map (script: "${script}/bin/${script.name}") scripts)}
     '';
 
-  webcordScripts = mkSuspendScripts "WebCord" "webcord";
   discordScripts = mkSuspendScripts "spotify" "spotify";
 
-  allPreScripts = [
-    webcordScripts.pre
-    discordScripts.pre
-  ];
+  allPreScripts = [ discordScripts.pre ];
 
-  allPostScripts = [
-    webcordScripts.post
-    discordScripts.post
-  ];
+  allPostScripts = [ discordScripts.post ];
 
   preSuspendScript = mkSuspendWrapper "pre-suspend-all" allPreScripts;
   postResumeScript = mkSuspendWrapper "post-resume-all" allPostScripts;
