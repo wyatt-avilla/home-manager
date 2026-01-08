@@ -22,6 +22,8 @@ let
     # Available wallpapers:
     ${lib.concatStringsSep "\n" (map (p: "# ${p}") wallpapers)}
 
+    splash = false
+
     wallpaper {
         monitor =
         path = $random_wallpaper
