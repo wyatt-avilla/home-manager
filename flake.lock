@@ -609,36 +609,6 @@
         "type": "github"
       }
     },
-    "ixx": {
-      "inputs": {
-        "flake-utils": [
-          "nixvim",
-          "nixvim",
-          "nuschtosSearch",
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixvim",
-          "nixvim",
-          "nuschtosSearch",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1754860581,
-        "narHash": "sha256-EM0IE63OHxXCOpDHXaTyHIOk2cNvMCGPqLt/IdtVxgk=",
-        "owner": "NuschtOS",
-        "repo": "ixx",
-        "rev": "babfe85a876162c4acc9ab6fb4483df88fa1f281",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NuschtOS",
-        "ref": "v0.1.1",
-        "repo": "ixx",
-        "type": "github"
-      }
-    },
     "nix-checks": {
       "inputs": {
         "nixpkgs": [
@@ -828,11 +798,11 @@
         "nixvim": "nixvim_2"
       },
       "locked": {
-        "lastModified": 1767840512,
-        "narHash": "sha256-hkPOycuW3da9pThIAQUTX9eeO9Bl7tiz9m/KEQHj644=",
+        "lastModified": 1767845964,
+        "narHash": "sha256-3bM52ft2biJpwZyRybRWnNzG4ri7j4gplgeFJ3BDmsE=",
         "owner": "wyatt-avilla",
         "repo": "nixvim",
-        "rev": "dfd826ed278d6210918243f4570a34b7c5e7bbd4",
+        "rev": "b54bf89abd26b32ac6960f2ed7d515986993cb35",
         "type": "github"
       },
       "original": {
