@@ -20,9 +20,12 @@ let
 
     cat > "${config.home.homeDirectory}/.config/hypr/hyprpaper.conf" << EOF
     # Available wallpapers:
-    ${lib.concatStringsSep "\n" (map (p: "#${p}") wallpapers)}
-    preload = $random_wallpaper
-    wallpaper = , $random_wallpaper
+    ${lib.concatStringsSep "\n" (map (p: "# ${p}") wallpapers)}
+
+    wallpaper {
+        monitor =
+        path = $random_wallpaper
+    }
     EOF
   '';
 in
