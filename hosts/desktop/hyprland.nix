@@ -54,13 +54,14 @@ in
 
   wayland.windowManager.hyprland = {
     settings = {
+      "$modifier" = "SUPER";
+
       monitor = [
         "${mainMonitor},2560x1440@165,0x0,1"
         "${verticalMonitor},1920x1080,2560x-200,1,transform,1"
       ];
 
       general = {
-        "$modifier" = "SUPER";
         gaps_in = 5;
         gaps_out = 10;
       };

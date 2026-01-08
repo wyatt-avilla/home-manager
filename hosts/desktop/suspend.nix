@@ -57,7 +57,7 @@ let
 in
 {
   services.hypridle = {
-    enable = true;
+    enable = false;
     settings = {
       general = {
         before_sleep_cmd = "${preSuspendScript}/bin/pre-suspend-all";
