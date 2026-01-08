@@ -89,9 +89,9 @@ in
       workspace = [ "special:popupterm,on-created-empty:${terminal}" ];
 
       windowrule = [
-        "opacity 0.8 override 0.7 override, class:[Oo]bsidian"
-        "opacity 0.8 override 0.65 override, class:[Ss]potify"
-        "bordercolor rgb(${lib.removePrefix "#" config.variables.colors.red}), fullscreen:1"
+        "match:class [Oo]bsidian, opacity 0.8 0.7"
+        "match:class [Ss]potify, opacity 0.8 0.65"
+        "match:fullscreen_state_client 1, border_color rgb(${lib.removePrefix "#" config.variables.colors.red})"
       ];
     };
   };

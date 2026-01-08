@@ -66,7 +66,7 @@ in
         gaps_out = 10;
       };
 
-      windowrule = [ "opacity 0.8 override 0.7 override, class:.*(${terminal}).*" ];
+      windowrule = [ "match:class .*(${terminal}).*, opacity 0.8 0.7" ];
 
       bind = [
         "$modifier,code:47,exec,${terminal}"
