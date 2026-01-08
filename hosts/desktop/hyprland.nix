@@ -71,8 +71,8 @@ in
       bind = [
         "$modifier,code:47,exec,${terminal}"
       ]
-      ++ builtins.map (key: mkWorkspaceBind key { }) workspaceKeys
-      ++ builtins.map (key: mkWorkspaceBind key { shouldShift = true; }) workspaceKeys;
+      ++ map (key: mkWorkspaceBind key { }) workspaceKeys
+      ++ map (key: mkWorkspaceBind key { shouldShift = true; }) workspaceKeys;
 
       workspace =
         mkMonitorAssociations {

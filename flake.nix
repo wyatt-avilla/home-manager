@@ -39,8 +39,6 @@
       self,
       nixpkgs,
       home-manager,
-      hyprland,
-      nixvim,
       stylix,
       spicetify-nix,
       nix-secrets,

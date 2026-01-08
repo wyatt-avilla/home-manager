@@ -5,7 +5,7 @@
   ...
 }:
 let
-  wallpapers = builtins.filter (path: pkgs.lib.filesystem.pathIsRegularFile path) (
+  wallpapers = builtins.filter (p: pkgs.lib.filesystem.pathIsRegularFile p) (
     pkgs.lib.filesystem.listFilesRecursive ../../assets/wallpapers
   );
 
@@ -20,7 +20,7 @@ let
 
     cat > "${config.home.homeDirectory}/.config/hypr/hyprpaper.conf" << EOF
     # Available wallpapers:
-    ${lib.concatStringsSep "\n" (builtins.map (p: "#${p}") wallpapers)}
+    ${lib.concatStringsSep "\n" (map (p: "#${p}") wallpapers)}
     preload = $random_wallpaper
     wallpaper = , $random_wallpaper
     EOF
