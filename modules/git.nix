@@ -1,6 +1,11 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  inputs,
+  ...
+}:
 let
-  email = "wyattmurphy1@gmail.com";
+  email = inputs.nix-secrets.nixosModules.plainSecrets.personalEmail;
   allowedSigners = "${config.home.homeDirectory}/.ssh/allowed_signers";
 
   allowedSignersScript = pkgs.writeShellScriptBin "allowed-signers-file-gen" ''
