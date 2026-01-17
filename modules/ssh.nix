@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  inputs,
   ...
 }:
 let
@@ -34,7 +35,14 @@ in
       enable = true;
       matchBlocks = {
         "homelab" = {
-          hostname = "10.0.5.69";
+          hostname = inputs.nix-secrets.nixosModules.plainSecrets.homelab.localIp;
+          user = "wyatt";
+          setEnv = {
+            TERM = "xterm-256color";
+          };
+        };
+        "vps" = {
+          hostname = inputs.nix-secrets.nixosModules.plainSecrets.vps.publicIp;
           user = "wyatt";
           setEnv = {
             TERM = "xterm-256color";
