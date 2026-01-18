@@ -35,7 +35,8 @@ in
       enable = true;
       matchBlocks = {
         "homelab" = {
-          hostname = inputs.nix-secrets.nixosModules.plainSecrets.homelab.localIp;
+          hostname = inputs.nix-secrets.nixosModules.plainSecrets.vps.publicIp;
+          port = 2222;
           user = "wyatt";
           setEnv = {
             TERM = "xterm-256color";
