@@ -51,6 +51,7 @@ let
     obs-studio
     gimp
     obsidian
+    slack
   ];
 
   dev = with pkgs; [
