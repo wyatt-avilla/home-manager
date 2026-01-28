@@ -52,6 +52,7 @@ let
     gimp
     obsidian
     slack
+    discord
   ];
 
   dev = with pkgs; [
