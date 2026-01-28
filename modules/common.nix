@@ -36,6 +36,7 @@ let
     dust
     img2pdf
     hexyl
+    opencode
   ];
 
   gui = with pkgs; [
