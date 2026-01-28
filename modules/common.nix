@@ -13,7 +13,6 @@ let
     wget
     jq
     tree
-    hyprpicker
     cloc
     eza
     bat
