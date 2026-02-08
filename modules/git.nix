@@ -5,7 +5,7 @@
   ...
 }:
 let
-  email = inputs.nix-secrets.nixosModules.plainSecrets.personalEmail;
+  email = inputs.nix-secrets.nixosModules.plainSecrets.email.linux;
   allowedSigners = "${config.home.homeDirectory}/.ssh/allowed_signers";
 
   allowedSignersScript = pkgs.writeShellScriptBin "allowed-signers-file-gen" ''
