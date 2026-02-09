@@ -118,55 +118,63 @@ let
   '';
 in
 {
-  programs.fzf.enableZshIntegration = true;
-  programs.zsh = {
-    enable = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-
-    shellAliases = {
-      ls = "${lib.getExe pkgs.eza} --group-directories-first --icons";
-      cat = lib.getExe pkgs.bat;
-      lf = "${config.programs.yazi.shellWrapperName}";
-      vim = lib.getExe inputs.nixvim.packages.${pkgs.system}.default;
-      lt = ezaTree;
-    };
-
-    zsh-abbr = {
+  programs = {
+    direnv = {
       enable = true;
-      abbreviations = {
-        gd = "git diff";
-        gs = "git status";
-        gbr = "git branch";
-        gco = "git checkout";
-        gsw = "git switch";
-        gcm = "git commit -m \"%\"";
-        gpl = "git pull";
-        gph = "git push";
-        grs = "git restore";
-
-        try = "nix-shell -p % --run zsh";
-        nd = "nix develop";
-        nb = "nix build";
-
-        py = "python3";
-      };
+      enableZshIntegration = true;
     };
 
-    plugins = [
-      {
-        name = "fzf-tab";
-        src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
-      }
-    ];
+    fzf.enableZshIntegration = true;
 
-    initContent = ''
-      setopt HISTVERIFY
-    ''
-    + fzfConfig
-    + style
-    + vimMode
-    + nixTemp
-    + ripGrep;
+    zsh = {
+      enable = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+
+      shellAliases = {
+        ls = "${lib.getExe pkgs.eza} --group-directories-first --icons";
+        cat = lib.getExe pkgs.bat;
+        lf = "${config.programs.yazi.shellWrapperName}";
+        vim = lib.getExe inputs.nixvim.packages.${pkgs.system}.default;
+        lt = ezaTree;
+      };
+
+      zsh-abbr = {
+        enable = true;
+        abbreviations = {
+          gd = "git diff";
+          gs = "git status";
+          gbr = "git branch";
+          gco = "git checkout";
+          gsw = "git switch";
+          gcm = "git commit -m \"%\"";
+          gpl = "git pull";
+          gph = "git push";
+          grs = "git restore";
+
+          try = "nix-shell -p % --run zsh";
+          nd = "nix develop";
+          nb = "nix build";
+
+          py = "python3";
+        };
+      };
+
+      plugins = [
+        {
+          name = "fzf-tab";
+          src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
+        }
+      ];
+
+      initContent = ''
+        setopt HISTVERIFY
+      ''
+      + fzfConfig
+      + style
+      + vimMode
+      + nixTemp
+      + ripGrep;
+    };
   };
 }
