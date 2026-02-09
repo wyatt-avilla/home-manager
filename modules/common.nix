@@ -6,7 +6,7 @@
 }:
 
 let
-  nixvim-stylix = inputs.nixvim.packages.${pkgs.system}.default;
+  nixvim-stylix = inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   commandLine = with pkgs; [
     nixvim-stylix
