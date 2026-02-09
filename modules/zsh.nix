@@ -8,7 +8,7 @@
 let
   ezaTree = "${lib.getExe pkgs.eza} --tree --level=3 --color=always --group-directories-first --icons";
 
-  fzfPreview = pkgs.writeShellScriptBin "fzf-preview" ''
+  fzfPreview = pkgs.writeShellScript "fzf-preview" ''
     if [[ -d "$1" ]]; then
       ${ezaTree} "$1"
     elif [[ -f "$1" ]]; then
@@ -21,7 +21,7 @@ let
   fzfConfig = ''
     export FZF_COMPLETION_TRIGGER='**'
     export FZF_DEFAULT_OPTS='
-      --preview "${lib.getExe fzfPreview} {}"
+      --preview "${fzfPreview} {}"
       --bind ctrl-u:preview-up
       --bind ctrl-d:preview-down
     '

@@ -8,7 +8,7 @@ let
   email = inputs.nix-secrets.nixosModules.plainSecrets.email.linux;
   allowedSigners = "${config.home.homeDirectory}/.ssh/allowed_signers";
 
-  allowedSignersScript = pkgs.writeShellScriptBin "allowed-signers-file-gen" ''
+  allowedSignersScript = pkgs.writeShellScript "allowed-signers-file-gen" ''
     if [ -s "${config.variables.secretsDirectory}/ssh-public-key" ]; then
       printf "${email} $(cat "${config.variables.secretsDirectory}/ssh-public-key")" > "${allowedSigners}"
     fi
@@ -48,7 +48,7 @@ in
     };
 
     Service = {
-      ExecStart = "${allowedSignersScript}/bin/allowed-signers-file-gen";
+      ExecStart = "${allowedSignersScript}";
       Type = "oneshot";
     };
 

@@ -12,7 +12,7 @@ let
       flagFile = "/tmp/${lower}-running.flag";
     in
     {
-      pre = pkgs.writeShellScriptBin "${lower}-pre-suspend" ''
+      pre = pkgs.writeShellScript "${lower}-pre-suspend" ''
         client=$(${hyprctl} clients -j | ${jq} -c '.[] | select(.class == "${className}")')
         ws_id=$(echo "$client" | ${jq} -r '.workspace.id' | head -n1)
         address=$(echo "$client" | ${jq} -r '.address' | head -n1)
@@ -26,7 +26,7 @@ let
         fi
       '';
 
-      post = pkgs.writeShellScriptBin "${lower}-post-resume" ''
+      post = pkgs.writeShellScript "${lower}-post-resume" ''
         if [ -f ${flagFile} ]; then
           ws_id=$(${cat} ${flagFile})
           rm -f ${flagFile}
@@ -41,9 +41,9 @@ let
 
   mkSuspendWrapper =
     name: scripts:
-    pkgs.writeShellScriptBin name ''
+    pkgs.writeShellScript name ''
       set -e
-      ${lib.concatStringsSep "\n  " (map (script: "${script}/bin/${script.name}") scripts)}
+      ${lib.concatStringsSep "\n  " (map (script: "${script}") scripts)}
     '';
 
   discordScripts = mkSuspendScripts "spotify" "spotify";
@@ -60,8 +60,8 @@ in
     enable = false;
     settings = {
       general = {
-        before_sleep_cmd = "${preSuspendScript}/bin/pre-suspend-all";
-        after_sleep_cmd = "${postResumeScript}/bin/post-resume-all";
+        before_sleep_cmd = "${preSuspendScript}";
+        after_sleep_cmd = "${postResumeScript}";
       };
       listener = {
         timeout = 60 * 20;

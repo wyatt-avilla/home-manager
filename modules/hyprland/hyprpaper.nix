@@ -10,8 +10,6 @@ let
   );
 
   randomWallpaperScript = pkgs.writeShellScript "set-random-wallpaper" ''
-    #!/usr/bin/env bash
-
     wallpapers=(${lib.concatStringsSep " " (map (w: "\"${w}\"") wallpapers)})
 
     random_wallpaper="''${wallpapers[$RANDOM % ''${#wallpapers[@]}]}"

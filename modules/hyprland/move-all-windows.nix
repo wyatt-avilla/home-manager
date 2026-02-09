@@ -4,7 +4,7 @@ let
   jq = lib.getExe pkgs.jq;
   notifySend = lib.getExe pkgs.libnotify;
 
-  moveAllWindows = pkgs.writeShellScriptBin "move_all_windows.sh" ''
+  moveAllWindows = pkgs.writeShellScript "move_all_windows.sh" ''
     current_workspace=$(hyprctl activeworkspace -j | ${jq} -r '.id')
     target_workspace=$(${fuzzel} --dmenu --lines 0 --prompt "Switch all windows to workspace: ")
 
@@ -41,7 +41,7 @@ let
     name = "move-all-windows";
     desktopName = "move_all_windows.sh";
     comment = "Move all windows from current workspace to another";
-    exec = "${moveAllWindows}/bin/move_all_windows.sh";
+    exec = "${moveAllWindows}";
     categories = [ "Utility" ];
     icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus/16x16/mimetypes/text-x-script.svg";
     terminal = false;

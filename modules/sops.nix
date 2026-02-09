@@ -8,7 +8,7 @@ let
   keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
   sopsPrivateKey = "${config.variables.secretsDirectory}/sops-private-key";
 
-  sopsKeyFileGenScript = pkgs.writeShellScriptBin "sops-key-file-gen" ''
+  sopsKeyFileGenScript = pkgs.writeShellScript "sops-key-file-gen" ''
     if [ -s "${sopsPrivateKey}" ]; then
       cp -f "${sopsPrivateKey}" "${keyFile}"
     fi
@@ -30,7 +30,7 @@ in
       };
 
       Service = {
-        ExecStart = "${sopsKeyFileGenScript}/bin/sops-key-file-gen";
+        ExecStart = "${sopsKeyFileGenScript}";
         Type = "oneshot";
       };
 

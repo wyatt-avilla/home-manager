@@ -11,7 +11,7 @@ let
 
   keyDirectory = "${config.home.homeDirectory}/.ssh/";
 
-  sshKeyLoadScript = pkgs.writeShellScriptBin "ssh-key-load" ''
+  sshKeyLoadScript = pkgs.writeShellScript "ssh-key-load" ''
     if [ -s "${sshPubSecret}" ] && [ -s "${sshPrivateSecret}" ]; then
       cp -f "${sshPubSecret}" "${config.variables.sshKeyPairPaths.public}"
       cp -f "${sshPrivateSecret}" "${config.variables.sshKeyPairPaths.private}"
@@ -60,7 +60,7 @@ in
 
       Service = {
         Type = "oneshot";
-        ExecStart = "${sshKeyLoadScript}/bin/ssh-key-load";
+        ExecStart = "${sshKeyLoadScript}";
       };
 
       Install = {

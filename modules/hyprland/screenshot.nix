@@ -6,7 +6,7 @@ let
   swappy = lib.getExe pkgs.swappy;
   jq = lib.getExe pkgs.jq;
 
-  screenshotScript = pkgs.writeShellScriptBin "screenshot" ''
+  screenshotScript = pkgs.writeShellScript "screenshot" ''
     selection_choices=$(
     	cat <<EOF
     Monitor
@@ -38,6 +38,6 @@ let
 in
 {
   wayland.windowManager.hyprland.settings.bind = [
-    "$modifier SHIFT,f,exec,${lib.getExe screenshotScript}"
+    "$modifier SHIFT,f,exec,${screenshotScript}"
   ];
 }
