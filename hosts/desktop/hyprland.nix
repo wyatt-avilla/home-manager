@@ -82,7 +82,10 @@ in
             verticalMonitor
           ];
         }
-        ++ [ "m[${verticalMonitor}], layoutopt:orientation:top, mfact:0.5" ];
+        ++ [ "m[${verticalMonitor}], layoutopt:orientation:top, mfact:0.5" ]
+        ++ map (id: [ "${toString id}, gapsout:0" ]) (
+          lib.range (builtins.length workspaceKeys) (builtins.length workspaceKeys * 2)
+        );
 
       decoration = {
         rounding = 3;
@@ -125,7 +128,6 @@ in
           }
 
           handle_workspace_switching() {
-            workspacesPerMonitor=8
             workspaceShift=0
             if [ "$focused_monitor" = "$vertical_monitor" ]; then
               workspaceShift=${toString (builtins.length workspaceKeys)}
