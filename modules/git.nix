@@ -26,6 +26,8 @@ in
       init.defaultBranch = "main";
       gpg.ssh.allowedSignersFile = allowedSigners;
       push.autoSetupRemote = true;
+      rebase.autoStash = true;
+      pull.rebase = true;
     };
 
     signing = {
