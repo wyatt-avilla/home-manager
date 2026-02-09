@@ -86,6 +86,8 @@ in
     overlays = [ (import ../overlays/electron.nix) ];
   };
 
+  news.display = "silent";
+
   home = {
     username = "wyatt";
     homeDirectory = "/home/wyatt";
