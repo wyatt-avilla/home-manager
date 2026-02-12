@@ -36,7 +36,6 @@ let
     dust
     img2pdf
     hexyl
-    opencode
   ];
 
   gui = with pkgs; [
@@ -79,6 +78,7 @@ in
     ./sops.nix
     ./syncthing.nix
     ./waybar.nix
+    ./opencode.nix
   ];
 
   nixpkgs = {
