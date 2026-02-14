@@ -15,7 +15,7 @@
 
   config = {
     home = {
-      packages = with pkgs; [ amdgpu_top ];
+      packages = with pkgs; [ nvtopPackages.amd ];
 
       stateVersion = "24.11";
     };
