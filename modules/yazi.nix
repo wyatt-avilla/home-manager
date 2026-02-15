@@ -3,6 +3,24 @@
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
+    theme = {
+      indicator = {
+        padding = {
+          open = "█";
+          close = "█";
+        };
+      };
+      status = {
+        sep_left = {
+          open = "█";
+          close = "█";
+        };
+        sep_right = {
+          open = "█";
+          close = "█";
+        };
+      };
+    };
     keymap = {
       mgr.keymap = [
         {
