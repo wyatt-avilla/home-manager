@@ -1,6 +1,11 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
-  fuzzel = lib.getExe pkgs.fuzzel;
+  walker = lib.getExe config.programs.walker.package;
   grim = lib.getExe pkgs.grim;
   slurp = lib.getExe pkgs.slurp;
   swappy = lib.getExe pkgs.swappy;
@@ -15,7 +20,7 @@ let
     EOF
     )
 
-    selected_mode=$(echo "''${selection_choices}" | ${fuzzel} --dmenu --lines 3)
+    selected_mode=$(echo "''${selection_choices}" | ${walker} --dmenu --maxheight 130 --nosearch)
 
     case "''${selected_mode}" in
     Monitor)
@@ -37,7 +42,5 @@ let
   '';
 in
 {
-  wayland.windowManager.hyprland.settings.bind = [
-    "$modifier SHIFT,f,exec,${screenshotScript}"
-  ];
+  wayland.windowManager.hyprland.settings.bind = [ "$modifier SHIFT,f,exec,${screenshotScript}" ];
 }

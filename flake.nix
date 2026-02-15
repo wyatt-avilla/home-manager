@@ -23,6 +23,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    elephant.url = "github:abenz1267/elephant";
+
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs.elephant.follows = "elephant";
+    };
+
     nix-secrets = {
       url = "git+ssh://git@github.com/wyatt-avilla/nix-secrets";
       inputs.nixpkgs.follows = "nixpkgs";

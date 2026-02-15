@@ -1,0 +1,217 @@
+{ config, ... }:
+{
+  wayland.windowManager.hyprland.settings.layerrule = [
+    "blur on, match:namespace walker"
+    "ignore_alpha 0.5, match:namespace walker"
+  ];
+
+  programs.walker.themes.custom.style = ''
+    @define-color window_bg_color ${config.variables.colors.background};
+    @define-color accent_bg_color ${config.variables.colors.bright_black};
+    @define-color theme_fg_color ${config.variables.colors.foreground};
+    @define-color error_bg_color ${config.variables.colors.red};
+    @define-color error_fg_color ${config.variables.colors.foreground};
+
+    * {
+      all: unset;
+    }
+
+    #window {
+      background: transparent;
+    }
+
+    .box-wrapper {
+      box-shadow:
+        0 19px 38px rgba(0, 0, 0, 0.3),
+        0 15px 12px rgba(0, 0, 0, 0.22);
+      background: alpha(@window_bg_color, 0.6);
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px solid darker(@accent_bg_color);
+    }
+
+    popover {
+      background: alpha(lighter(@window_bg_color), 0.6);
+      border: 1px solid darker(@accent_bg_color);
+      border-radius: 18px;
+      padding: 10px;
+    }
+
+    .normal-icons {
+      -gtk-icon-size: 16px;
+    }
+
+    .large-icons {
+      -gtk-icon-size: 32px;
+    }
+
+    scrollbar {
+      opacity: 0;
+    }
+
+    .preview-box,
+    .elephant-hint,
+    .placeholder {
+      color: @theme_fg_color;
+    }
+
+    .box {
+    }
+
+    .search-container {
+      border-radius: 10px;
+    }
+
+    .input placeholder {
+      opacity: 0.5;
+    }
+
+    .input selection {
+      background: lighter(lighter(lighter(@window_bg_color)));
+    }
+
+    .input {
+      caret-color: @theme_fg_color;
+      background: alpha(lighter(@window_bg_color), 0.5);
+      padding: 10px;
+      color: @theme_fg_color;
+    }
+
+    .input:focus,
+    .input:active {
+    }
+
+    .content-container {
+    }
+
+    .placeholder {
+    }
+
+    .scroll {
+    }
+
+    .list {
+      color: @theme_fg_color;
+    }
+
+    child {
+    }
+
+    .item-box {
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .item-quick-activation {
+      background: alpha(@accent_bg_color, 0.25);
+      border-radius: 5px;
+      padding: 10px;
+    }
+
+    child:selected .item-box,
+    row:selected .item-box {
+      background: alpha(@accent_bg_color, 0.25);
+    }
+
+    .item-text-box {
+    }
+
+    .item-subtext {
+      font-size: 12px;
+      opacity: 0.5;
+    }
+
+    .providerlist .item-subtext {
+      font-size: unset;
+      opacity: 0.75;
+    }
+
+    .item-image-text {
+      font-size: 28px;
+    }
+
+    .preview {
+      border: 1px solid alpha(@accent_bg_color, 0.25);
+      border-radius: 10px;
+      color: @theme_fg_color;
+    }
+
+    .calc .item-text {
+      font-size: 24px;
+    }
+
+    .symbols .item-image {
+      font-size: 24px;
+    }
+
+    .todo.done .item-text-box {
+      opacity: 0.25;
+    }
+
+    .todo.urgent {
+      font-size: 24px;
+    }
+
+    .todo.active {
+      font-weight: bold;
+    }
+
+    .bluetooth.disconnected {
+      opacity: 0.5;
+    }
+
+    .preview .large-icons {
+      -gtk-icon-size: 64px;
+    }
+
+    .keybinds {
+      padding-top: 10px;
+      border-top: 1px solid lighter(@window_bg_color);
+      font-size: 12px;
+      color: @theme_fg_color;
+    }
+
+    .global-keybinds {
+    }
+
+    .item-keybinds {
+    }
+
+    .keybind {
+    }
+
+    .keybind-button {
+      opacity: 0.5;
+    }
+
+    .keybind-button:hover {
+      opacity: 0.75;
+    }
+
+    .keybind-bind {
+      text-transform: lowercase;
+      opacity: 0.35;
+    }
+
+    .keybind-label {
+      padding: 2px 4px;
+      border-radius: 4px;
+      border: 1px solid @theme_fg_color;
+    }
+
+    .error {
+      padding: 10px;
+      background: @error_bg_color;
+      color: @error_fg_color;
+    }
+
+    :not(.calc).current {
+      font-style: italic;
+    }
+
+    .preview-content.archlinuxpkgs,
+    .preview-content.dnfpackages {
+      font-family: monospace;
+    }
+  '';
+}

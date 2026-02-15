@@ -1,12 +1,17 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
-  fuzzel = lib.getExe pkgs.fuzzel;
+  walker = lib.getExe config.programs.walker.package;
   jq = lib.getExe pkgs.jq;
   notifySend = lib.getExe pkgs.libnotify;
 
   moveAllWindows = pkgs.writeShellScript "move_all_windows.sh" ''
     current_workspace=$(hyprctl activeworkspace -j | ${jq} -r '.id')
-    target_workspace=$(${fuzzel} --dmenu --lines 0 --prompt "Switch all windows to workspace: ")
+    target_workspace=$(${walker} --dmenu --maxheight 50 --placeholder "Switch all windows to workspace: ")
 
     if [ -z "''${target_workspace}" ]; then
       exit

@@ -65,8 +65,8 @@ in
 {
   imports = [
     ./hyprland
+    ./walker
     ./yazi.nix
-    ./fuzzel.nix
     ./starship.nix
     ./zsh.nix
     ./wezterm.nix
@@ -132,7 +132,6 @@ in
 
   services = {
     swaync.enable = true;
-    cliphist.enable = true;
   };
 
   fonts.fontconfig.enable = true;
