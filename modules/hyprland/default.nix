@@ -29,6 +29,7 @@ in
 
       general = {
         layout = "master";
+        "col.active_border" = lib.mkForce "rgb(${lib.removePrefix "#" config.variables.colors.white})";
       };
 
       misc = {

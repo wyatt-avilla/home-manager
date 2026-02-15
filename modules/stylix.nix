@@ -82,5 +82,7 @@ in
       name = "Bibata-Modern-Ice";
       size = 24;
     };
+
+    targets.swaync.colors.override.withHashtag.base0D = config.variables.colors.white;
   };
 }
