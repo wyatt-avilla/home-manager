@@ -66,6 +66,7 @@ in
   imports = [
     ./hyprland
     ./walker
+    ./swaync
     ./yazi.nix
     ./starship.nix
     ./zsh.nix
@@ -131,10 +132,6 @@ in
       "image/bmp" = "org.gnome.Loupe.desktop";
       "image/tiff" = "org.gnome.Loupe.desktop";
     };
-  };
-
-  services = {
-    swaync.enable = true;
   };
 
   fonts.fontconfig.enable = true;
