@@ -110,7 +110,7 @@
 
     child:selected .item-box,
     row:selected .item-box {
-      background: alpha(@accent_bg_color, 0.25);
+      background: alpha(lighter(@accent_bg_color), 0.5);
     }
 
     .item-text-box {
