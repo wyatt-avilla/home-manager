@@ -42,7 +42,7 @@ let
     fira-code
     nerd-fonts.fira-code
     google-chrome
-    feh
+    loupe
     hyprshot
     hyprpicker
     wl-clipboard
@@ -124,12 +124,12 @@ in
       "x-scheme-handler/https" = "google-chrome.desktop";
       "text/html" = "google-chrome.desktop";
       "application/pdf" = "org.pwmt.zathura.desktop";
-      "image/png" = "feh.desktop";
-      "image/jpeg" = "feh.desktop";
-      "image/gif" = "feh.desktop";
-      "image/webp" = "feh.desktop";
-      "image/bmp" = "feh.desktop";
-      "image/tiff" = "feh.desktop";
+      "image/png" = "org.gnome.Loupe.desktop";
+      "image/jpeg" = "org.gnome.Loupe.desktop";
+      "image/gif" = "org.gnome.Loupe.desktop";
+      "image/webp" = "org.gnome.Loupe.desktop";
+      "image/bmp" = "org.gnome.Loupe.desktop";
+      "image/tiff" = "org.gnome.Loupe.desktop";
     };
   };
 
