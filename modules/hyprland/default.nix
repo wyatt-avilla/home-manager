@@ -90,6 +90,7 @@ in
 
       windowrule = [
         "match:class [Oo]bsidian, opacity 0.8 0.7"
+        "match:class [Ss]lack, opacity 0.85 0.75"
         "match:class [Ss]potify, opacity 0.8 0.65"
         "match:fullscreen_state_client 1, border_color rgb(${lib.removePrefix "#" config.variables.colors.red})"
       ];
