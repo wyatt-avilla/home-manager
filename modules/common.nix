@@ -117,6 +117,9 @@ in
     enable = true;
 
     defaultApplications = {
+      "inode/directory" = "yazi.desktop";
+      "text/markdown" = "nvim.desktop";
+      "text/x-markdown" = "nvim.desktop";
       "x-scheme-handler/http" = "google-chrome.desktop";
       "x-scheme-handler/https" = "google-chrome.desktop";
       "text/html" = "google-chrome.desktop";
