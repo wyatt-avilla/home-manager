@@ -131,6 +131,7 @@ in
         lib.concatMapStringsSep "" (prependDollarAndJoinWith "") [
           languages
           buildTooling
+          infrastructure
           environment
           containerization
           [
@@ -229,6 +230,11 @@ in
           [
             "aws"
             "  "
+          ]
+
+          [
+            "azure"
+            ""
           ]
 
           [
@@ -382,6 +388,11 @@ in
           ]
 
           [
+            "openstack"
+            ""
+          ]
+
+          [
             "package"
             "󰏗 "
           ]
@@ -404,6 +415,11 @@ in
           [
             "pixi"
             "󰏗 "
+          ]
+
+          [
+            "pulumi"
+            ""
           ]
 
           [
@@ -434,6 +450,11 @@ in
           [
             "swift"
             " "
+          ]
+
+          [
+            "terraform"
+            ""
           ]
 
           [
