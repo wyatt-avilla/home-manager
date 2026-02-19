@@ -127,7 +127,7 @@ in
     enable = true;
     enableZshIntegration = true;
     settings = {
-      format = "󱄅 (red)$username $directory ${
+      format = "$jobs󱄅 (red)$username $directory ${
         lib.concatMapStringsSep "" (prependDollarAndJoinWith "") [
           languages
           buildTooling
@@ -144,6 +144,11 @@ in
       add_newline = true;
 
       fill.symbol = " ";
+
+      jobs = {
+        symbol = "󱟱 ";
+        format = "[$number$symbol]($style)";
+      };
 
       username = {
         format = "[$user]($style)";
