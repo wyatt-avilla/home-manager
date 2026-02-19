@@ -677,11 +677,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1753764242,
-        "narHash": "sha256-dhoA9pnMppaCJO5tzNQaTDV9mQEaL9ijgSRRxDibYKY=",
+        "lastModified": 1770625239,
+        "narHash": "sha256-vS7FIo8FUtHtHiAmiUngPOQ9NFITskoVasG+33vCDKA=",
         "owner": "wyatt-avilla",
         "repo": "nix-ci",
-        "rev": "9ef2f997abc1fa03c4e18de0dd3a35858dd9f5e8",
+        "rev": "57b99f9f7834cf69bc52e993a7c0b73bc3b172b9",
         "type": "github"
       },
       "original": {
@@ -849,11 +849,11 @@
         "nixvim": "nixvim_2"
       },
       "locked": {
-        "lastModified": 1769542822,
-        "narHash": "sha256-LgDGSi1JQcCjulwUVQyMVJx9xgBOLvYpoDjcufABQTU=",
+        "lastModified": 1771493572,
+        "narHash": "sha256-q2gKKJp7xtHPYARnt/SAH/bcIwTiuwygp/N3Pr1AKM0=",
         "owner": "wyatt-avilla",
         "repo": "nixvim",
-        "rev": "4c2541a4e5863d13ad993eea2f5d142498a412ff",
+        "rev": "9d186d0cbec878ba4be318e2ace0a0d5f6c4a839",
         "type": "github"
       },
       "original": {
