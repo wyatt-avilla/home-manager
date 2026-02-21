@@ -30,6 +30,15 @@ in
         "col.active_border" = lib.mkForce "rgb(${lib.removePrefix "#" config.variables.colors.white})";
       };
 
+      group = {
+        "col.border_active" = lib.mkForce "rgb(${lib.removePrefix "#" config.variables.colors.white})";
+        groupbar = {
+          gradients = true;
+          "col.inactive" = lib.mkForce "rgb(${lib.removePrefix "#" config.variables.colors.black})";
+          "col.active" = lib.mkForce "rgb(${lib.removePrefix "#" config.variables.colors.bright_black})";
+        };
+      };
+
       misc = {
         disable_hyprland_logo = true;
         enable_swallow = true;
@@ -59,11 +68,6 @@ in
         "$modifier,w,exec,${lib.getExe' pkgs.google-chrome "google-chrome"}"
         "$modifier,q,killactive"
 
-        "$modifier,e,layoutmsg,cyclenext"
-        "$modifier,i,layoutmsg,cycleprev"
-        "$modifier SHIFT,e,layoutmsg,swapnext"
-        "$modifier SHIFT,i,layoutmsg,swapprev"
-
         "$modifier,f,exec,${lib.getExe config.programs.walker.package}"
         "$modifier,p,togglespecialworkspace,popupterm"
         "$modifier,b,fullscreen,1"
@@ -71,7 +75,24 @@ in
         "$modifier,u,exec,${lib.getExe config.programs.walker.package} --provider clipboard"
 
         "$modifier SHIFT,V,togglefloating"
+      ]
+      ++ [
         "$modifier,m,layoutmsg,swapwithmaster"
+        "$modifier,e,layoutmsg,cyclenext"
+        "$modifier,i,layoutmsg,cycleprev"
+        "$modifier SHIFT,e,layoutmsg,swapnext"
+        "$modifier SHIFT,i,layoutmsg,swapprev"
+      ]
+      ++ [
+        "$modifier,h,togglegroup"
+
+        "$modifier CONTROL,n,changegroupactive,b"
+        "$modifier CONTROL,o,changegroupactive,f"
+        "$modifier CONTROL SHIFT,o,movegroupwindow,f"
+        "$modifier CONTROL SHIFT,n,movegroupwindow,b"
+
+        "$modifier CONTROL SHIFT,e,movewindoworgroup,d"
+        "$modifier CONTROL SHIFT,i,movewindoworgroup,u"
       ];
 
       binde = [
