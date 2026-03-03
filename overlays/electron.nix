@@ -26,10 +26,8 @@ self: super: {
     substitute ${super.discord}/share/applications/discord.desktop \
       $out/share/applications/discord.desktop \
       --replace-fail "Exec=Discord" "Exec=$out/bin/discord" \
-      --replace-warn "Icon=discord" "Icon=$out/share/pixmaps/discord.png"
 
     cp -r ${super.discord}/share/icons $out/share/icons
-    cp ${super.discord}/share/pixmaps/discord.png $out/share/pixmaps/discord.png
   '';
 
   google-chrome = self.runCommand "google-chrome" { nativeBuildInputs = [ self.makeWrapper ]; } ''
