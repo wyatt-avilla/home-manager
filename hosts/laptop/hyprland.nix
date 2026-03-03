@@ -25,6 +25,7 @@ in
 
       bind = [
         "$modifier, Return, exec, ${terminal}"
+        "$modifier, Space, layoutmsg, swapwithmaster"
 
         "$modifier, 1, workspace, 1"
         "$modifier SHIFT, 1, movetoworkspace, 1"
