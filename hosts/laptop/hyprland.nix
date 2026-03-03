@@ -21,7 +21,7 @@ in
 
       monitor = [ ", preferred, auto, 1, mirror, LVDS-1" ];
 
-      windowrule = [ "opacity 0.95 override 0.8 override, class:.*(${terminal}).*" ];
+      windowrule = [ "match:class .*(${terminal}).*, opacity 0.95 0.8" ];
 
       bind = [
         "$modifier, Return, exec, ${terminal}"
