@@ -36,6 +36,13 @@ in
         interval = 1;
       };
 
+      systemd-failed-units = {
+        format = "{nr_failed} failed";
+        user = true;
+        system = true;
+        hide-on-ok = true;
+      };
+
       wireplumber = {
         format = "{volume}% {icon}";
         format-muted = "";
