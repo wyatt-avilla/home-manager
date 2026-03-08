@@ -33,23 +33,27 @@ in
   config = {
     programs.ssh = {
       enable = true;
-      matchBlocks = {
-        "homelab" = {
-          hostname = inputs.nix-secrets.nixosModules.plainSecrets.vps.publicIp;
-          port = 2222;
-          user = "wyatt";
-          setEnv = {
-            TERM = "xterm-256color";
+      matchBlocks =
+        let
+          hostname = "ssh.${inputs.nix-secrets.nixosModules.plainSecrets.domain.personal}";
+        in
+        {
+          "homelab" = {
+            inherit hostname;
+            port = 2222;
+            user = "wyatt";
+            setEnv = {
+              TERM = "xterm-256color";
+            };
+          };
+          "vps" = {
+            inherit hostname;
+            user = "wyatt";
+            setEnv = {
+              TERM = "xterm-256color";
+            };
           };
         };
-        "vps" = {
-          hostname = inputs.nix-secrets.nixosModules.plainSecrets.vps.publicIp;
-          user = "wyatt";
-          setEnv = {
-            TERM = "xterm-256color";
-          };
-        };
-      };
     };
 
     services.ssh-agent.enable = true;
