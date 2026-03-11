@@ -69,7 +69,7 @@ in
       windowrule = [ "match:class .*(${terminal}).*, opacity 0.8 0.7" ];
 
       bind = [
-        "$modifier,code:47,exec,${terminal}"
+        "$modifier,code:47,exec,${config.variables.hyprprojectLaunchScript}"
       ]
       ++ map (key: mkWorkspaceBind key { }) workspaceKeys
       ++ map (key: mkWorkspaceBind key { shouldShift = true; }) workspaceKeys;

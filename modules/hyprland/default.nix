@@ -11,6 +11,7 @@ in
 {
   imports = [
     ./hyprpaper.nix
+    ./hyprproject.nix
     ./screenshot.nix
     ./move-all-windows.nix
   ];

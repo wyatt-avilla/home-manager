@@ -24,7 +24,7 @@ in
       windowrule = [ "match:class .*(${terminal}).*, opacity 0.95 0.8" ];
 
       bind = [
-        "$modifier, Return, exec, ${terminal}"
+        "$modifier, Return, exec, ${config.variables.hyprprojectLaunchScript}"
         "$modifier, Space, layoutmsg, swapwithmaster"
 
         "$modifier, 1, workspace, 1"
