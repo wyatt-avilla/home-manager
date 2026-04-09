@@ -3,7 +3,6 @@ let
   jq = lib.getExe pkgs.jq;
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
   cat = "${pkgs.coreutils}/bin/cat";
-  systemctl = "${pkgs.systemd}/bin/systemctl";
 
   mkSuspendScripts =
     className: commandName:
@@ -65,7 +64,7 @@ in
       };
       listener = {
         timeout = 60 * 20;
-        on-timeout = "${systemctl} suspend";
+        on-timeout = "${lib.getExe' pkgs.systemd "systemctl"} suspend";
       };
     };
   };
