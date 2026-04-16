@@ -10,6 +10,7 @@ let
 
   commandLine = with pkgs; [
     nixvim-stylix
+    codex
     wget
     jq
     tree
@@ -84,7 +85,10 @@ in
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [ (import ../overlays/electron.nix) ];
+    overlays = [
+      (import ../overlays/electron.nix)
+      (import ../overlays/codex.nix)
+    ];
   };
 
   news.display = "silent";
