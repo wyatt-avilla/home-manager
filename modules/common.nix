@@ -85,10 +85,7 @@ in
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [
-      (import ../overlays/electron.nix)
-      (import ../overlays/codex.nix)
-    ];
+    overlays = [ (import ../overlays/codex.nix) ];
   };
 
   news.display = "silent";
