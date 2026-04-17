@@ -36,19 +36,30 @@ in
       matchBlocks =
         let
           hostname = "ssh.${inputs.nix-secrets.nixosModules.plainSecrets.domain.personal}";
+          user = "wyatt";
+          jumpHost = "vps-jump";
+          homelabWireguardIP = "10.0.0.2";
         in
         {
-          "homelab" = {
+          ${jumpHost} = {
+            inherit user;
             inherit hostname;
             port = 2222;
-            user = "wyatt";
+            setEnv = {
+              TERM = "xterm-256color";
+            };
+          };
+          "homelab" = {
+            inherit user;
+            hostname = homelabWireguardIP;
+            proxyJump = jumpHost;
             setEnv = {
               TERM = "xterm-256color";
             };
           };
           "vps" = {
+            inherit user;
             inherit hostname;
-            user = "wyatt";
             setEnv = {
               TERM = "xterm-256color";
             };
