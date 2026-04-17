@@ -37,6 +37,7 @@ let
     dust
     img2pdf
     hexyl
+    nh
   ];
 
   gui = with pkgs; [
