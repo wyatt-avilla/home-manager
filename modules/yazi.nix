@@ -3,6 +3,27 @@
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
+    initLua = ''
+      require("git"):setup {
+        order = 1500,
+      }
+    '';
+    settings = {
+      plugin.prepend_fetchers = [
+        {
+          id = "git";
+          url = "*";
+          run = "git";
+          group = "git";
+        }
+        {
+          id = "git";
+          url = "*/";
+          run = "git";
+          group = "git";
+        }
+      ];
+    };
     theme = {
       indicator = {
         padding = {
@@ -446,6 +467,8 @@
     };
 
     plugins = {
+      inherit (pkgs.yaziPlugins) git;
+
       super-escape = pkgs.writeTextDir "main.lua" ''
         ---@sync entry
         return {
