@@ -35,7 +35,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-checks = {
+    nix-ci = {
       url = "git+ssh://git@github.com/wyatt-avilla/nix-ci";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -49,12 +49,21 @@
       stylix,
       spicetify-nix,
       nix-secrets,
-      nix-checks,
+      nix-ci,
       ...
     }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
+      ci = nix-ci.lib.mkProject {
+        inherit pkgs;
+        src = self;
+
+        hooks = {
+          deadnix.excludes = [ "modules/starship.nix" ];
+          statix.excludes = [ "modules/starship.nix" ];
+        };
+      };
     in
     {
       homeConfigurations = {
@@ -81,32 +90,10 @@
         };
       };
 
-      devShells.${system}.default = pkgs.mkShell {
-        packages = with pkgs; [
-          pre-commit
-          nixfmt
-          statix
-        ];
-        shellHook = ''
-          pre-commit install
-        '';
-      };
+      formatter.${system} = ci.formatter;
 
-      checks.${system} = {
-        formatting = nix-checks.lib.mkFormattingCheck {
-          inherit pkgs;
-          src = self;
-        };
+      devShells.${system}.default = ci.devShell;
 
-        linting = nix-checks.lib.mkLintingCheck {
-          inherit pkgs;
-          src = self;
-        };
-
-        dead-code = nix-checks.lib.mkDeadCodeCheck {
-          inherit pkgs;
-          src = self;
-        };
-      };
+      checks.${system} = ci.checks;
     };
 }
