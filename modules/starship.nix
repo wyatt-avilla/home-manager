@@ -5,29 +5,6 @@ let
     separator: strings: builtins.concatStringsSep separator (map (s: "$" + s) strings);
   starshipVar = s: "\$\{${s}\}";
 
-  system = [
-    "sudo"
-    "username"
-    "hostname"
-    "package"
-    "localip"
-    "memory_usage"
-    "time"
-    "jobs"
-    "os"
-  ];
-
-  misc = [
-    "custom"
-    "line_break"
-    "character"
-  ];
-
-  communication = [
-    "buf"
-    "nats"
-  ];
-
   infrastructure = [
     "pulumi"
     "terraform"
@@ -35,12 +12,6 @@ let
     "gcloud"
     "openstack"
     "azure"
-  ];
-
-  package = [
-    "helm"
-    "conda"
-    "spack"
   ];
 
   versionControl = [
@@ -65,13 +36,6 @@ let
     "nix_shell"
     "direnv"
     "env_var"
-  ];
-
-  shell = [
-    "shell"
-    "cmd_duration"
-    "status"
-    "shlvl"
   ];
 
   languages = [

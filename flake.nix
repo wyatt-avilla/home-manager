@@ -58,11 +58,6 @@
       ci = nix-ci.lib.mkProject {
         inherit pkgs;
         src = self;
-
-        hooks = {
-          deadnix.excludes = [ "modules/starship.nix" ];
-          statix.excludes = [ "modules/starship.nix" ];
-        };
       };
     in
     {
