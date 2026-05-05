@@ -9,7 +9,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -32,7 +31,9 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Install Nix
-        uses: DeterminateSystems/determinate-nix-action@v3
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up SSH key
         env:
@@ -55,27 +56,28 @@ jobs:
           echo "homes=$homes" >> "$GITHUB_OUTPUT"
 
   build:
-    name: Build ${{ matrix.home }}
+    name: Build homes
     needs: homes
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      max-parallel: 1
-      matrix:
-        home: ${{ fromJSON(needs.homes.outputs.homes) }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v6
 
       - name: Install Nix
-        uses: DeterminateSystems/determinate-nix-action@v3
-
-      - name: Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@v13
+        uses: cachix/install-nix-action@v31
         with:
-          diff-store: true
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Restore Nix build cache
+        id: nix-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .nix-build-cache
+          key: nix-home-${{ runner.os }}-${{ hashFiles('flake.lock') }}-${{ github.sha }}
+          restore-keys: |
+            nix-home-${{ runner.os }}-${{ hashFiles('flake.lock') }}-
+            nix-home-${{ runner.os }}-
 
       - name: Set up SSH key
         env:
@@ -91,9 +93,31 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-      - name: Build Home Manager configuration
+      - name: Build Home Manager configurations
         env:
-          HOME_CONFIGURATION: ${{ matrix.home }}
+          HOMES: ${{ needs.homes.outputs.homes }}
         run: |
+          mkdir -p .nix-build-cache
+
+          mapfile -t build_targets < <(
+            jq -r '.[] | ".#homeConfigurations.\(.).activationPackage"' <<< "$HOMES"
+          )
+
+          cache_args=()
+          if [ -f .nix-build-cache/nix-cache-info ]; then
+            cache_args+=(--extra-substituters "file://$PWD/.nix-build-cache?trusted=1")
+          fi
+
           nix build --print-build-logs --no-link \
-            ".#homeConfigurations.${HOME_CONFIGURATION}.activationPackage"
+            "${cache_args[@]}" \
+            "${build_targets[@]}"
+
+          nix copy --to "file://$PWD/.nix-build-cache?compression=zstd" \
+            "${build_targets[@]}"
+
+      - name: Save Nix build cache
+        if: always() && steps.nix-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .nix-build-cache
+          key: nix-home-${{ runner.os }}-${{ hashFiles('flake.lock') }}-${{ github.sha }}
