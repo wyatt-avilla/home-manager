@@ -1,5 +1,4 @@
 {
-  # trigger build
   description = "My Home Manager configuration";
 
   inputs = {
