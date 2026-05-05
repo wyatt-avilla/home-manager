@@ -1,0 +1,123 @@
+name: Build Home Manager Configurations
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  homes:
+    name: Enumerate homes
+    runs-on: ubuntu-latest
+
+    outputs:
+      homes: ${{ steps.homes.outputs.homes }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up SSH key
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        run: |
+          if [ -z "${SSH_DEPLOY_KEY:-}" ]; then
+            echo "SSH_DEPLOY_KEY is required to fetch private flake inputs."
+            exit 1
+          fi
+
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_DEPLOY_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Enumerate Home Manager outputs
+        id: homes
+        run: |
+          homes="$(nix eval --json '.#homeConfigurations' --apply builtins.attrNames)"
+          echo "homes=$homes" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build homes
+    needs: homes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Restore Nix build cache
+        id: nix-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .nix-build-cache
+          key: nix-home-${{ runner.os }}-${{ hashFiles('flake.lock') }}-${{ github.sha }}
+          restore-keys: |
+            nix-home-${{ runner.os }}-${{ hashFiles('flake.lock') }}-
+            nix-home-${{ runner.os }}-
+
+      - name: Set up SSH key
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        run: |
+          if [ -z "${SSH_DEPLOY_KEY:-}" ]; then
+            echo "SSH_DEPLOY_KEY is required to fetch private flake inputs."
+            exit 1
+          fi
+
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_DEPLOY_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Build Home Manager configurations
+        env:
+          HOMES: ${{ needs.homes.outputs.homes }}
+        run: |
+          mkdir -p .nix-build-cache
+
+          mapfile -t build_targets < <(
+            jq -r '.[] | ".#homeConfigurations.\(.).activationPackage"' <<< "$HOMES"
+          )
+
+          cache_args=()
+          if [ -f .nix-build-cache/nix-cache-info ]; then
+            cache_args+=(--extra-substituters "file://$PWD/.nix-build-cache?trusted=1")
+          fi
+
+          nix build --print-build-logs --no-link \
+            "${cache_args[@]}" \
+            "${build_targets[@]}"
+
+          nix copy --to "file://$PWD/.nix-build-cache?compression=zstd" \
+            "${build_targets[@]}"
+
+      - name: Save Nix build cache
+        if: always() && steps.nix-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .nix-build-cache
+          key: nix-home-${{ runner.os }}-${{ hashFiles('flake.lock') }}-${{ github.sha }}
