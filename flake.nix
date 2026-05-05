@@ -1,5 +1,6 @@
 {
   description = "My Home Manager configuration";
+  # cache test
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
