@@ -55,9 +55,92 @@ jobs:
           homes="$(nix eval --json '.#homeConfigurations' --apply builtins.attrNames)"
           echo "homes=$homes" >> "$GITHUB_OUTPUT"
 
+  cache:
+    name: Check Nix build cache
+    runs-on: ubuntu-latest
+
+    outputs:
+      cache-hit: ${{ steps.nix-cache.outputs.cache-hit }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check Nix build cache
+        id: nix-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .nix-build-cache
+          key: nix-home-${{ runner.os }}-${{ hashFiles('flake.lock') }}-${{ github.sha }}
+          restore-keys: |
+            nix-home-${{ runner.os }}-${{ hashFiles('flake.lock') }}-
+            nix-home-${{ runner.os }}-
+          lookup-only: true
+
+  build-cached:
+    name: Build ${{ matrix.home }}
+    needs:
+      - homes
+      - cache
+    if: needs.cache.outputs.cache-hit == 'true'
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        home: ${{ fromJSON(needs.homes.outputs.homes) }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Restore Nix build cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .nix-build-cache
+          key: nix-home-${{ runner.os }}-${{ hashFiles('flake.lock') }}-${{ github.sha }}
+          restore-keys: |
+            nix-home-${{ runner.os }}-${{ hashFiles('flake.lock') }}-
+            nix-home-${{ runner.os }}-
+
+      - name: Set up SSH key
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        run: |
+          if [ -z "${SSH_DEPLOY_KEY:-}" ]; then
+            echo "SSH_DEPLOY_KEY is required to fetch private flake inputs."
+            exit 1
+          fi
+
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_DEPLOY_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Build Home Manager configuration
+        env:
+          HOME_CONFIG: ${{ matrix.home }}
+        run: |
+          if [ ! -f .nix-build-cache/nix-cache-info ]; then
+            echo "Expected an exact restored Nix build cache."
+            exit 1
+          fi
+
+          nix build --print-build-logs --no-link \
+            --extra-substituters "file://$PWD/.nix-build-cache?trusted=1" \
+            ".#homeConfigurations.${HOME_CONFIG}.activationPackage"
+
   build:
     name: Build homes
-    needs: homes
+    needs:
+      - homes
+      - cache
+    if: needs.cache.outputs.cache-hit != 'true'
     runs-on: ubuntu-latest
 
     steps:
