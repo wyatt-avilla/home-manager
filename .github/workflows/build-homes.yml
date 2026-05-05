@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -62,6 +63,7 @@ jobs:
 
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
         home: ${{ fromJSON(needs.homes.outputs.homes) }}
 
@@ -76,6 +78,8 @@ jobs:
 
       - name: Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@v13
+        with:
+          diff-store: true
 
       - name: Set up SSH key
         env:
