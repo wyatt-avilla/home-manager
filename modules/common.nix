@@ -54,6 +54,7 @@ let
     obsidian
     slack
     discord
+    cheese
   ];
 
   dev = with pkgs; [
