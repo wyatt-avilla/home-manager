@@ -6,11 +6,11 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "codex";
-  version = "0.130.0";
+  version = "0.144.6";
 
   src = fetchurl {
     url = "https://github.com/openai/codex/releases/download/rust-v${version}/codex-x86_64-unknown-linux-musl.tar.gz";
-    hash = "sha256-Fneee3hXUIp2ijbX1OCE7sM27COUbtcKmwlIm4+GEZA=";
+    hash = "sha256-ap3vUaCtjOpmhNjrO/AzyJ8z47xc/kkvGh4KcYRRocY=";
   };
 
   sourceRoot = ".";
