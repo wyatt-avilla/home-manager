@@ -1,45 +1,6 @@
-{
-  lib,
-  pkgs,
-  inputs,
-  ...
-}:
+{ pkgs, ... }:
 
 let
-  nixvim-stylix = inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default;
-
-  commandLine = with pkgs; [
-    nixvim-stylix
-    codex
-    wget
-    jq
-    tree
-    cloc
-    eza
-    bat
-    ripgrep
-    fastfetch
-    fzf
-    fd
-    btop
-    delta
-    ffmpeg
-    duf
-    zip
-    unzip
-    file
-    usbutils
-    entr
-    killall
-    sops
-    tldr
-    hyperfine
-    dust
-    img2pdf
-    hexyl
-    nh
-  ];
-
   gui = with pkgs; [
     fira-code
     nerd-fonts.fira-code
@@ -57,22 +18,13 @@ let
     cheese
   ];
 
-  dev = with pkgs; [
-    cargo
-    python3
-    gh
-    pre-commit
-    nix-output-monitor
-  ];
 in
 {
   imports = [
+    ./headless.nix
     ./hyprland
     ./walker
     ./swaync
-    ./yazi.nix
-    ./starship.nix
-    ./zsh.nix
     ./wezterm.nix
     ./zathura.nix
     ./stylix.nix
@@ -82,40 +34,14 @@ in
     ./sops.nix
     ./syncthing.nix
     ./waybar.nix
-    ./opencode.nix
   ];
 
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [ (import ../overlays/codex.nix) ];
-  };
-
-  news.display = "silent";
-
   home = {
-    username = "wyatt";
-    homeDirectory = "/home/wyatt";
-
-    sessionVariables = {
-      EDITOR = lib.getExe nixvim-stylix;
-      NIXOS_OZONE_WL = 1;
-    };
-
-    packages = lib.flatten [
-      commandLine
-      gui
-      dev
-    ];
-
-    file.".lesskey".text = ''
-      # command
-      e forw-line
-      i back-line
-
-      k repeat-search
-      N reverse-search
-    '';
+    sessionVariables.NIXOS_OZONE_WL = 1;
+    packages = gui;
   };
+
+  programs.opencode.settings.plugin = [ "@mohak34/opencode-notifier@0.1.19" ];
 
   xdg.mimeApps = {
     enable = true;

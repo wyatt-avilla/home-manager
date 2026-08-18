@@ -17,6 +17,7 @@ in
 {
   programs.git = {
     enable = true;
+    package = null;
     settings = {
       user = {
         name = "Wyatt Avilla";
@@ -37,10 +38,7 @@ in
     };
   };
 
-  programs.difftastic = {
-    enable = true;
-    git.enable = true;
-  };
+  programs.difftastic.git.enable = true;
 
   systemd.user.services.allowed-signers-file-gen = {
     Unit = {
