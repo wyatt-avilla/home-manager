@@ -60,6 +60,12 @@
     in
     {
       homeConfigurations = {
+        headless = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit inputs; };
+          modules = [ ./hosts/headless/default.nix ];
+        };
+
         desktop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = { inherit inputs; };
