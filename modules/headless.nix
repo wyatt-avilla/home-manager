@@ -39,6 +39,7 @@ let
     hexyl
     nh
     git
+    git-worktree-runner
     openssh
   ];
 
@@ -60,7 +61,10 @@ in
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [ (import ../overlays/codex.nix) ];
+    overlays = [
+      (import ../overlays/codex.nix)
+      (import ../overlays/git-worktree-runner.nix)
+    ];
   };
 
   news.display = "silent";
