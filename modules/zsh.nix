@@ -111,6 +111,10 @@ let
     }
   '';
 
+  gwtInit = ''
+    eval "$(${lib.getExe pkgs.git-worktree-runner} init zsh --as gwt)"
+  '';
+
   style = ''
     zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
     zstyle ':completion:*:descriptions' format '[%d]'
@@ -174,7 +178,8 @@ in
       + style
       + vimMode
       + nixTemp
-      + ripGrep;
+      + ripGrep
+      + gwtInit;
     };
   };
 }
