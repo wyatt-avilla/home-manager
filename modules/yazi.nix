@@ -55,6 +55,11 @@
           desc = "Exit visual mode, clear selected, cancel search, or exit";
         }
         {
+          on = "q";
+          run = "quit";
+          desc = "Exit Yazi";
+        }
+        {
           on = "i";
           run = "arrow -1";
           desc = "Move cursor up";
@@ -435,7 +440,7 @@
         }
         {
           on = "q";
-          run = "close";
+          run = "quit";
           desc = "Exit the process";
         }
         {
@@ -470,19 +475,21 @@
       inherit (pkgs.yaziPlugins) git;
 
       super-escape = pkgs.writeTextDir "main.lua" ''
-        ---@sync entry
+        local state = ya.sync(function()
+          return cx.active.mode.is_select, #cx.active.selected
+        end)
+
         return {
           entry = function()
-            local visual_active = cx.active.mode.is_select
-            local selected = #cx.active.selected
+            local visual_active, selected = state()
 
-        	if visual_active  then
-        		ya.mgr_emit("escape", { visual = true })
-        	elseif selected > 0 then
-        		ya.mgr_emit("escape", { visual = true, select = true })
-        	else
-        		ya.mgr_emit("close", { visual = true })
-        	end
+            if visual_active then
+              return ya.emit("escape", { visual = true })
+            elseif selected > 0 then
+              return ya.emit("escape", { visual = true, select = true })
+            else
+              return ya.emit("quit", {})
+            end
           end,
         }
       '';
