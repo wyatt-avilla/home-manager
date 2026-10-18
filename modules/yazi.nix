@@ -3,6 +3,7 @@
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
+    shellWrapperName = "y";
     initLua = ''
       require("git"):setup {
         order = 1500,

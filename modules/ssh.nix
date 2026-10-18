@@ -33,7 +33,8 @@ in
   config = {
     programs.ssh = {
       enable = true;
-      matchBlocks =
+      enableDefaultConfig = false;
+      settings =
         let
           hostname = "ssh.${inputs.nix-secrets.nixosModules.plainSecrets.domain.personal}";
           user = "wyatt";
@@ -42,25 +43,25 @@ in
         in
         {
           ${jumpHost} = {
-            inherit user;
-            inherit hostname;
-            port = 2222;
-            setEnv = {
+            User = user;
+            HostName = hostname;
+            Port = 2222;
+            SetEnv = {
               TERM = "xterm-256color";
             };
           };
           "homelab" = {
-            inherit user;
-            hostname = homelabWireguardIP;
-            proxyJump = jumpHost;
-            setEnv = {
+            User = user;
+            HostName = homelabWireguardIP;
+            ProxyJump = jumpHost;
+            SetEnv = {
               TERM = "xterm-256color";
             };
           };
           "vps" = {
-            inherit user;
-            inherit hostname;
-            setEnv = {
+            User = user;
+            HostName = hostname;
+            SetEnv = {
               TERM = "xterm-256color";
             };
           };
