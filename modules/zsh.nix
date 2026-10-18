@@ -136,7 +136,7 @@ in
       syntaxHighlighting.enable = true;
 
       shellAliases = {
-        ls = "${lib.getExe pkgs.eza} --group-directories-first --icons";
+        ls = "${lib.getExe pkgs.eza} --group-directories-first --icons auto";
         cat = lib.getExe pkgs.bat;
         lf = "${config.programs.yazi.shellWrapperName}";
         vim = lib.getExe inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default;
